@@ -1,5 +1,4 @@
-# Install dependencies
-
-run... \
-```$ yarn install``` \
-```$ pip install -r requirements.txt```
+# ScrumMe
+> 
+> $ pip install -r requirements.txt
+> $ touch scrumme/.env
