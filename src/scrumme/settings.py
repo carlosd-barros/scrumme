@@ -69,7 +69,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            #os.path.join(BASE_DIR, 'templates'),
             BASE_DIR.child('templates')
         ],
         'APP_DIRS': True,
@@ -137,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = BASE_DIR.child('staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 STATIC_URL = '/static/'
 
@@ -149,7 +148,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = f"{BASE_DIR}/media"
+MEDIA_ROOT = BASE_DIR.child('media')
 
 LOGOUT_URL = "/auth/logout/"
 
