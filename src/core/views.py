@@ -1,4 +1,4 @@
-import json
+# import json
 import logging
 
 #from django.shortcuts import render
@@ -8,11 +8,5 @@ from django.views.generic.base import View, TemplateView
 
 logger = logging.getLogger(__name__)
 
-def HomePageView(request):
-    html = """
-    <body>
-        <h1>Hello world<h1/>
-    <body>
-    """
-
-    return HttpResponse(html)
+class Dashboard(TemplateView):
+    template_name = 'core/index.html'
