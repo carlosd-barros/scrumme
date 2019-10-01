@@ -124,6 +124,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# yarn
+node_modules/
+
 # docs pessoais
 anotations.txt
 startbootstrap-sb-admin-2-gh-pages/
