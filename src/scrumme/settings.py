@@ -19,7 +19,7 @@ from dj_database_url import parse as db_url
 
 
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 
     'core',
     'accounts',
-
 ]
 
 MIDDLEWARE = [
@@ -94,7 +93,7 @@ DATABASES = {
     'default': config(
         'DATABASE_URL',
         # default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
-        default='sqlite:///' + BASE_DIR.parent.child('db.sqlite3'),
+        default='sqlite:///' + BASE_DIR.child('db.sqlite3'),
         cast=db_url
     )
 }
@@ -136,7 +135,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = BASE_DIR.child('staticfiles')
 
 STATIC_URL = '/static/'
 
