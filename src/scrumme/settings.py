@@ -15,7 +15,6 @@ import django_heroku
 
 from decouple import config
 from unipath import Path
-from dj_database_url import parse as db_url
 
 
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -90,15 +89,11 @@ WSGI_APPLICATION = 'scrumme.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        # default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
-        default='sqlite:///' + BASE_DIR.child('db.sqlite3'),
-        cast=db_url
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -165,6 +160,10 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
+
+AWS_S3_FILE_OVERWWRITE = False
+
+AWS_DEFAULT_ACL = None
 
 # Configure Django App for Heroku.
 # https://github.com/heroku/django-heroku

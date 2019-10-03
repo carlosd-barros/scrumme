@@ -20,6 +20,10 @@
   <!-- Custom styles for this template-->
   <link href="{% static 'custom/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+  <!-- css specifique page -->
+  {% block page-css %}{% endblock page-css %}
+    
+
 </head>
 
 <body id="page-top">
@@ -339,6 +343,9 @@
   <!-- Page level custom scripts -->
   <script src="{% static 'custom/js/demo/chart-area-demo.js' %}"></script>
   <script src="{% static 'custom/js/demo/chart-pie-demo.js' %}"></script>
+
+  <!-- Js specifique page -->
+  {% block page-js %}{% endblock page-js %}
 
 </body>
 </html>
