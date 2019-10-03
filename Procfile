@@ -1,1 +1,1 @@
-web: gunicorn src.scrumme.wsgi --log-file -
+web: gunicorn scrumme.wsgi --log-file -
