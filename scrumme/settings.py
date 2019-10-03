@@ -173,51 +173,51 @@ django_heroku.settings(locals())
 
 INTERNAL_IPS = ('127.0.0.1',)
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[%(asctime)s] %(levelname)s %(name)s:'
-                      '%(filename)s:%(lineno)d %(message)s',
-            'datefmt': '%d/%b/%Y %H:%M:%S'
-        },
-    },
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue'
-        },
-    },
-    'handlers': {
-        'null': {
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console', ],
-            'level': config('LOG_LEVEL', default='DEBUG'),
-            'propagate': False,
-        },
-        'requests': {
-            'handlers': ['null', ],
-            'propagate': False,
-        },
-        'requests_oauthlib': {
-            'handlers': ['null', ],
-            'propagate': False,
-        },
-        'urllib3': {
-            'handlers': ['null', ],
-            'propagate': False,
-        }
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '[%(asctime)s] %(levelname)s %(name)s:'
+#                       '%(filename)s:%(lineno)d %(message)s',
+#             'datefmt': '%d/%b/%Y %H:%M:%S'
+#         },
+#     },
+#     'filters': {
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse'
+#         },
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue'
+#         },
+#     },
+#     'handlers': {
+#         'null': {
+#             'class': 'logging.NullHandler',
+#         },
+#         'console': {
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose'
+#         }
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['console', ],
+#             'level': config('LOG_LEVEL', default='DEBUG'),
+#             'propagate': False,
+#         },
+#         'requests': {
+#             'handlers': ['null', ],
+#             'propagate': False,
+#         },
+#         'requests_oauthlib': {
+#             'handlers': ['null', ],
+#             'propagate': False,
+#         },
+#         'urllib3': {
+#             'handlers': ['null', ],
+#             'propagate': False,
+#         }
+#     }
+# }
