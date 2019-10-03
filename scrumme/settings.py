@@ -30,9 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = [
-    'https://scrum-me.herokuapp.com',
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
