@@ -3,23 +3,23 @@ from django.contrib.auth import views as auth_views
 from .views import (
     AuthLoginView, 
     AuthLogout, 
-    AuthRegister
+    AuthRegister,
+
 )
 
 app_name = 'auth'
 
 urlpatterns = [
     path(
-        'login/', 
+        'login/',
         auth_views.LoginView.as_view(
-            template_name="auth/login.html"
-        ), 
-        name='login'
-    ),
+            template_name='auth/login.html'
+        ),
+        name='login'),
     path(
-        'register/', 
+        'register/',
         AuthRegister.as_view(
-            template_name="auth/ragister.html"
+            template_name="auth/register.html"
         ),
         name='register'
     ),

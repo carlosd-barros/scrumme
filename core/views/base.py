@@ -10,3 +10,6 @@ logger = logging.getLogger(__name__)
 
 class Dashboard(TemplateView):
     template_name = 'core/index.html'
+
+class NotFoundView(TemplateView):
+    template_name = '404.html'

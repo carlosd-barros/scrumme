@@ -9,9 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="CYBERULBRA-2077">
-  <link rel="icon" href="./static/images/favicon.ico">
+  <link rel="icon" href="{% static 'images/favicon.ico' %}">
 
-  <title>ScrumMe &raquo; Dashboard</title>
+  <title>ScrumMe &raquo; {% block title %}{% endblock title %}</title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static 'custom/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -114,7 +114,7 @@
             <a class="collapse-item" href="#">Forgot Password</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="#">404 Page</a>
+            <a class="collapse-item" href="{% url 'core:404' %}">404 Page</a>
             <a class="collapse-item" href="#">Blank Page</a>
           </div>
         </div>
@@ -255,6 +255,8 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+                {% if user.is_authenticated %}
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
@@ -268,10 +270,33 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{% url 'auth:logout' %}" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
+
+                {% if user.is_superuser %}
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Admin
+                </a>
+                {% endif %}
+
+                {% else %}
+                <a class="dropdown-item" href="{% url 'auth:login' %}">
+                  <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Login
+                </a>
+                <a class="dropdown-item" href="{% url 'auth:register' %}">
+                    <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Register
+                  </a>
+                {% endif %}
+
+                
+                  
+
+                  
               </div>
             </li>
 
@@ -321,14 +346,14 @@
         <div class="modal-body">Selecione o botão de "Logout" a baixo para encerrar sua sessão.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Calcelar</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="{% url 'auth:logout' %}">Logout</a>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src=" {% static 'custom/vendor/jquery/jquery.min.js' %} "></script>
+  <script src="{% static 'custom/vendor/jquery/jquery.min.js' %} "></script>
   <script src="{% static 'custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Core plugin JavaScript-->
