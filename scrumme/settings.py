@@ -147,7 +147,7 @@ LOGOUT_URL = "/auth/logout/"
 # Auth
 LOGIN_REDIRECT_URL = 'core:dashboard'
 
-LOGOUT_REIRECT_URL = 'auth:login'
+LOGOUT_REDIRECT_URL = 'core:dashboard'
 
 # E-mail
 # https://docs.djangoproject.com/en/2.0/topics/email/

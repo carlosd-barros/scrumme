@@ -4,9 +4,7 @@ from django.conf import settings
 from django.urls import path, include
 from django.urls.base import reverse_lazy
 from django.conf.urls.static import static
-from django.views.generic.base import (
-    RedirectView,
-)
+from django.views.generic.base import RedirectView
 
 from django.contrib import admin
 
@@ -28,10 +26,20 @@ urlpatterns = [
     path(
         'auth/',
         include(
-            'accounts.urls',
+            (
+                'django.contrib.auth.urls', 
+                'auth'
+            ), 
             namespace='auth'
+        )
+    ),
+    path(
+        'accounts/',
+        include(
+            'accounts.urls',
+            namespace='accounts'
         ),
-        name='auth'
+        name='accounts'
     ),
     path(
         'core',
@@ -48,12 +56,12 @@ urlpatterns += static(
     document_root=settings.MEDIA_ROOT
 )
 
-urlpatterns += [
-    path(
-        'favicon.ico',
-        RedirectView.as_view(
-            url='/static/images/favicon.ico',
-            permanent=True
-        )
-    )
-]
+# urlpatterns += [
+#     path(
+#         'favicon.ico',
+#         RedirectView.as_view(
+#             url='/static/images/favicon.ico',
+#             permanent=True
+#         )
+#     )
+# ]

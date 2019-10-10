@@ -22,7 +22,7 @@
 
   <!-- css specifique page -->
   {% block page-css %}{% endblock page-css %}
-    
+
 
 </head>
 
@@ -276,7 +276,7 @@
                 </a>
 
                 {% if user.is_superuser %}
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="admin/" target="_blank">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Admin
                 </a>
@@ -287,16 +287,13 @@
                   <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Login
                 </a>
-                <a class="dropdown-item" href="{% url 'auth:register' %}">
+                <a class="dropdown-item" href="{% url 'accounts:register' %}">
                     <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Register
                   </a>
                 {% endif %}
 
-                
-                  
 
-                  
               </div>
             </li>
 
@@ -305,9 +302,14 @@
         <!-- End Topbar -->
         
         <!-- Main Content -->
-        {% block main-content %}
-          
-        {% endblock main-content %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% block main-content %}{% endblock main-content %}
 
       </div>
       <!-- End of Main Content -->

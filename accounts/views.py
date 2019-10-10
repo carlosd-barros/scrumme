@@ -1,31 +1,45 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.urls.base import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, View
+from django.contrib import messages
 from django.contrib.auth.forms import (
     UserCreationForm, 
     UserChangeForm, 
     AuthenticationForm
 )
+from .forms import AuthRegisterForm
 from django.contrib import messages
 
-class RegisterView(FormView):
-    form_class = UserCreationForm
+import logging
+
+logger = logging.getLogger(__name__)
+
+class AuthRegisterView(FormView):
+    form_class = AuthRegisterForm
     template_name = 'auth/register.html'
+    sucess_url = 'auth:login'
 
     def form_valid(self, form):
         if self.request.method == "POST":
-            form = UserCreationForm(self.request.POST)
+            logger.debug('tá funfando')
+            form = AuthRegisterForm(self.request.POST)
             if form.is_valid():
-                username = self.request.user.username
+                form.save()
+                first_name = form.cleaned_data.get('first_name').capitalize()
+                messages.success(
+                    self.request, 
+                    f'{first_name}, sua conta foi criada com sucesso!'
+                )
         else:
+            logger.debug('deu ruim man')
             form = UserCreationForm()
 
         return super(
-            RegisterView, self).form_valid(form)
+            AuthRegisterView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('auth:login')
+        return reverse(self.sucess_url)
 
 class AuthLoginView(FormView):
     form_class = AuthenticationForm
@@ -45,7 +59,4 @@ class AuthLoginView(FormView):
         return reverse('core:dashboard')
 
 class AuthLogout(FormView):
-    pass
-
-class AuthRegister(FormView):
     pass

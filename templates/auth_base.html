@@ -21,7 +21,7 @@
   <link href="{% static 'custom/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
   <!-- css specifique page -->
-  {% block page-css %}{% endblock page-css %}
+  {% block css-page %}{% endblock css-page %}
 
 </head>
 
@@ -40,7 +40,7 @@
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">
-                      {% block title-h1 %}{% endblock title-h1 %}
+                      {% block page-title %}{% endblock page-title %}
                     </h1>
                   </div>
 
@@ -66,11 +66,19 @@
                   </div>
                   {% endif %}
 
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+
                   <form class="user" method="POST"> {% csrf_token %}
                     {% block main-content %}{% endblock main-content %}
 
-                    {% block extra-content %}{% endblock extra-content %}
                   </form>
+                  {% block extra-content %}{% endblock extra-content %}
 
                   </div>
                 </div>
@@ -102,7 +110,7 @@
   <script src="{% static 'custom/js/sb-admin-2.min.js' %}"></script>
 
   <!-- Js specifique page -->
-  {% block page-js %}{% endblock page-js %}
+  {% block js-page %}{% endblock js-page %}
 
 </body>
 
