@@ -23,10 +23,18 @@
   <!-- css specifique page -->
   {% block page-css %}{% endblock page-css %}
 
-
+  
+  
 </head>
 
 <body id="page-top">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -191,7 +199,9 @@
                 </form>
               </div>
             </li>
-
+            
+            
+            {% if user.is_authenticated %}
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -244,15 +254,36 @@
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>
             </li>
+            {% endif %}
+              
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
+              {% if user.is_authenticated %}
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">keanu Brabor</span>
-                <img class="img-profile rounded-circle" src="https://i.ibb.co/DM2XPHc/FotoJet.png">
-              </a>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    {{ user.username }}
+                  </span>
+                  
+                  {% if pessoa %}
+                    <img class="img-profile rounded-circle" src="{{ pessoa.image.url }}">
+                  {% else %}
+                    <img class="img-profile rounded-circle" src="/media/profile01.svg">
+                  {% endif %}
+
+                </a>
+              {% else %}
+              <div class="nav-link dropdown-toggle">
+                <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'auth:login' %}">
+                  Login
+                </a>
+                <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:register' %}">
+                  Register
+                </a>
+              </div>
+              {% endif %}
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 

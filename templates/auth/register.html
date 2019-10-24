@@ -3,29 +3,31 @@
 
 
 {% block title %}Register{% endblock title %}
-  
+
 
 {% block main-content %}
-{{ form|crispy }}
-<!-- <div class="form-group row">
-  <div class="col-sm-6 mb-3 mb-sm-0">
-    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
-  </div>
-  <div class="col-sm-6">
-    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
-  </div>
-</div>
 <div class="form-group">
-  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+  <input type="text" class="form-control form-control-user" id="{{ form.username.auto_id }}" name="{{ form.username.name }}" placeholder="{{ form.username.label }}" required="">
 </div>
 <div class="form-group row">
   <div class="col-sm-6 mb-3 mb-sm-0">
-    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+    <input type="text" class="form-control form-control-user" id="{{ form.first_name.auto_id }}" name="{{ form.first_name.name }}" placeholder="{{ form.first_name.label }}" required="">
   </div>
   <div class="col-sm-6">
-    <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+    <input type="text" class="form-control form-control-user" id="{{ form.last_name.auto_id }}" name="{{ form.last_name.name }}" placeholder="{{ form.last_name.label }}" required="">
   </div>
-</div> -->
+</div>
+<div class="form-group">
+  <input type="email" class="form-control form-control-user" id="{{ form.email.auto_id }}" name="{{ form.email.name }}" placeholder="{{ form.email.label }}" required="">
+</div>
+<div class="form-group row">
+  <div class="col-sm-6 mb-3 mb-sm-0">
+    <input type="password" class="form-control form-control-user" id="{{ form.password1.auto_id }}" name="{{ form.password1.name }}" placeholder="{{ form.password1.label }}" required="">
+  </div>
+  <div class="col-sm-6">
+    <input type="password" class="form-control form-control-user" id="{{ form.password2.auto_id }}" name="{{ form.password2.name }}" placeholder="{{ form.password2.label }}" required="">
+  </div>
+</div>
 <button class="btn btn-primary btn-user btn-block" type="submit">Register Account</button>
 <hr>
 <a href="#" class="btn btn-google btn-user btn-block">

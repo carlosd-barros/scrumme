@@ -10,6 +10,7 @@ class LoginForm(forms.Form):
 
 
 class AuthRegisterForm(UserCreationForm):
+
     class Meta:
         model = User
         fields = [
