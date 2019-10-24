@@ -9,7 +9,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View, TemplateView
 
 
-from accounts.models import Pessoa
+from accounts.models import Jogador
 
 logger = logging.getLogger(__name__)
 
@@ -17,10 +17,10 @@ class DashboardView(TemplateView):
     template_name = 'core/index.html'
 
     def get_context_data(self, **kwargs):
-        pessoa = None
+        player = None
 
         if self.request.user.is_authenticated:
-            pessoa = Pessoa.objects.get_or_create(
+            player = Jogador.objects.get_or_create(
                 user=self.request.user,
                 defaults={
                     'user':self.request.user,
@@ -29,7 +29,7 @@ class DashboardView(TemplateView):
             )[0]
 
         kwargs.update({
-            'pessoa': pessoa
+            'pessoa': player
         })
 
         return super(

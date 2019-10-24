@@ -16,8 +16,8 @@ class Jogador(models.Model):
     updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
 
     class Meta:
-        verbose_name='Pessoa'
-        verbose_name_plural='Pessoas'
+        verbose_name='Jogador'
+        verbose_name_plural='Jogador'
 
     def __str__(self):
         return self.name
