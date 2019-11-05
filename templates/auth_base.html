@@ -51,7 +51,20 @@
     </div>
     {% endif %}
     <!-- end form errors -->
-    
+  {% if messages %}
+    <div class="innerLR">
+      {% for message in messages %}
+        {% if message.tags %}
+          {% if message.tags == 'error' %}
+            <div class="alert alert-danger">{{ message }}</div>
+          {% else %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
     <!-- main block content -->
     
     {% block main %}

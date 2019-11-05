@@ -2,10 +2,11 @@
 
 {% block title %}Dashboard{% endblock title %}
 
-{% block main-content %}
+{% block main %}
 <!-- content section -->
 
 <h2>Suas equipes</h2>
+<hr/>
 {% for equipe in equipes %}
 <article class="media content-section">
     <div class="media-body">
@@ -27,7 +28,9 @@
 
 {% endfor %}
 
+<br/>
 <h2>Suas quests</h2>
+<hr/>
 {% for quest in quests %}
 <article class="media content-section">
     <div class="media-body">
@@ -49,4 +52,4 @@
 
 {% endfor %}
 
-{% endblock main-content %}
+{% endblock main %}

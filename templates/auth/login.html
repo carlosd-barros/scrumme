@@ -15,13 +15,6 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Seja bem vindo!</h1>
               </div>
-              {% if messages %}
-                {% for message in messages %}
-                  <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                  </div>
-                {% endfor %}
-              {% endif %}
               <form class="user" method="POST"> {% csrf_token %}
                 <div id="div_id_username" class="form-group"> 
                   <div class=""> 

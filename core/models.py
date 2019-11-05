@@ -39,26 +39,25 @@ class Jogador(models.Model):
         null=True
     )
     points = models.IntegerField("Scrum points", default=0)
-    avatar = models.ImageField(default='profile01.svg', upload_to='profile_pics')
+    avatar = models.ImageField(default='profile_pics/default.svg', upload_to='profile_pics')
     active = models.BooleanField(default=True)
     created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
     updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.upper()
+
+        return super(
+            Jogador, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name='Jogador'
         verbose_name_plural='Jogadores'
 
     def __str__(self):
-        if not self.classe or not self.type:
-            return  f"{self.user.username} - " \
-                f"pontos: {self.points} - " \
-                f"ativo: {self.active}"
-
-        return  f"{self.user.username} - " \
-                f"classe: {self.classe.name} - " \
-                f"tipo: {self.type} - " \
-                f"pontos: {self.points} - " \
-                f"ativo: {self.active}"
+        if self.name:
+            return self.name
+        return self.user.username
 
 
 class Equipe(models.Model):
