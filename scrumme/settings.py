@@ -147,7 +147,7 @@ LOGOUT_URL = "/auth/logout/"
 # Auth
 LOGIN_REDIRECT_URL = 'core:dashboard'
 
-LOGOUT_REDIRECT_URL = 'core:dashboard'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 # E-mail
 # https://docs.djangoproject.com/en/2.0/topics/email/
@@ -166,6 +166,11 @@ EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
 AWS_S3_FILE_OVERWWRITE = False
 
 AWS_DEFAULT_ACL = None
+
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-age
+SESSION_COOKIE_AGE = 3600
+
 
 # Configure Django App for Heroku.
 # https://github.com/heroku/django-heroku

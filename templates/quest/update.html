@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update{% endblock title %}
+
+{% block css %} {% endblock css %}
+
+
+{% block main %}
+
+<form action="." method="POST">
+    {{form|crispy}}
+</form>
+
+{% endblock main %}
+
+
+{% block js %} {% endblock js %}
+

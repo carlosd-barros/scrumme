@@ -1,34 +1,111 @@
 from django.db import models
-from accounts.models import Jogador
+from .choices import JogadorType
+from django.contrib.auth.models import User
 
 
-class Equipe(models.Model):
-    name = models.CharField('Nome da equipe', max_length=70)
-    product_owner = models.ForeignKey(
-        Jogador,
+class Classe(models.Model):
+    name = models.CharField("Classe", max_length=50)
+    min_points = models.IntegerField("Minimos pontos")
+    max_points = models.IntegerField("Maximo de pontos", blank=True, null=True)
+
+    class Meta:
+        verbose_name='Classe'
+        verbose_name_plural='Classes'
+
+    def __str__(self):
+        return self.name
+
+class Jogador(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        "Nome Completo",
+        max_length=150,
+    )
+    classe = models.ForeignKey(
+        Classe,
         null=True,
         blank=True,
-        on_delete=models.PROTECT,
-        verbose_name="Product Owner",
-        related_name='jogador_product_owner'
+        verbose_name="Classe",
+        on_delete=models.PROTECT
     )
-    scrum_master = models.ForeignKey(
-        Jogador,
-        null=True,
+    type = models.IntegerField(
+        'Tipo de jogador',
+        choices=JogadorType.choices(),
+        default=JogadorType.COMUM.code,
         blank=True,
-        on_delete=models.PROTECT,
-        verbose_name="Scrum Master",
-        related_name='jogador_scrum_master'
+        null=True
     )
-    dev_team = models.ManyToManyField(Jogador, verbose_name="Dev Team")
+    points = models.IntegerField("Scrum points", default=0)
+    avatar = models.ImageField(default='profile01.svg', upload_to='profile_pics')
     active = models.BooleanField(default=True)
     created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
     updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
 
+    class Meta:
+        verbose_name='Jogador'
+        verbose_name_plural='Jogadores'
+
+    def __str__(self):
+        if not self.classe or not self.type:
+            return  f"{self.user.username} - " \
+                f"pontos: {self.points} - " \
+                f"ativo: {self.active}"
+
+        return  f"{self.user.username} - " \
+                f"classe: {self.classe.name} - " \
+                f"tipo: {self.type} - " \
+                f"pontos: {self.points} - " \
+                f"ativo: {self.active}"
+
+
+class Equipe(models.Model):
+    name = models.CharField('Nome da equipe', max_length=100)
+    lider = models.ForeignKey(
+        Jogador,
+        null=True,
+        blank=True,
+        verbose_name="Lider da equipe",
+        related_name="lider",
+        on_delete=models.PROTECT
+    )
+    team = models.ManyToManyField(
+        Jogador,
+        blank=True,
+        verbose_name="Time",
+        related_name="team"
+    )
+    active = models.BooleanField(default=True)
+    created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
+    updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
 
     class Meta:
         verbose_name="Equipe"
         verbose_name_plural="Equipes"
+
+    def __str__(self):
+        return self.name
+
+class Quest(models.Model):
+    name = models.CharField("Nome", max_length=50)
+    jogador = models.ForeignKey(
+        Jogador,
+        null=True,
+        blank=True,
+        verbose_name="Responsável",
+        on_delete=models.PROTECT
+    )
+    init_date = models.DateField("Inicio")
+    end_date = models.DateField("Fim", null=True, blank=True)
+    points = models.IntegerField("Quantidade de pontos")
+    description = models.TextField("Descrição")
+    created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name='Quest'
+        verbose_name_plural='Quests'
 
     def __str__(self):
         return self.name

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}List{% endblock title %}
+
+{% block css %} {% endblock css %}
+
+{% block main %}
+
+<h1>List equipe view</h1>
+<ul>
+  {% for classe in object_list %}
+    <li>
+      {{classe}}
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock main %}
+
+{% block js %} {% endblock js %}
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes{% endblock title %}
+
+
+{% block main-content %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <legend class="border-bottom mb-4">Profile</legend>
+      <small class="text-muted">O que tu quer hj, meu balaustre?</small>
+  <div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'core:jogador_update' object.pk %}">Atualizar</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Deletar</a>
+  </div>
+    </div>
+    <h2 class="article-title">Ficou top meu consagrado!</h2>
+    <p class="article-content">Ficou top meu consagrado!</p>
+  </div>
+</article>
+{% endblock main-content %}
+

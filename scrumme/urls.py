@@ -9,6 +9,7 @@ from django.views.generic.base import RedirectView
 from django.contrib import admin
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path(
         '',
         RedirectView.as_view(
@@ -20,20 +21,6 @@ urlpatterns = [
         name="home"
     ),
     path(
-        'admin/',
-        admin.site.urls
-    ),
-    path(
-        'auth/',
-        include(
-            (
-                'django.contrib.auth.urls', 
-                'auth'
-            ), 
-            namespace='auth'
-        )
-    ),
-    path(
         'accounts/',
         include(
             'accounts.urls',
@@ -42,7 +29,7 @@ urlpatterns = [
         name='accounts'
     ),
     path(
-        'core',
+        'core/',
         include(
             'core.urls',
             namespace='core'
@@ -51,17 +38,8 @@ urlpatterns = [
     ),
 ]
 
-urlpatterns += static(
-    settings.MEDIA_URL,
-    document_root=settings.MEDIA_ROOT
-)
-
-# urlpatterns += [
-#     path(
-#         'favicon.ico',
-#         RedirectView.as_view(
-#             url='/static/images/favicon.ico',
-#             permanent=True
-#         )
-#     )
-# ]
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

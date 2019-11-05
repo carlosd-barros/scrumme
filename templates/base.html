@@ -21,7 +21,7 @@
   <link href="{% static 'custom/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
   <!-- css specifique page -->
-  {% block page-css %}{% endblock page-css %}
+  {% block css %}{% endblock css %}
 
   
   
@@ -78,7 +78,6 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
             <a class="collapse-item" href="#">Buttons</a>
-            <a class="collapse-item" href="#">Cards</a>
           </div>
         </div>
       </li>
@@ -93,9 +92,6 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Utilities:</h6>
             <a class="collapse-item" href="#">Colors</a>
-            <a class="collapse-item" href="#">Borders</a>
-            <a class="collapse-item" href="#">Animations</a>
-            <a class="collapse-item" href="#">Other</a>
           </div>
         </div>
       </li>
@@ -117,13 +113,10 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="#">Login</a>
-            <a class="collapse-item" href="#">Register</a>
-            <a class="collapse-item" href="#">Forgot Password</a>
+            <a class="collapse-item" href="{% url 'accounts:password_reset' %}">Resetar senha</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>
             <a class="collapse-item" href="{% url 'core:404' %}">404 Page</a>
-            <a class="collapse-item" href="#">Blank Page</a>
           </div>
         </div>
       </li>
@@ -201,15 +194,15 @@
             </li>
             
             
-            {% if user.is_authenticated %}
-            <!-- Nav Item - Alerts -->
+            <!-- {% if user.is_authenticated %}
+
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
+
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
-              <!-- Dropdown - Alerts -->
+
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
@@ -229,14 +222,14 @@
               </div>
             </li>
 
-            <!-- Nav Item - Messages -->
+
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
+
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
-              <!-- Dropdown - Messages -->
+
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
@@ -254,10 +247,10 @@
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>
             </li>
-            {% endif %}
+            <div class="topbar-divider d-none d-sm-block"></div>
+            {% endif %} -->
               
 
-            <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
@@ -266,17 +259,11 @@
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                     {{ user.username }}
                   </span>
-                  
-                  {% if pessoa %}
-                    <img class="img-profile rounded-circle" src="{{ pessoa.image.url }}">
-                  {% else %}
-                    <img class="img-profile rounded-circle" src="/media/profile01.svg">
-                  {% endif %}
-
+                  <img class="img-profile rounded-circle" src="{{ user.jogador.avatar.url }}">
                 </a>
               {% else %}
               <div class="nav-link dropdown-toggle">
-                <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'auth:login' %}">
+                <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:login' %}">
                   Login
                 </a>
                 <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:register' %}">
@@ -288,33 +275,25 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
                 {% if user.is_authenticated %}
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{% url 'core:jogador_details' user.pk %}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'auth:logout' %}" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{% url 'accounts:logout' %}" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
 
                 {% if user.is_superuser %}
-                <a class="dropdown-item" href="admin/" target="_blank">
+                <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Admin
                 </a>
                 {% endif %}
 
                 {% else %}
-                <a class="dropdown-item" href="{% url 'auth:login' %}">
+                <a class="dropdown-item" href="{% url 'accounts:login' %}">
                   <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Login
                 </a>
@@ -323,7 +302,6 @@
                     Register
                   </a>
                 {% endif %}
-
 
               </div>
             </li>
@@ -340,7 +318,13 @@
             </div>
           {% endfor %}
         {% endif %}
-        {% block main-content %}{% endblock main-content %}
+        <div class="container">
+          <div class="row">
+
+            {% block main-content %}{% endblock main-content %}
+
+          </div>
+        </div>
 
       </div>
       <!-- End of Main Content -->
@@ -379,7 +363,7 @@
         <div class="modal-body">Selecione o botão de "Logout" a baixo para encerrar sua sessão.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Calcelar</button>
-          <a class="btn btn-primary" href="{% url 'auth:logout' %}">Logout</a>
+          <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
         </div>
       </div>
     </div>
@@ -403,7 +387,7 @@
   <script src="{% static 'custom/js/demo/chart-pie-demo.js' %}"></script>
 
   <!-- Js specifique page -->
-  {% block page-js %}{% endblock page-js %}
+  {% block js %}{% endblock js %}
 
 </body>
 </html>

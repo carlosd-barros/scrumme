@@ -1,10 +1,11 @@
 import logging
+
 from django.urls import reverse
+from django.db import transaction
 from django.shortcuts import render
 from django.urls.base import reverse_lazy
 
 from django.views.generic import FormView, View
-from django.contrib import messages
 from django.contrib import messages
 
 from .forms import AuthRegisterForm
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 class AuthRegisterView(FormView):
     form_class = AuthRegisterForm
     template_name = 'auth/register.html'
-    sucess_url = 'auth:login'
+    sucess_url = 'accounts:login'
 
     def form_valid(self, form):
         if self.request.method == "POST":

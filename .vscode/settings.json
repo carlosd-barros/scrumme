@@ -11,7 +11,7 @@
         "--load-plugin",
         "pylint_django",
     ],
-    "python.pythonPath": "/home/carlos/.pyenv/versions/3.7.4/envs/scrumme-3.7/bin/python",
+    "python.pythonPath": "~/.pyenv/versions/3.7.4/envs/scrumme-3.7/bin/python",
     "python.autoComplete.extraPaths": [
         "${workspaceRoot}"
     ],

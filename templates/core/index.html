@@ -3,9 +3,50 @@
 {% block title %}Dashboard{% endblock title %}
 
 {% block main-content %}
-    <div class="container">
-        <div class="row">
-            <h1>Hello world core</h1>
+<!-- content section -->
+
+<h2>Suas equipes</h2>
+{% for equipe in equipes %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">
+                <legend >Equipe  {{ equipe.name|capfirst }}</legend>
+            </a>
+            <small class="text-muted"> Equipe criada em {{ equipe.created|date:'d/m/Y' }}</small>
+        </div>
+        <div class="post">
+            <p>Última alteração em {{ equipe.updated|date:'d/m/Y' }}.
+            <br>Clique <a href="#">aqui</a> para mais detalhes!</p>
         </div>
     </div>
+</article>
+{% empty %}
+
+<p>Parece que você não possui equipes cadastrados! <br>
+
+{% endfor %}
+
+<h2>Suas quests</h2>
+{% for quest in quests %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">
+                <legend >Quest  {{ quest.name|capfirst }}</legend>
+            </a>
+            <small class="text-muted"> Quest criada em {{ quest.created|date:'d/m/Y' }}</small>
+        </div>
+        <div class="post">
+            <p>Última alteração em {{ quest.updated|date:'d/m/Y' }}.
+            <br>Clique <a href="#">aqui</a> para mais detalhes!</p>
+        </div>
+    </div>
+</article>
+{% empty %}
+
+<p>Parece que você não possui quests cadastrados! <br>
+
+{% endfor %}
+
 {% endblock main-content %}
