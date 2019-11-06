@@ -7,10 +7,12 @@
 
 
 {% block main %}
-<h1>Create quest view</h1>
+<h1>Criar Quest</h1>
 
 <form action="." method="POST">
+    {% csrf_token %}
     {{form|crispy}}
+    <input type="submit" class="btn btn-primary" style="float:right" value="Criar Quest" >
 </form>
 
 {% endblock main %}

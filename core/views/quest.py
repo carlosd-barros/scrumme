@@ -1,7 +1,7 @@
 import logging
 
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http.response import HttpResponse, HttpResponseRedirect
 
 from django.db.models import Q
@@ -37,6 +37,10 @@ class QuestCreateView(CreateView):
         "init_date", "end_date",
         "points", "description"
     ]
+    def form_valid(self, form):
+        quest = form.save(commit=False)
+        quest.save()
+        return redirect('core:dashboard')
 
 
 class QuestDetailView(DetailView):
