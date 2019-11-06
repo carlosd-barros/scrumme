@@ -11,7 +11,7 @@
         "--load-plugin",
         "pylint_django",
     ],
-    "python.pythonPath": "~/.pyenv/versions/3.7.4/envs/projects/bin/python",
+    "python.pythonPath": "/home/carlos/.pyenv/versions/3.7.4/envs/scrumme-3.7/bin/python",
     "python.autoComplete.extraPaths": [
         "${workspaceRoot}"
     ],
@@ -21,4 +21,11 @@
     ],
     "terminal.integrated.shell.linux": null,
     "git.ignoreLimitWarning": true,
+    "python.linting.enabled": true,
+    "files.associations": {
+        "**/templates/*.html": "django-html",
+        "**/templates/*": "django-txt",
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "emmet.includeLanguages": {"django-html": "html"},
 }
