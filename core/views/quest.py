@@ -26,7 +26,7 @@ class QuestListView(ListView):
     model = Quest
     template_name = "quest/list.html"
     ordering = ["name"]
-    paginated_by = 5
+    paginate_by = 5
 
 
 class QuestCreateView(CreateView):

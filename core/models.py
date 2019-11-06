@@ -7,6 +7,7 @@ class Classe(models.Model):
     name = models.CharField("Classe", max_length=50)
     min_points = models.IntegerField("Minimos pontos")
     max_points = models.IntegerField("Maximo de pontos", blank=True, null=True)
+    active = models.BooleanField('Ativo')
 
     class Meta:
         verbose_name='Classe'

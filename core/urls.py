@@ -44,28 +44,28 @@ urlpatterns = [
     # Quest
     path(
         'quest/list/',
-        EquipeListView.as_view(),
-        name='equipe_list'
+        QuestListView.as_view(),
+        name='quest_list'
     ),
     path(
         'quest/create/',
-        EquipeCreateView.as_view(),
-        name='equipe_create'
+        QuestCreateView.as_view(),
+        name='quest_create'
     ),
     path(
         'quest/<int:pk>/delete/',
-        EquipeDeleteView.as_view(),
-        name='equipe_delete'
+        QuestDeleteView.as_view(),
+        name='quest_delete'
     ),
     path(
         'quest/<int:pk>/detail/',
-        EquipeDetailView.as_view(),
-        name='equipe_detail'
+        QuestDetailView.as_view(),
+        name='quest_detail'
     ),
     path(
         'quest//update',
-        EquipeUpdateView.as_view(),
-        name='equipe_update'
+        QuestUpdateView.as_view(),
+        name='quest_update'
     ),
 
 

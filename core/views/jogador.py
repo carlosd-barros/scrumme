@@ -26,7 +26,7 @@ class JogadorListView(ListView):
     model = Jogador
     template_name = "jogador/list.html"
     ordering = ["name"]
-    paginated_by = 5
+    paginate_by = 5
 
 
 class JogadorCreateView(CreateView):

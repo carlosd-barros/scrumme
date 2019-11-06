@@ -27,7 +27,20 @@ class EquipeListView(LoginRequiredMixin, ListView):
     model = Equipe
     template_name = "equipe/list.html"
     ordering = ["name"]
-    paginated_by = 5
+    paginate_by = 5
+    permission_denied_message = (
+        'Você não possui permissão de acesso.'
+    )
+
+    def get_queryset(self):
+        queryset = super(EquipeListView, self).get_queryset()
+        integrante = self.request.user.jogador
+        queryset = queryset.filter(
+            Q(lider=integrante) |
+            Q(team__in=[integrante])
+        )
+
+        return queryset
 
 class EquipeCreateView(LoginRequiredMixin, CreateView):
     model = Equipe
@@ -37,7 +50,6 @@ class EquipeCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         if self.request.method == 'POST':
-            data = form.cleaned_data
             if form.is_valid():
                 form.save()
                 messages.success(
