@@ -6,15 +6,17 @@
 
 {% block main %}
 
-<h1>List quest view</h1>
-<ul>
-  {% for classe in object_list %}
-    <li>
-      {{classe}}
-    </li>
-  {% endfor %}
-</ul>
-
+<h1>Lista de Quests:</h1>
+<div class="card">
+  <ul class="list-group">
+    {% for classe in object_list %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{classe}}
+        <span class="badge badge-primary badge-pill">{{classe.points}}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock main %}
 
 {% block js %} {% endblock js %}
