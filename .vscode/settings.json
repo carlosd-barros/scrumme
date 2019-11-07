@@ -11,7 +11,7 @@
         "--load-plugin",
         "pylint_django",
     ],
-    "python.pythonPath": "/usr/bin/python",
+    "python.pythonPath": "/home/defensoria/.pyenv/versions/projects/bin/python",
     "python.autoComplete.extraPaths": [
         "${workspaceRoot}"
     ],
