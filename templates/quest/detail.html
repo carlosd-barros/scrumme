@@ -7,7 +7,32 @@
 
 {% block main %}
 
-<p>Detail quest view {{object}}</p>
+<div class="row">
+  <div class="col-xl-12 col-lg-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Detalhes</h5>
+      </div>
+      <div class="card-body">
+        <p> <strong>Nome:</strong> {{ object.name|upper }}</p>
+        <p><strong>Responsáveis:</strong><br>
+        <ul>
+          {% for integrante in object.responsaveis.all %}
+            <li>
+              {{ integrante.name }}
+            </li>
+          {% endfor %}
+        </ul>
+        </p>
+        <p> <strong> Inicio previsto para:</strong> {{ object.init_date }}</p>
+        <p> <strong> Conclusão prevista para:</strong> {{ object.end_date }}</p>
+        <p> <strong> Pontos por conclusão:</strong> {{ object.points }}</p>
+        <p> <strong> Criado em:</strong>{{ object.created }}</p>
+        <p> <strong> Última alteração em:</strong> {{ object.updated }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock main %}
 

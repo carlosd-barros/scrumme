@@ -7,7 +7,24 @@
 
 {% block main %}
 
-<h1>Delete quest view</h1>
+<div class="row">
+  <div class="col-xl-12 col-lg-4">
+      <div class="card shadow border-bottom-danger">
+      <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Deletar</h5>
+      </div>
+        <div class="card-body">
+          <h2>Deseja deletar a quest "{{ object.name|capfirst }}"?</h2>
+          <form method="POST"> {% csrf_token %}
+            <div class="form-group">
+              <a href="{% url 'core:quest_list' %}" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">Cancelar</a>
+              <button class="btn btn-outline-danger btn-sm" type="submit">Sim, quero deletar!</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
 
 {% endblock main %}
 

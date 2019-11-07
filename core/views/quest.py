@@ -25,15 +25,16 @@ logger = logging.getLogger(__name__)
 class QuestListView(ListView):
     model = Quest
     template_name = "quest/list.html"
-    ordering = ["name"]
+    ordering = ["-created"]
     paginate_by = 5
 
 
 class QuestCreateView(CreateView):
     model = Quest
     template_name = "quest/create.html"
+    success_url = reverse_lazy('core:quest_list')
     fields = [
-        "name", "jogador",
+        "name", "responsaveis",
         "init_date", "end_date",
         "points", "description"
     ]
@@ -51,13 +52,15 @@ class QuestDetailView(DetailView):
 class QuestDeleteView(DeleteView):
     model = Quest
     template_name = "quest/delete.html"
+    success_url = reverse_lazy('core:quest_list')
 
 
 class QuestUpdateView(UpdateView):
     model = Quest
     template_name = "quest/update.html"
+    success_url = reverse_lazy('core:quest_list')
     fields = [
-        "name", "jogador",
+        "name", "responsaveis",
         "init_date", "end_date",
         "points", "description"
     ]

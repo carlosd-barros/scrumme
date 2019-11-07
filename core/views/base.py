@@ -52,23 +52,16 @@ class DashboardView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        player = None
+        if self.request.user.is_authenticated:
+            player = self.request.user.jogador
 
-        player = Jogador.objects.filter(
-            active=True,
-            user__exact=self.request.user
+        context['equipes'] = Equipe.objects.filter(
+            team__in=[player]
         )
-        print('primeiro', player)
-        equipes = Equipe.objects.filter(
-            team__in=player
+        context['quests'] = Quest.objects.filter(
+            responsaveis__in=[player]
         )
-        print('segundo', equipes)
-        quests = Quest.objects.filter(
-            jogador__exact=player.first()
-        )
-        print('ultimo', quests)
-
-        context['equipes'] = equipes
-        context['quests'] = quests
 
         return context
 

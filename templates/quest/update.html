@@ -8,9 +8,24 @@
 
 {% block main %}
 
-<form action="." method="POST">
-    {{form|crispy}}
-</form>
+<div class="row">
+  <div class="col-xl-12 col-lg-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Editar quest - {{ object.name|upper }}</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST"> {% csrf_token %}
+          {{ form|crispy }}
+          <div class="form-group text-right">
+            <a href="{% url 'core:equipe_list' %}" class="btn btn-outline-danger btn-sm" role="button" aria-pressed="true">Cancelar</a>
+            <button class="btn btn-outline-success btn-sm" type="submit" role="button" aria-pressed="true">Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock main %}
 

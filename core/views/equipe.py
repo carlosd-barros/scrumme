@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class EquipeListView(LoginRequiredMixin, ListView):
     model = Equipe
     template_name = "equipe/list.html"
-    ordering = ["name"]
+    ordering = ["-created"]
     paginate_by = 5
 
     def get_queryset(self):

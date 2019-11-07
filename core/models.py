@@ -90,18 +90,18 @@ class Equipe(models.Model):
 
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=50)
-    responsaveis = models.ForeignKey(
+    responsaveis = models.ManyToManyField(
         Jogador,
-        null=True,
         blank=True,
-        verbose_name="Responsável",
-        on_delete=models.PROTECT
+        verbose_name="Responsáveis",
     )
     init_date = models.DateField("Inicio")
     end_date = models.DateField("Fim", null=True, blank=True)
     points = models.IntegerField("Quantidade de pontos")
     description = models.TextField("Descrição")
+    active = models.BooleanField("Ativo", default=True)
     created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
+    updated = models.DateTimeField("Atualizado em", auto_now=True, null=True)
 
     class Meta:
         verbose_name='Quest'
