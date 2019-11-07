@@ -28,9 +28,6 @@ class EquipeListView(LoginRequiredMixin, ListView):
     template_name = "equipe/list.html"
     ordering = ["name"]
     paginate_by = 5
-    permission_denied_message = (
-        'Você não possui permissão de acesso.'
-    )
 
     def get_queryset(self):
         queryset = super(EquipeListView, self).get_queryset()
@@ -38,7 +35,7 @@ class EquipeListView(LoginRequiredMixin, ListView):
         queryset = queryset.filter(
             Q(lider=integrante) |
             Q(team__in=[integrante])
-        )
+        ).distinct()
 
         return queryset
 
@@ -67,21 +64,35 @@ class EquipeCreateView(LoginRequiredMixin, CreateView):
             EquipeCreateView, self).form_valid(form)
 
 
-class EquipeDetailView(DetailView):
+class EquipeDetailView(LoginRequiredMixin, DetailView):
     model = Equipe
     template_name = "equipe/detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(EquipeDetailView, self).get_context_data(**kwargs)
+        context['quests'] = Quest.objects.filter(
+            
+        )
 
-class EquipeDeleteView(DeleteView):
+        return context
+
+
+class EquipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Equipe
+    success_url = reverse_lazy('core:equipe_list')
     template_name = "equipe/delete.html"
 
 
-class EquipeUpdateView(UpdateView):
+class EquipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Equipe
     template_name = "equipe/update.html"
+    success_url = reverse_lazy('core:equipe_list')
     fields = [
-        "name", "jogador",
-        "init_date", "end_date",
-        "points", "description"
+        'lider', 'team'
     ]
+
+    def test_func(self):
+        equipe = self.get_object()
+        if self.request.object == equipe:
+            return True
+        return False
