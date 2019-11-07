@@ -90,7 +90,7 @@ class Equipe(models.Model):
 
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=50)
-    jogador = models.ForeignKey(
+    responsaveis = models.ForeignKey(
         Jogador,
         null=True,
         blank=True,
