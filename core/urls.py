@@ -40,6 +40,11 @@ urlpatterns = [
         JogadorUpdateView.as_view(),
         name='jogador_update'
     ),
+    path(
+        'profile/<int:pk>/delete/',
+        JogadorDeleteView.as_view(),
+        name='jogador_delete'
+    ),
 
     # Quest
     path(
