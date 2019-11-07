@@ -20,8 +20,8 @@
       {% endfor %}
     </fieldset>
     <div class="form-group">
-      <input class="btn btn-outline-primary" type="submit" value="Salvar">
-      <a href= "{% url 'core:jogador_details' object.pk %}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Cancelar</a>
+      <a href= "{% url 'core:jogador_details' object.pk %}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Descartar</a>
+      <input class="btn btn-outline-primary" type="submit" value="Atualizar Profile">
     </div>
   </form>
 </div>

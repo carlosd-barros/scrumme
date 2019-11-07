@@ -8,15 +8,24 @@
   <div class="media-body">
     <div class="article-metadata">
       <legend class="border-bottom mb-4">Profile</legend>
-      <small class="text-muted">O que tu quer hj, meu balaustre?</small>
-  <div>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'core:jogador_update' object.pk %}">Atualizar</a>
-    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'core:jogador_delete' jogador.pk %}">Deletar</a>
-  </div>
     </div>
-    <h2 class="article-title">Ficou top meu consagrado!</h2>
-    <p class="article-content">Ficou top meu consagrado!</p>
   </div>
 </article>
+
+
+<div class="col-xl-5 col-lg-4">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h5 class="m-0 font-weight-bold text-primary"><a href="{% url 'core:jogador_update' object.pk %}">Atualizar</a></h5>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h5 class="m-0 font-weight-bold"><a href="{% url 'core:jogador_delete' jogador.pk %}" class=text-danger>Deletar</a></h5>
+    </div>
+  </div>
+</div>
+
 {% endblock main %}
 
