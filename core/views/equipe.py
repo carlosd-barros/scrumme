@@ -68,6 +68,14 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
     model = Equipe
     template_name = "equipe/detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(EquipeDetailView, self).get_context_data(**kwargs)
+        context['quests'] = Quest.objects.filter(
+            
+        )
+
+        return context
+
 
 class EquipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Equipe
