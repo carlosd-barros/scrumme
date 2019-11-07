@@ -15,5 +15,17 @@
 ```$ pip install -r requirements.txt``` \
 ```$ yarn install```
 
+## .env
+crie um arquivo .env no diretório base ou na pasta do projeto \
+
+> `DEBUG=True` \
+> `EMAIL_HOST = smtp.gmail.com` \
+> `EMAIL_USE_TLS=True` \
+> `EMAIL_PORT=587` \
+> `EMAIL_HOST_USER=your_user@gmail.com` \
+> `EMAIL_HOST_PASSWORD=your_password` \
+> `LOG_LEVEL=DEBUG` \
+> `SECRET_KEY=your_secret_key`
+
 ## link do site
 * https://scrum-me.herokuapp.com/
