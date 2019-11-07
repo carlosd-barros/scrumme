@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}Detail{% endblock title %}
 
-{% block css %} {% endblock css %}
-
-
 {% block main %}
 
-<div class="col-sm-8 text-left"> 
-  <h1>Welcome</h1>
-  <hr>
-  <h3>Test</h3>
-  <p></p>
+<div class="row">
+  <div class="col-xl-12 col-lg-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Detalhes</h6>
+      </div>
+      <div class="card-body">
+        <h5> Detalhes da equipe" - {{ object.name|capfirst }}"?</h5>
+          <div class="form-group">
+            <a class="text" href="{% url 'core:equipe_list' %}" aria-pressed="true">Voltar a lista de equipes</a>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock main %}
-
-
-{% block js %} {% endblock js %}
-

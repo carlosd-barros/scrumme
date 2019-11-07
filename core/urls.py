@@ -63,7 +63,7 @@ urlpatterns = [
         name='quest_detail'
     ),
     path(
-        'quest//update',
+        'quest/<int:pk>/update',
         QuestUpdateView.as_view(),
         name='quest_update'
     ),

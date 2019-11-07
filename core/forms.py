@@ -14,7 +14,7 @@ class EquipeCreateForm(forms.ModelForm):
     team = forms.ModelMultipleChoiceField(
         label='Integrantes do time',
         queryset=Jogador.objects.filter(active=True),
-        help_text='Mantenha precionado ctrl para celecionar vários'
+        help_text='Mantenha precionado ctrl para selecionar vários'
     )
 
     class Meta:

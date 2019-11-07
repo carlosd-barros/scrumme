@@ -204,7 +204,6 @@
         </nav>
         <!-- End Topbar -->
         
-        <!-- Main Content -->
           {% if messages %}
             <div class="innerLR">
               {% for message in messages %}
@@ -219,11 +218,9 @@
             </div>
           {% endif %}
         <div class="container">
-          {% comment %} <div class="row"> {% endcomment %}
 
             {% block main %}{% endblock main %}
 
-          {% comment %} </div> {% endcomment %}
         </div>
       </div>
       <!-- End of Main Content -->
