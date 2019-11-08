@@ -14,10 +14,10 @@
         <h5 class="m-0 font-weight-bold text-primary">Deletar</h5>
       </div>
         <div class="card-body">
-          <h2>Deseja deletar a quest "{{ object.name|capfirst }}"?</h2>
+          <h2>{{ object.name|capfirst }}, quer mesmo se deletar?</h2>
           <form method="POST"> {% csrf_token %}
             <div class="form-group">
-              <a href="{% url 'core:quest_list' %}" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">Cancelar</a>
+              <a href="{% url 'core:jogador_details' object.pk %}" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">Cancelar</a>
               <button class="btn btn-outline-danger btn-sm" type="submit">Sim, delete agora!</button>
             </div>
           </form>
@@ -30,4 +30,3 @@
 
 
 {% block js %} {% endblock js %}
-

@@ -46,6 +46,7 @@ class JogadorDetailView(DetailView):
 
 class JogadorDeleteView(DeleteView):
     model = Jogador
+    success_url = reverse_lazy('accounts:login')
     template_name = "jogador/delete.html"
 
 

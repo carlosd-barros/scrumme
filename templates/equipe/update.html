@@ -17,9 +17,9 @@
         <h3>Editando a equipe "{{ object.name|capfirst }}".</h3>
         <form method="POST"> {% csrf_token %}
           {{ form|crispy }}
-          <div class="form-group text-right">
-            <a href="{% url 'core:equipe_list' %}" class="btn btn-outline-danger btn-sm" role="button" aria-pressed="true">Cancelar</a>
-            <button class="btn btn-outline-success btn-sm" type="submit" role="button" aria-pressed="true">Confirmar</button>
+          <div class="form-group">
+            <a href="{% url 'core:equipe_list' %}" class="btn btn-outline-danger btn-sm" role="button" aria-pressed="true">Descartar</a>
+            <button class="btn btn-outline-success btn-sm" type="submit" role="button" aria-pressed="true">Atualizar Equipe</button>
           </div>
         </form>
       </div>

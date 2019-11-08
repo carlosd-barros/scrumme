@@ -11,14 +11,13 @@
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
-            <a class="mr-2" href="#">
-                <legend >Equipe  {{ equipe.name|capfirst }}</legend>
+            <a class="mr-2" href="{% url 'core:equipe_detail' equipe.pk %}">
+                <legend>Equipe  {{ equipe.name|capfirst }}</legend>
             </a>
             <small class="text-muted"> Equipe criada em {{ equipe.created|date:'d/m/Y' }}</small>
-        </div>
+        </div> 
         <div class="post">
-            <p>Última alteração em {{ equipe.updated|date:'d/m/Y' }}.
-            <br>Clique <a href="#">aqui</a> para mais detalhes!</p>
+            <p>Última alteração em {{ equipe.updated|date:'d/m/Y' }}.</p>
         </div>
     </div>
 </article>
