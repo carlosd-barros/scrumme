@@ -19,6 +19,8 @@ from django.views.generic import (
 
 from core.models import Jogador, Classe, Equipe, Quest
 
+from core.forms import QuestCreateForm
+
 logger = logging.getLogger(__name__)
 
 
@@ -31,13 +33,10 @@ class QuestListView(ListView):
 
 class QuestCreateView(CreateView):
     model = Quest
+    form_class = QuestCreateForm
     template_name = "quest/create.html"
     success_url = reverse_lazy('core:quest_list')
-    fields = [
-        "name", "responsaveis",
-        "init_date", "end_date",
-        "points", "description"
-    ]
+
     def form_valid(self, form):
         quest = form.save(commit=False)
         quest.save()
@@ -57,10 +56,7 @@ class QuestDeleteView(DeleteView):
 
 class QuestUpdateView(UpdateView):
     model = Quest
+    form_class = QuestCreateForm
     template_name = "quest/update.html"
     success_url = reverse_lazy('core:quest_list')
-    fields = [
-        "name", "responsaveis",
-        "init_date", "end_date",
-        "points", "description"
-    ]
+

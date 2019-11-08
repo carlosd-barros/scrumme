@@ -9,6 +9,7 @@
   <div class="card-header py-3">
     <h5 class="m-0 font-weight-bold text-primary">Equipes que você participa</h5>
   </div>
+  {% if object_list|length != 0 %}
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -78,6 +79,9 @@
         </tr>
         {% endfor %}
       </table>
+      {% else %}
+        <p class="text-center">Parece que você não está participando de nenhuma equipe ainda.</p>
+      {% endif %}
       <!-- paginação -->
       <section style="float: right;">
         {% if is_paginated %}

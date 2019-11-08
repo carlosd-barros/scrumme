@@ -15,6 +15,7 @@ class QuestAdmin(admin.ModelAdmin):
         'end_date', 'points',
     ]
     readonly_fields = ['created']
+    filter_horizontal = ['responsaveis']
     search_fields = [
         'name',
         'jogador__user__username',
