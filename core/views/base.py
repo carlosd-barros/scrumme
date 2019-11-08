@@ -49,7 +49,7 @@ class DashboardView(TemplateView):
 
         return super(
             DashboardView, self).dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         player = None

@@ -83,31 +83,46 @@
         <p class="text-center">Parece que você não está participando de nenhuma equipe ainda.</p>
       {% endif %}
       <!-- paginação -->
+      {% if is_paginated %}
       <section style="float: right;">
-        {% if is_paginated %}
-
+        <ul class="pagination">
+        
         {% if page_obj.has_previous %}
-          <a class="btn btn-outline-info mb-4" href="?page=1">Primeiro</a>
-          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        <li class="page-item">
+          <a class="page-link" href="?page=1">Primeiro</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        </li>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %}
           {% if page_obj.number == num %}
-            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
 
           {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
 
           {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Próximo</a>
-          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Último</a>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próximo</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Último</a>
+        </li>
         {% endif %}
 
-        {% endif %}
+        </ul>
+
       </section>
+      {% endif %}
       <!-- fim paginação -->
     </div>
   </div>

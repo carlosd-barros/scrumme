@@ -3,13 +3,29 @@
 {% block title %}Dashboard{% endblock title %}
 
 {% block main %}
-<!-- content section -->
 
-<h2>Suas equipes</h2>
-<hr/>
-{% for equipe in equipes %}
-<article class="media content-section">
-    <div class="media-body">
+<h2 class="m-0 font-weight-bold text-secondary"> Suas equipes </h2>
+<hr>
+<div class="row">
+  {% for equipe in equipes %}
+  <div class="col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h5 class="m-0 font-weight-bold text-primary">Detalhes</h5>
+        <div class="dropdown no-arrow">
+          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-header">Ações</div>
+            <a class="dropdown-item" href="#">Detalhes</a>
+            <a class="dropdown-item" href="#">Editar</a>
+            <a class="dropdown-item" href="#">Excluir</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-body">
         <div class="article-metadata">
             <a class="mr-2" href="{% url 'core:equipe_detail' equipe.pk %}">
                 <legend>Equipe  {{ equipe.name|capfirst }}</legend>
@@ -19,95 +35,67 @@
         <div class="post">
             <p>Última alteração em {{ equipe.updated|date:'d/m/Y' }}.</p>
         </div>
-    </div>
-</article>
-{% empty %}
-
-<p>Parece que você não está em nenhuma equipe. <br>
-
-{% endfor %}
-
-<br/>
-<h2>Suas quests</h2>
-<hr/>
-{% for quest in quests %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="#">
-                <legend >Quest  {{ quest.name|capfirst }}</legend>
-            </a>
-            <small class="text-muted"> Quest criada em {{ quest.created|date:'d/m/Y' }}</small>
-        </div>
-        <div class="post">
-            <p>Última alteração em {{ quest.updated|date:'d/m/Y' }}.
-            <br>Clique <a href="#">aqui</a> para mais detalhes!</p>
-        </div>
-    </div>
-</article>
-{% empty %}
-
-<p>Parece que você não é reponsável por nenhuma quest. <br>
-
-{% endfor %}
-
-<br> <br>
-<p>Lembra de mexer nisso aqui depois</p>
-
-<div class="col-xl-5 col-lg-4">
-  <div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h5 class="m-0 font-weight-bold text-primary">Detalhes</h5>
-      <div class="dropdown no-arrow">
-        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-          <div class="dropdown-header">Ações</div>
-          <a class="dropdown-item" href="#">Detalhes</a>
-          <a class="dropdown-item" href="#">Editar</a>
-          <a class="dropdown-item" href="#">Excluir</a>
+  
+        <div class="form-group">
+          <a class="text" href="#" aria-pressed="true">Voltar a lista de classes</a>
         </div>
       </div>
     </div>
-
-    <!-- Card Body -->
-    <div class="card-body">
-      <h3> Detalhes da equipe</h3>
-      <div class="form-group">
-        <a class="text" href="#" aria-pressed="true">Voltar a lista de classes</a>
-      </div>
-    </div>
-
   </div>
-
-  {% comment %}  {% endcomment %}
-
-  <div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h5 class="m-0 font-weight-bold text-primary">Detalhes</h5>
-      <div class="dropdown no-arrow">
-        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-          <div class="dropdown-header">Ações</div>
-          <a class="dropdown-item" href="#">Detalhes</a>
-          <a class="dropdown-item" href="#">Editar</a>
-          <a class="dropdown-item" href="#">Excluir</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card Body -->
-    <div class="card-body">
-      <h3> Detalhes da quest</h3>
-      <div class="form-group">
-        <a class="text" href="#" aria-pressed="true">Voltar a lista de quests</a>
-      </div>
-    </div>
-
-  </div>
+  {% empty %}
+    <p>Parece que você não está em nenhuma equipe. <br>
+  {% endfor %}
 </div>
+
+{% comment %} QUESTS {% endcomment %}
+<h2 class="m-0 font-weight-bold text-secondary"> Suas quests </h2>
+<hr>
+<div class="row">
+  {% for quest in quests %}
+  <div class="col-lg-6">
+
+    <div class="card shadow">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h5 class="m-0 font-weight-bold text-primary">Detalhes</h5>
+        <div class="dropdown no-arrow">
+          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-header">Ações</div>
+            <a class="dropdown-item" href="#">Detalhes</a>
+            <a class="dropdown-item" href="#">Editar</a>
+            <a class="dropdown-item" href="#">Excluir</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-body">
+  
+          <div class="article-metadata">
+              <a class="mr-2" href="#">
+                  <legend >Quest  {{ quest.name|capfirst }}</legend>
+              </a>
+              <small class="text-muted"> Quest criada em {{ quest.created|date:'d/m/Y' }}</small>
+          </div>
+  
+          <div class="post">
+              <p>Última alteração em {{ quest.updated|date:'d/m/Y' }}.
+              <br>Clique <a href="#">aqui</a> para mais detalhes!</p>
+          </div>
+  
+          <div class="form-group">
+            <a class="text" href="#" aria-pressed="true">Voltar a lista de quests</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <p>Parece que você não é reponsável por nenhuma quest. <br>
+    {% endfor %}
+</div>
+
+
+{% comment %} </div> {% endcomment %}
 
 {% endblock main %}
