@@ -204,22 +204,25 @@
         </nav>
         <!-- End Topbar -->
         
-          {% if messages %}
-            <div class="innerLR">
-              {% for message in messages %}
-                {% if message.tags %}
-                  {% if message.tags == 'error' %}
-                    <div class="alert alert-danger">{{ message }}</div>
-                  {% else %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                  {% endif %}
+        {% if messages %}
+          <div class="innerLR">
+            {% for message in messages %}
+              {% if message.tags %}
+                {% if message.tags == 'error' %}
+                  <div class="alert alert-danger">{{ message }}</div>
+                {% else %}
+                  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
                 {% endif %}
-              {% endfor %}
-            </div>
-          {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
         <div class="container">
 
-            {% block main %}{% endblock main %}
+            {% block main %}
+
+            {% endblock main %}
 
         </div>
       </div>

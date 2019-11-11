@@ -58,17 +58,17 @@ urlpatterns = [
         name='quest_create'
     ),
     path(
-        'quest/<int:pk>/delete/',
+        'quest/<slug:slug>/delete/',
         QuestDeleteView.as_view(),
         name='quest_delete'
     ),
     path(
-        'quest/<int:pk>/detail/',
+        'quest/<slug:slug>/detail/',
         QuestDetailView.as_view(),
         name='quest_detail'
     ),
     path(
-        'quest/<int:pk>/update',
+        'quest/<slug:slug>/update',
         QuestUpdateView.as_view(),
         name='quest_update'
     ),
@@ -86,17 +86,17 @@ urlpatterns = [
         name='equipe_create'
     ),
     path(
-        'equipe/<int:pk>/delete/',
+        'equipe/<slug:slug>/delete/',
         EquipeDeleteView.as_view(),
         name='equipe_delete'
     ),
     path(
-        'equipe/<int:pk>/detail/',
+        'equipe/<slug:slug>/detail/',
         EquipeDetailView.as_view(),
         name='equipe_detail'
     ),
     path(
-        'equipe/<int:pk>/update/',
+        'equipe/<slug:slug>/update/',
         EquipeUpdateView.as_view(),
         name='equipe_update'
     ),

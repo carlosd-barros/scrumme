@@ -38,9 +38,22 @@ class QuestCreateView(CreateView):
     success_url = reverse_lazy('core:quest_list')
 
     def form_valid(self, form):
-        quest = form.save(commit=False)
-        quest.save()
-        return redirect('core:dashboard')
+        if self.request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(
+                    self.request,
+                    "Quest criada com sucesso."
+                )
+            else:
+                messages.error(
+                    self.request,
+                    'Ops, parece que algo deu errado.'
+                )
+                form = form(self.request.POST)
+
+        return super(
+            QuestCreateView, self).form_valid(form)
 
 
 class QuestDetailView(DetailView):

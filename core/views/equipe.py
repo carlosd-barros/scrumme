@@ -69,12 +69,16 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
     template_name = "equipe/detail.html"
 
     def get_context_data(self, **kwargs):
-        context = super(EquipeDetailView, self).get_context_data(**kwargs)
-        context['quests'] = Quest.objects.filter(
-            
-        )
+        team = self.get_object().team.all()
 
-        return context
+        kwargs.update({
+            'quests':Quest.objects.filter(
+                responsaveis__in=team
+            ).distinct()
+        })
+
+        return super(
+            EquipeDetailView, self).get_context_data(**kwargs)
 
 
 class EquipeDeleteView(LoginRequiredMixin, DeleteView):

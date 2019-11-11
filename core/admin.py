@@ -7,6 +7,9 @@ class EquipeAdmin(admin.ModelAdmin):
     readonly_fields = ['created','updated']
     filter_horizontal = ['team']
     search_fields = ['name']
+    prepopulated_fields = {
+        "slug": ("name",)
+    }
 
 @admin.register(Quest)
 class QuestAdmin(admin.ModelAdmin):
@@ -21,13 +24,20 @@ class QuestAdmin(admin.ModelAdmin):
         'jogador__user__username',
         'jojador__name'
     ]
+    prepopulated_fields = {
+        "slug": ("name",)
+    }
 
 
 @admin.register(Classe)
 class ClasseAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {
+        "slug": ("name",)
+    }
 
 
 @admin.register(Jogador)
 class JogadorAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {
+        "slug": ("name",)
+    }

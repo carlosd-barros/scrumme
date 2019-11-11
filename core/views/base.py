@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import slugify
 
 from django.views.generic import (
@@ -32,8 +31,8 @@ class DashboardView(TemplateView):
                 defaults={
                     'user':request.user,
                     'name':(
-                        f"{request.user.first_name.upper()} "
-                        f"{request.user.last_name.upper()}"
+                        f"{request.user.first_name} "
+                        f"{request.user.last_name}"
                     )
                 }
             )
