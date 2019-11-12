@@ -7,45 +7,80 @@
 
 {% block main %}
 
-<div class="row">
-  <div class="col-xl-12 col-lg-4">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Detalhes</h5>
-      </div>
-      <div class="card-body">
-        <p> <strong>Nome:</strong> {{ object.name|upper }}</p>
-        <p><strong>Responsáveis:</strong><br>
-        <ul>
-          {% for integrante in object.responsaveis.all %}
-            <li>
-              {{ integrante.name }}
-            </li>
-          {% endfor %}
-        </ul>
-        </p>
-        <p> <strong> Inicio previsto para:</strong> {{ object.init_date }}</p>
-        <p> <strong> Conclusão prevista para:</strong> {{ object.end_date }}</p>
-        <p> <strong> Pontos por conclusão:</strong> {{ object.points }}</p>
-        <p> <strong> Criado em:</strong>{{ object.created }}</p>
-        <p> <strong> Última alteração em:</strong> {{ object.updated }}</p>
-      </div>
-    </div>
-  </div>
-</div>
+<a class="text" href="{% url 'core:quest_list' %}" aria-pressed="true">Quests</a>
+<h1 class="margin-none">Detalhes</h1>
 
-<div class="row">
-  <div class="col-xl-12 col-lg-4">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary"><a href="{% url 'core:quest_list' %}">Voltar para as Quests</a></h5>
-      </div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary text-captalize">{{ object.name }}</h5>
     </div>
-  </div>
+
+    <div class="card-body">
+        <div class="widget-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div><strong>Inicio previsto para</strong></div>
+                    {{ object.init_date|date:'d/m/Y' }}
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Conclusão prevista para</strong></div>
+                    {{ object.end_date|date:'d/m/Y' }}
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Pontos por conclusão</strong></div>
+                    <div class=" row">
+                        <div class="col-md-6 text-center">
+                            <span class="badge badge-pill badge-info">{{ object.points }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> <br/>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div><strong>Responsáveis</strong></div>
+                    <ul>
+                        {% for integrante in object.responsaveis.all %}
+                            <li>
+                                {{ integrante.name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Criada em</strong></div>
+                    {{ object.created|date:'d/m/Y' }}
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Última alteração em</strong></div>
+                    {{ object.updated|date:'d/m/Y' }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-right">
+            <div class="btn">
+                <a class="btn btn-secondary"
+                href="{% url 'core:quest_update' object.pk %}">
+                    Editar
+                </a>
+
+                <a class="btn btn-primary"
+                href="{% url 'core:quest_update' object.pk %}">
+                    Concluir
+                </a>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 {% endblock main %}
 
-
 {% block js %} {% endblock js %}
-
