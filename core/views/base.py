@@ -37,6 +37,10 @@ class DashboardView(TemplateView):
                 }
             )
 
+            if jogador.name == '':
+                jogador.name = jogador.user.username
+                jogador.save()
+
         else:
             messages.error(
                 request,
