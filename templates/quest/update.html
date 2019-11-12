@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Update{% endblock title %}
+{% block title %}Quest Update{% endblock title %}
 
 {% block css %} {% endblock css %}
 
@@ -15,11 +15,14 @@
         <h5 class="m-0 font-weight-bold text-primary">Editar quest "{{ object.name|upper }}"</h5>
       </div>
       <div class="card-body">
-        <form method="POST"> {% csrf_token %}
+        <form method="POST"> 
+
+          {% csrf_token %}
           {{ form|crispy }}
+
           <div class="form-group text-right">
             <a href="{% url 'core:equipe_list' %}" class="btn btn-outline-danger btn-sm" role="button" aria-pressed="true">Descartar</a>
-            <button class="btn btn-outline-success btn-sm" type="submit" role="button" aria-pressed="true">Atualizar Quest</button>
+            <button onsubmit="return confirm('Confirmar?')" class="btn btn-outline-success btn-sm" type="submit" role="button" aria-pressed="true">Atualizar Quest</button>
           </div>
         </form>
       </div>

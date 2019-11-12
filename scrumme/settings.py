@@ -169,7 +169,7 @@ AWS_DEFAULT_ACL = None
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-age
-SESSION_COOKIE_AGE = 3600000
+# SESSION_COOKIE_AGE = 3600000
 
 
 # Configure Django App for Heroku.
