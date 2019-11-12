@@ -105,7 +105,6 @@ class Equipe(models.Model):
         verbose_name_plural="Equipes"
 
     def __str__(self):
-        return self.name
 
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=100)
