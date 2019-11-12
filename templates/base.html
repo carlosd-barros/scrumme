@@ -239,8 +239,8 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'custom/vendor/jquery/jquery.min.js' %} "></script>
-  <script src="{% static 'custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Core plugin JavaScript-->
   <script src="{% static 'custom/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
@@ -248,12 +248,6 @@
   <!-- Custom scripts for all pages-->
   <script src="{% static 'custom/js/sb-admin-2.min.js' %}"></script>
 
-  <!-- Page level plugins -->
-  <script src="{% static 'custom/vendor/chart.js/Chart.min.js' %}"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="{% static 'custom/js/demo/chart-area-demo.js' %}"></script>
-  <script src="{% static 'custom/js/demo/chart-pie-demo.js' %}"></script>
 
   <!-- Js specifique page -->
   {% block js %}{% endblock js %}

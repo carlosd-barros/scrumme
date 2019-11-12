@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Detail{% endblock title %}
+{% block title %}Quest Detail{% endblock title %}
 
 {% block css %} {% endblock css %}
 
@@ -66,14 +66,15 @@
 
         <div class="text-right">
             <div class="btn">
-                <a class="btn btn-secondary"
+                <a class="btn btn-outline-secondary"
                 href="{% url 'core:quest_update' object.pk %}">
-                    Editar
+                    Editar quest
                 </a>
 
-                <a class="btn btn-primary"
+                <a class="btn btn-outline-success"
                 href="{% url 'core:quest_update' object.pk %}">
-                    Concluir
+                    <li class="fas fa-check-circle"></li>
+                    Concluir quest
                 </a>
             </div>
         </div>

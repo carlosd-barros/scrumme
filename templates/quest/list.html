@@ -1,52 +1,90 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
-{% block title %}List{% endblock title %}
+{% block title %}Quest List{% endblock title %}
 
 {% block css %} {% endblock css %}
 
 {% block main %}
 
-<h1>Lista de Quests:</h1>
-<div class="card">
-  <ul class="list-group">
-    {% for quest in object_list %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{quest}}
-        <span class="badge badge-primary badge-pill">{{quest.points}}</span>
-      <div class="btn-group">
-        <div class="col-md-18">
 
-          <a class="btn btn-info btn-icon-split btn-sm"
-          href="{% url 'core:quest_detail' quest.slug %}"
-          title="Visualizar">
-            <span class="icon text-white-600">
-              <i class="fas fa-eye"></i>
-            </span>
-          </a>
 
-          <a class="btn btn-success btn-icon-split btn-sm"
-            href="{% url 'core:quest_update' quest.slug %}"
-            title="Editar">
-            <span class="icon text-white-600" >
-              <i class="fas fa-edit"></i>
-            </span>
-          </a>
+<nav class="nav-container" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Quest</li>
+    </ol>
+    <ul class="nav-buttons">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cogs"></i> Opções
+            </button>
 
-          <a class="btn btn-danger btn-icon-split btn-sm"
-          href="{% url 'core:quest_delete' quest.slug %}"
-          title="Excluir">
-            <span class="icon text-white-600">
-              <i class="fas fa-trash"></i>
-            </span>
-          </a>
-
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'core:quest_create' %}">Novo</a>
+            </div>
         </div>
-      </li>
+    </ul>
+</nav>
 
-    {% endfor %}
-  </ul>
-</div>
+<table class="table table-striped table-datatables">
+
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th class="text-center">Responsáveis</th>
+            <th class="text-center">Inicio</th>
+            <th class="text-center">Entrega</th>
+            <th class="text-center">Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for quest in object_list %}
+        <tr>
+            <td>{{ quest.name }}</td>
+            <td class="text-center">{{ quest.responsaveis.all|length }}</td>
+            <td class="text-center">{{ quest.init_date|date:'d/m/Y' }}</td>
+            <td class="text-center">{{ quest.end_date|date:'d/m/Y' }}</td>
+
+            <td class="actions text-center align-middle">
+            <div class="btn-group">
+
+                <a class="btn btn-outline-secondary"
+                href="{% url 'core:quest_detail' quest.slug %}"
+                title="Visualizar">
+                    <span class="icon text-white-600">
+                    <i class="fas fa-eye"></i>
+                    </span>
+                </a>
+
+                <a class="btn btn-outline-success"
+                href="{% url 'core:quest_update' quest.slug %}"
+                title="Editar">
+                    <i class="fas fa-edit"></i>
+                </a>
+
+                <a class="btn btn-outline-danger"
+                href="{% url 'core:quest_delete' quest.pk %}"
+                title="Excluir">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock main %}
 
-{% block js %} {% endblock js %}
+{% block js %}
+
+<link rel="stylesheet" href="{% static 'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+<script type="text/javascript" src="{% static 'node_modules/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dataTables.init.js' %}"></script>
+
+{% endblock js %}
 
