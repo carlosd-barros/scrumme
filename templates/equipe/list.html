@@ -1,28 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load staticfiles %}
 
 {% block title %}List{% endblock title %}
 
 {% block main %}
 
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h5 class="m-0 font-weight-bold text-primary">Equipes que você participa</h5>
-  </div>
-  {% if object_list|length != 0 %}
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+    <thead>
+        <tr>
             <th class="text-center">Nome</th>
             <th class="text-center">Lider</th>
             <th class="text-center">Time</th>
             <th class="text-center">Ativo</th>
             <th class="text-center">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
+        </tr>
+    </thead>
+
+    <tbody>
         {% for equipe in object_list %}
         <tr>
           <td class="align-middle">{{equipe.name}}</td>
@@ -36,20 +32,20 @@
               {% endfor %}
               </ul>
           </td>
-          <td class="align-middle">
 
+          <td class="align-middle">
             {% if equipe.active %}
               <p>ATIVO</p>
             {% else %}
               <p>DESATIVADO</p>
             {% endif %}
-
           </td>
+
           <td class="actions text-center align-middle">
             <div class="btn-group">
-              <div class="col-md-18">
+              {% comment %} <div class="col-md-18"> {% endcomment %}
 
-                <a class="btn btn-info btn-icon-split btn-sm"
+                <a class="btn btn-outline-secondary"
                 href="{% url 'core:equipe_detail' equipe.slug %}"
                 title="Visualizar">
                   <span class="icon text-white-600">
@@ -57,76 +53,26 @@
                   </span>
                 </a>
 
-                <a class="btn btn-success btn-icon-split btn-sm"
-                  href="{% url 'core:equipe_update' equipe.slug %}"
-                  title="Editar">
-                  <span class="icon text-white-600" >
+                <a class="btn btn-outline-success"
+                href="{% url 'core:equipe_update' equipe.slug %}"
+                title="Editar">
                     <i class="fas fa-edit"></i>
-                  </span>
                 </a>
 
-                <a class="btn btn-danger btn-icon-split btn-sm"
-                href="{% url 'core:equipe_delete' equipe.slug %}"
+                <a class="btn btn-outline-danger"
+                href="{% url 'core:equipe_delete' equipe.pk %}"
                 title="Excluir">
-                  <span class="icon text-white-600">
-                    <i class="fas fa-trash"></i>
-                  </span>
+                    <i class="fas fa-trash-alt"></i>
                 </a>
 
               </div>
-            </div>
+            {% comment %} </div> {% endcomment %}
           </td>
         </tr>
         {% endfor %}
-      </table>
-      {% else %}
-        <p class="text-center">Parece que você não está participando de nenhuma equipe ainda.</p>
-      {% endif %}
-      <!-- paginação -->
-      {% if is_paginated %}
-      <section style="float: right;">
-        <ul class="pagination">
-        
-        {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page=1">Primeiro</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-        </li>
-        {% endif %}
+    </tbody>
+</table>
 
-        {% for num in page_obj.paginator.page_range %}
-          {% if page_obj.number == num %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-          </li>
-
-          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-          </li>
-
-          {% endif %}
-        {% endfor %}
-
-        {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próximo</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Último</a>
-        </li>
-        {% endif %}
-
-        </ul>
-
-      </section>
-      {% endif %}
-      <!-- fim paginação -->
-    </div>
-  </div>
-</div>
 {% endblock main %}
 
 {% block js %}
@@ -136,7 +82,6 @@
 <script src="{% static 'custom/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
 <!-- Page level custom scripts -->
-{% comment %} <script src="{% static 'custom/js/demo/datatables-demo.js' %}"></script> {% endcomment %}
+<script src="{% static 'custom/js/demo/datatables-demo.js' %}"></script>
 
 {% endblock js %}
-

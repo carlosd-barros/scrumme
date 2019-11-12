@@ -27,7 +27,6 @@ class EquipeListView(LoginRequiredMixin, ListView):
     model = Equipe
     template_name = "equipe/list.html"
     ordering = ["-created"]
-    paginate_by = 5
 
     def get_queryset(self):
         queryset = super(EquipeListView, self).get_queryset()

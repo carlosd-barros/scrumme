@@ -12,9 +12,9 @@
     <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-        <h5 class="m-0 font-weight-bold text-primary">
+        <h5 class="m-0 font-weight-bold text-primary text-capitalize">
           <a href="{% url 'core:equipe_detail' equipe.slug %}">
-            {{ equipe.name|capfirst }}
+            {{ equipe.name }}
           </a>
         </h5>
 
@@ -81,9 +81,9 @@
     <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-        <h5 class="m-0 font-weight-bold text-primary">
+        <h5 class="m-0 font-weight-bold text-primary text-capitalize">
           <a href="{% url 'core:quest_detail' quest.slug %}">
-            {{ quest.name|capfirst }}
+            {{ quest.name }}
           </a>
         </h5>
 
@@ -141,13 +141,5 @@
     <p>Parece que você não é reponsável por nenhuma quest.<br>
   {% endfor %}
 </div>
-
-<div class="card-body">
-  <div class="article-metadata">
-      
-  </div>
-</div>
-
-{% comment %} </div> {% endcomment %}
 
 {% endblock main %}
