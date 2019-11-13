@@ -64,19 +64,18 @@
 
         </div>
 
-        <div class="text-right">
-            <div class="btn">
-                <a class="btn btn-outline-secondary"
-                href="{% url 'core:quest_update' object.pk %}">
-                    Editar quest
-                </a>
+        <div class="form-group float-right">
+            <a class="btn btn-outline-secondary"
+            href="{% url 'core:quest_update' object.slug %}">
+                Editar quest
+            </a>
 
-                <a class="btn btn-outline-success"
-                href="{% url 'core:quest_update' object.pk %}">
-                    <li class="fas fa-check-circle"></li>
-                    Concluir quest
-                </a>
-            </div>
+            <a class="btn btn-outline-success"
+            onsubmit="return confirm('Confirmar conclusão?')"
+            href="#">
+                <li class="fas fa-check-circle"></li>
+                Concluir quest
+            </a>
         </div>
 
     </div>

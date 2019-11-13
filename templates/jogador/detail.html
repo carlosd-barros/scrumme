@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load jogador_tags %}
+
+{% block title %}Detalhes{% endblock title %}
+
+
+{% block main %}
+
+<header class="row justify-content-md-center">
+
+    <div class="media col-md-3">
+        <div class="container">
+            <div class="card-body">
+                <div class="text-center py-3">
+                    <a href="{% url 'core:jogador_update' object.user.id %}"
+                    title="Editar perfil">
+                        <img class="mr-0" src="{{ object.avatar.url }}" alt="Generic placeholder image">
+                    </a>
+                </div> <hr>
+
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <a href="{% url 'core:jogador_update' object.user.id %}">Editar</a>
+                    </div>
+
+                    <div class="col-md-6 text-center">
+                        <a href="{% url 'core:jogador_delete' object.slug %}" class=text-danger>Deletar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div>
+            <div>
+                <a href="{% url 'core:jogador_update' object.user.id %}"
+                title="Editar perfil"
+                class="font-weight-bold text-dark card-link">
+                    <h2>{{ object.user.username }}</h2>
+                </a>
+            </div> <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div><strong>Pontos</strong></div>
+                    <span class="badge badge-pill badge-info">
+                        {{ object.points }}
+                    </span>
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Classe</strong></div>
+                    {{ object.classe.name }}
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Tipo de Jogador</strong></div>
+                    {% get_jogador_type object.type as type %}
+                    {{ type }}
+                </div>
+            </div> <br>
+
+            <div><strong><p>{{ object.name }}</p></strong></div>
+
+            <div>
+                {% get_equipes object as equipes %}
+                <span><strong>Equipes: </strong>{{ equipes|length }}</span>
+            </div>
+
+            <div>
+                {% get_quests object as quests %}
+                <span><strong>Quests: </strong>{{ quests|length }}</span>
+            </div>
+
+        </div>
+    </div>
+
+</header>
+
+
+{% endblock main %}
+

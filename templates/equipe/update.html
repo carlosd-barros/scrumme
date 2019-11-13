@@ -8,23 +8,37 @@
 {% block main %}
 
 <div class="row">
-  <div class="col-xl-12 col-lg-4">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Editar</h5>
-      </div>
-      <div class="card-body">
-        <h3>Editando a equipe "{{ object.name|capfirst }}".</h3>
-        <form method="POST"> {% csrf_token %}
-          {{ form|crispy }}
-          <div class="form-group">
-            <a href="{% url 'core:equipe_list' %}" class="btn btn-outline-danger btn-sm" role="button" aria-pressed="true">Descartar</a>
-            <button class="btn btn-outline-success btn-sm" type="submit" role="button" aria-pressed="true">Atualizar Equipe</button>
-          </div>
-        </form>
-      </div>
+    <div class="col-xl-12 col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">
+                    Editando a equipe '{{ object.name|capfirst }}'
+                </h5>
+            </div>
+
+            <div class="card-body">
+                <form method="POST">
+
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                    <div class="form-group float-right">
+                        <a href="{% url 'core:equipe_list' %}"
+                        class="btn btn-outline-danger"
+                        role="button" aria-pressed="true">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            Cancelar
+                        </a>
+                        <button class="btn btn-outline-success"
+                        type="submit" role="button" aria-pressed="true">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            Atualizar Equipe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 {% endblock main %}

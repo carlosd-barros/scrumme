@@ -31,9 +31,9 @@ urlpatterns = [
 
     # Jogador
     path(
-        'profile/<int:pk>/details/',
+        'profile/<slug:slug>/details/',
         JogadorDetailView.as_view(),
-        name='jogador_details'
+        name='jogador_detail'
     ),
     path(
         'profile/<int:pk>/update/',
@@ -41,7 +41,7 @@ urlpatterns = [
         name='jogador_update'
     ),
     path(
-        'profile/<int:pk>/delete/',
+        'profile/<slug:slug>/delete/',
         JogadorDeleteView.as_view(),
         name='jogador_delete'
     ),

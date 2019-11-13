@@ -7,139 +7,139 @@
 <h2 class="m-0 font-weight-bold text-secondary"> Suas equipes </h2>
 <hr>
 <div class="row">
-  {% for equipe in equipes %}
-  <div class="col-lg-6">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    {% for equipe in equipes %}
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-        <h5 class="m-0 font-weight-bold text-primary text-capitalize">
-          <a href="{% url 'core:equipe_detail' equipe.slug %}">
-            {{ equipe.name }}
-          </a>
-        </h5>
+            <h5 class="m-0 font-weight-bold text-primary text-capitalize">
+                <a href="{% url 'core:equipe_detail' equipe.slug %}">
+                    {{ equipe.name }}
+                </a>
+            </h5>
 
-        <div class="dropdown no-arrow">
-          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-            <div class="dropdown-header">Ações</div>
-            <a class="dropdown-item" href="{% url 'core:equipe_detail' equipe.slug %}">Detalhes</a>
-            <a class="dropdown-item" href="{% url 'core:equipe_update' equipe.slug %}">Editar</a>
-            <a class="dropdown-item" href="{% url 'core:equipe_delete' equipe.slug %}">Excluir</a>
-          </div>
+            <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Ações</div>
+                    <a class="dropdown-item" href="{% url 'core:equipe_detail' equipe.slug %}">Detalhes</a>
+                    <a class="dropdown-item" href="{% url 'core:equipe_update' equipe.slug %}">Editar</a>
+                    <a class="dropdown-item" href="{% url 'core:equipe_delete' equipe.slug %}">Excluir</a>
+                </div>
+            </div>
         </div>
 
-      </div>
+        <div class="card-body">
+            <div class="article-metadata">
 
-      <div class="card-body">
-        <div class="article-metadata">
+                <div class="widget widget-heading-simple table-condensed">
+                <div class="widget-body">
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div><strong>Lider</strong></div>
+                        {{ equipe.lider.name }}
+                    </div>
+                    <div class="col-md-6">
+                        <div><strong>Composta por</strong></div>
+                        {{ equipe.team.all|length }} integrantes
+                    </div>
+                    </div>
+                    <br/>
 
-            <div class="widget widget-heading-simple table-condensed">
-              <div class="widget-body">
-                <div class="row">
-                  <div class="col-md-6">
-                      <div><strong>Lider</strong></div>
-                      {{ equipe.lider.name }}
-                  </div>
-                  <div class="col-md-6">
-                    <div><strong>Composta por</strong></div>
-                    {{ equipe.team.all|length }} integrantes
-                  </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div><strong>Criada em</strong></div>
+                        {{ equipe.created|date:'d/m/Y' }}
+                    </div>
+                    <div class="col-md-6">
+                        <div><strong>Última atualização</strong></div>
+                        {{ equipe.updated|date:'d/m/Y' }}
+                    </div>
+                    </div>
                 </div>
-                <br/>
-
-                <div class="row">
-                  <div class="col-md-6">
-                    <div><strong>Criada em</strong></div>
-                    {{ equipe.created|date:'d/m/Y' }}
-                  </div>
-                  <div class="col-md-6">
-                    <div><strong>Última atualização</strong></div>
-                    {{ equipe.updated|date:'d/m/Y' }}
-                  </div>
                 </div>
-              </div>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+    {% empty %}
+        <p>Parece que você não está em nenhuma equipe.</p> <br>
+    {% endfor %}
+    </div>
+
+    {% comment %} QUESTS {% endcomment %}
+    <h2 class="m-0 font-weight-bold text-secondary"> Suas quests </h2>
+    <hr>
+    <div class="row">
+    {% for quest in quests %}
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
+            <h5 class="m-0 font-weight-bold text-primary text-capitalize">
+            <a href="{% url 'core:quest_detail' quest.slug %}">
+                {{ quest.name }}
+            </a>
+            </h5>
+
+            <div class="dropdown no-arrow">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                <div class="dropdown-header">Ações</div>
+                <a class="dropdown-item" href="{% url 'core:quest_detail' quest.slug %}">Detalhes</a>
+                <a class="dropdown-item" href="{% url 'core:quest_update' quest.slug %}">Editar</a>
+                <a class="dropdown-item" href="{% url 'core:quest_delete' quest.slug %}">Excluir</a>
+            </div>
             </div>
 
         </div>
-      </div>
 
-    </div>
-  </div>
-  {% empty %}
-    <p>Parece que você não está em nenhuma equipe.</p> <br>
-  {% endfor %}
-</div>
+        <div class="card-body">
+            <div class="article-metadata">
 
-{% comment %} QUESTS {% endcomment %}
-<h2 class="m-0 font-weight-bold text-secondary"> Suas quests </h2>
-<hr>
-<div class="row">
-  {% for quest in quests %}
-  <div class="col-lg-6">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div class="widget widget-heading-simple table-condensed">
+                <div class="widget-body">
 
-        <h5 class="m-0 font-weight-bold text-primary text-capitalize">
-          <a href="{% url 'core:quest_detail' quest.slug %}">
-            {{ quest.name }}
-          </a>
-        </h5>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div><strong>Lider</strong></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div><strong>Composta por</strong></div>
+                        {{ quest.responsaveis.all|length }} integrantes
+                    </div>
+                    </div>
+                    <br/>
 
-        <div class="dropdown no-arrow">
-          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-            <div class="dropdown-header">Ações</div>
-            <a class="dropdown-item" href="{% url 'core:quest_detail' quest.slug %}">Detalhes</a>
-            <a class="dropdown-item" href="{% url 'core:quest_update' quest.slug %}">Editar</a>
-            <a class="dropdown-item" href="{% url 'core:quest_delete' quest.slug %}">Excluir</a>
-          </div>
-        </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div><strong>Criada em</strong></div>
+                        {{ quest.created|date:'d/m/Y' }}
+                    </div>
+                    <div class="col-md-6">
+                        <div><strong>Última atualização</strong></div>
+                        {{ quest.updated|date:'d/m/Y' }}
+                    </div>
+                    </div>
 
-      </div>
-
-      <div class="card-body">
-        <div class="article-metadata">
-
-            <div class="widget widget-heading-simple table-condensed">
-              <div class="widget-body">
-
-                <div class="row">
-                  <div class="col-md-6">
-                      <div><strong>Lider</strong></div>
-                  </div>
-                  <div class="col-md-6">
-                    <div><strong>Composta por</strong></div>
-                    {{ quest.responsaveis.all|length }} integrantes
-                  </div>
                 </div>
-                <br/>
-
-                <div class="row">
-                  <div class="col-md-6">
-                    <div><strong>Criada em</strong></div>
-                    {{ quest.created|date:'d/m/Y' }}
-                  </div>
-                  <div class="col-md-6">
-                    <div><strong>Última atualização</strong></div>
-                    {{ quest.updated|date:'d/m/Y' }}
-                  </div>
                 </div>
 
-              </div>
             </div>
+        </div>
 
         </div>
-      </div>
-
     </div>
-  </div>
-  {% empty %}
-    <p>Parece que você não é reponsável por nenhuma quest.<br>
-  {% endfor %}
+    {% empty %}
+        <p>Parece que você não é reponsável por nenhuma quest.<br>
+    {% endfor %}
 </div>
 
 {% endblock main %}

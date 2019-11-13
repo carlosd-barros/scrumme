@@ -5,9 +5,7 @@
 
 {% block main %}
 
-<h2>Suas equipes</h2> <br/>
-
-<nav class="nav-container" aria-label="breadcrumb">
+{% comment %} <nav class="nav-container" aria-label="breadcrumb">
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Options
@@ -18,7 +16,9 @@
             <a class="dropdown-item" href="#">Alguma coisa aqui</a>
         </div>
     </div>
-</nav>
+</nav> {% endcomment %}
+
+<h2>Suas equipes</h2> <hr> <br>
 
 <table class="table table-striped table-datatables">
     <thead>
@@ -26,7 +26,6 @@
             <th>Nome</th>
             <th>Lider</th>
             <th class="text-center">Time</th>
-            <th class="text-center">Ativo</th>
             <th class="text-center">Ações</th>
         </tr>
     </thead>
@@ -34,44 +33,35 @@
     <tbody>
         {% for equipe in object_list %}
         <tr>
-          <td>{{ equipe.name }}</td>
-          <td>{{ equipe.lider }}</td>
-          <td class="text-center">{{ equipe.responsaveis.all|length }} integrantes</td>
+            <td>{{ equipe.name }}</td>
+            <td>{{ equipe.lider }}</td>
+            <td class="text-center">{{ equipe.team.all|length }} integrantes</td>
 
-          <td class="text-center">
-            {% if equipe.active %}
-              <p>ATIVO</p>
-            {% else %}
-              <p>DESATIVADO</p>
-            {% endif %}
-          </td>
+            <td class="actions text-center">
+                <div class="btn-group">
 
-          <td class="actions text-center">
-            <div class="btn-group">
+                    <a class="btn btn-outline-secondary"
+                    href="{% url 'core:equipe_detail' equipe.slug %}"
+                    title="Visualizar">
+                    <span class="icon text-white-600">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                    </a>
 
-                <a class="btn btn-outline-secondary"
-                href="{% url 'core:equipe_detail' equipe.slug %}"
-                title="Visualizar">
-                  <span class="icon text-white-600">
-                    <i class="fas fa-eye"></i>
-                  </span>
-                </a>
+                    <a class="btn btn-outline-primary"
+                    href="{% url 'core:equipe_update' equipe.slug %}"
+                    title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
 
-                <a class="btn btn-outline-primary"
-                href="{% url 'core:equipe_update' equipe.slug %}"
-                title="Editar">
-                    <i class="fas fa-edit"></i>
-                </a>
+                    <a class="btn btn-outline-danger"
+                    href="{% url 'core:equipe_delete' equipe.slug %}"
+                    title="Excluir">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
 
-                <a class="btn btn-outline-danger"
-                href="{% url 'core:equipe_delete' equipe.pk %}"
-                title="Excluir">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-
-            </div>
-          </td>
-
+                </div>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
@@ -81,9 +71,9 @@
 
 {% block js %}
 
-<link rel="stylesheet" href="{% static 'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
-<script type="text/javascript" src="{% static 'node_modules/datatables.net/js/jquery.dataTables.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/dataTables.init.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <script type="text/javascript" src="{% static 'node_modules/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dataTables.init.js' %}"></script>
 
 {% endblock js %}

@@ -37,7 +37,6 @@ class EquipeListView(LoginRequiredMixin, ListView):
         ).distinct()
 
         return queryset
-
 class EquipeCreateView(LoginRequiredMixin, CreateView):
     model = Equipe
     form_class = EquipeCreateForm
@@ -85,11 +84,10 @@ class EquipeDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('core:equipe_list')
     template_name = "equipe/delete.html"
 
-
 class EquipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Equipe
     template_name = "equipe/update.html"
-    success_url = reverse_lazy('core:equipe_list')
+    success_url = 'core:equipe_detail'
     fields = [
         'lider', 'team'
     ]
@@ -99,3 +97,12 @@ class EquipeUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.object == equipe:
             return True
         return False
+
+    def get_success_url(self):
+        return reverse(
+            self.success_url,
+            kwargs=({
+                'slug':self.get_object().slug
+            })
+        )
+

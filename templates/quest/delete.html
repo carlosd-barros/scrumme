@@ -7,24 +7,41 @@
 
 {% block main %}
 
-<div class="row">
-  <div class="col-xl-12 col-lg-4">
-      <div class="card shadow border-bottom-danger">
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Deletar</h5>
-      </div>
-        <div class="card-body">
-          <h2>Deseja deletar a quest "{{ object.name|capfirst }}"?</h2>
-          <form method="POST"> {% csrf_token %}
-            <div class="form-group">
-              <a href="{% url 'core:quest_list' %}" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">Cancelar</a>
-              <button class="btn btn-outline-danger btn-sm" type="submit">Sim, delete agora!</button>
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">
+            Deseja deletar a quest "{{ object.name|capfirst }}"?
+        </h5>
+    </div>
+
+    <div class="card-body">
+        <h4>
+            <i class="fa fa-exclamation-triangle"></i>
+            Após excluir não será possível reverter.
+        </h4>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-group text-right">
+                <a href="{% url 'core:quest_list' %}"
+                class="btn btn-outline-primary"
+                role="button" aria-pressed="true">
+                    Cancelar
+                </a>
+
+                <button class="btn btn-outline-danger"
+                title="Excluir" type="submit">
+                    <i class="fa fa-minus-circle"></i>
+                    Excluir
+                </button>
             </div>
-          </form>
-        </div>
-      </div>
-  </div>
+        </form>
+    </div>
 </div>
+
 
 {% endblock main %}
 

@@ -4,100 +4,47 @@
 
 {% block main %}
 
-<div class="row justify-content-md-center">
-    <div class="col col-lg-8">
+<a class="text" href="{% url 'core:equipe_list' %}" aria-pressed="true">Equipes</a>
+<h1 class="margin-none">Detalhes</h1>
 
-        <a class="text" href="{% url 'core:equipe_list' %}" aria-pressed="true">Equipes</a>
-        <h1 class="margin-none">Detalhes</h1>
-
-    </div>
-</div>
-
-<div class="row justify-content-md-center">
-  <div class="col col-lg-8">
-
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
         <h5 class="m-0 font-weight-bold text-primary text-captalize">{{ object.name }}</h5>
-      </div>
-      <div class="card-body">
-
-        <div class="row">
-          <div class="col-md-6">
-              <div><strong>Lider</strong></div>
-              {{ object.lider.name }}
-          </div>
-          <div class="col-md-6">
-            <div><strong>Composta por</strong></div>
-            {{ object.team.all|length }} integrantes
-          </div>
-        </div>
-        <br/>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div><strong>Criada em</strong></div>
-            {{ object.created|date:'d/m/Y' }}
-          </div>
-          <div class="col-md-6">
-            <div><strong>Última atualização</strong></div>
-            {{ object.updated|date:'d/m/Y' }}
-          </div>
-        </div>
-
-      </div>
     </div>
+    <div class="card-body">
 
-  </div>
-</div> <br>
-
-{% comment %} <div class="row justify-content-md-center">
-  <div class="col col-lg-8">
-    <h4 class="margin-none">Quests relacionadas</h4>
-  </div>
-</div>
-{% for quest in quests %}
-
-<div class="row justify-content-md-center">
-  <div class="col col-lg-8">
-    <div class="card shadow mb-4">
-
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">{{ quest.name|capfirst }}</h5>
-      </div>
-      <div class="card-body">
-        <div class="widget-body">
-
-          <div class="row">
+        <div class="row">
             <div class="col-md-6">
                 <div><strong>Lider</strong></div>
                 {{ object.lider.name }}
             </div>
-            <div class="col-md-6">
-              <div><strong>Composta por</strong></div>
-              {{ object.team.all|length }} integrantes
-            </div>
-          </div>
-          <br/>
 
-          <div class="row">
             <div class="col-md-6">
-              <div><strong>Criada em</strong></div>
-              {{ object.created|date:'d/m/Y' }}
+                <div><strong>Criada em</strong></div>
+                {{ object.created|date:'d/m/Y' }}
             </div>
-            <div class="col-md-6">
-              <div><strong>Última atualização</strong></div>
-              {{ object.updated|date:'d/m/Y' }}
-            </div>
-          </div>
-
         </div>
-      </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div><strong>Integrantes</strong></div>
+                <ul>
+                    {% for integrante in object.team.all %}
+                        <li>
+                            {{ integrante.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <div><strong>Última atualização</strong></div>
+                {{ object.updated|date:'d/m/Y' }}
+            </div>
+        </div>
 
     </div>
-  </div>
 </div>
-
-{% endfor %} {% endcomment %}
 
 {% endblock main %}

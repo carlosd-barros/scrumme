@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete{% endblock title %}
+{% block title %}Jogador Delete{% endblock title %}
 
 {% block css %} {% endblock css %}
 
@@ -8,22 +8,42 @@
 {% block main %}
 
 <div class="row">
-  <div class="col-xl-12 col-lg-4">
-      <div class="card shadow border-bottom-danger">
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Deletar</h5>
-      </div>
-        <div class="card-body">
-          <h2>{{ object.name|capfirst }}, quer mesmo se deletar?</h2>
-          <form method="POST"> {% csrf_token %}
-            <div class="form-group">
-              <a href="{% url 'core:jogador_details' object.pk %}" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">Cancelar</a>
-              <button class="btn btn-outline-danger btn-sm" type="submit">Sim, delete agora!</button>
+    <div class="col-xl-12 col-lg-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">
+                    {{ object.name }}, quer mesmo se deletar?
+                </h5>
             </div>
-          </form>
+
+            <div class="card-body">
+                <h4>
+                    <i class="fa fa-exclamation-triangle"></i>
+                    Após excluir não será possível reverter.
+                </h4>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="form-group float-right">
+                        <a href="{% url 'core:jogador_detail' object.slug %}"
+                        title="Cancelar" class="btn btn-outline-primary"
+                        role="button" aria-pressed="true">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            Cancelar
+                        </a>
+
+                        <button class="btn btn-outline-danger"
+                        title="Excluir" type="submit">
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                            Excluir
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
 </div>
 
 {% endblock main %}

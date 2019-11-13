@@ -28,7 +28,7 @@ class JogadorListView(ListView):
     ordering = ["name"]
     paginate_by = 5
 
-
+@transaction.atomic
 class JogadorCreateView(CreateView):
     model = Jogador
     template_name = "jogador/create.html"
@@ -41,8 +41,7 @@ class JogadorCreateView(CreateView):
 
 class JogadorDetailView(DetailView):
     model = Jogador
-    template_name = "jogador/details.html"
-
+    template_name = "jogador/detail.html"
 
 class JogadorDeleteView(DeleteView):
     model = Jogador
@@ -53,16 +52,47 @@ class JogadorDeleteView(DeleteView):
 class JogadorUpdateView(UpdateView):
     model = User
     template_name = 'jogador/update.html'
-    success_url = 'core:jogador_details'
+    success_url = 'core:jogador_detail'
     fields = [
         'username', 'email',
         'first_name', 'last_name'
     ]
 
+    @transaction.atomic
+    def form_valid(self, form):
+        if self.request.method == 'POST':
+
+            if form.is_valid():
+                data = form.cleaned_data
+                user = form.save()
+
+                j = Jogador.objects.get(
+                    user = self.request.user
+                )
+                j.name = (
+                    f"{data.get('first_name')} "
+                    f"{data.get('last_name')}"
+                )
+                j.save()
+
+                messages.success(
+                    self.request,
+                    "Perfil atualizado com sucesso."
+                )
+        else:
+            messages.error(
+                self.request,
+                'Ops, parece que algo deu errado.'
+            )
+            form = self.get_form()
+
+        return super(
+            JogadorUpdateView, self).form_valid(form)
+
     def get_success_url(self):
         return reverse(
             self.success_url,
             kwargs=({
-                'pk':self.get_object().pk
+                'slug':self.get_object().jogador.slug
             })
         )

@@ -57,10 +57,11 @@ class Jogador(models.Model):
     def save(self, *args, **kwargs):
         if self.name:
             self.name = self.name.upper()
+            print('funfou a parada aqui')
         else:
             self.name = self.user.username
 
-        self.slug = slugify(self.name)
+        self.slug = slugify(self.user.username)
 
         super(Jogador, self).save(*args, **kwargs)
 
@@ -105,6 +106,7 @@ class Equipe(models.Model):
         verbose_name_plural="Equipes"
 
     def __str__(self):
+        self.name
 
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=100)
@@ -125,7 +127,7 @@ class Quest(models.Model):
     def save(self, **kwargs):
         if self.name:
             self.slug = slugify(self.name)
-        
+
         super(Quest, self).save(**kwargs)
 
     class Meta:

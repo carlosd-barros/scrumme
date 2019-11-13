@@ -28,7 +28,11 @@ class QuestListView(ListView):
     model = Quest
     template_name = "quest/list.html"
     ordering = ["-created"]
-    paginate_by = 5
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            responsaveis__in=[self.request.user.jogador]
+        ).distinct()
 
 
 class QuestCreateView(CreateView):
@@ -37,6 +41,7 @@ class QuestCreateView(CreateView):
     template_name = "quest/create.html"
     success_url = reverse_lazy('core:quest_list')
 
+    @transaction.atomic
     def form_valid(self, form):
         if self.request.method == 'POST':
             if form.is_valid():
