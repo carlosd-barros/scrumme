@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_list.html' %}
 {% load staticfiles %}
 
 {% block title %}Quest List{% endblock title %}
@@ -78,13 +78,4 @@
 </table>
 
 {% endblock main %}
-
-{% block js %}
-
-    <link rel="stylesheet" href="{% static 'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
-    <script type="text/javascript" src="{% static 'node_modules/datatables.net/js/jquery.dataTables.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/dataTables.init.js' %}"></script>
-
-{% endblock js %}
 

@@ -29,8 +29,8 @@ class QuestCreateForm(forms.ModelForm):
         label='Data inicial',
         widget=forms.widgets.DateInput(
             attrs={
-                'type': 'date',
-                'class':'form-control'
+                'type': 'text',
+                'class':'datepicker'
             }
         ),
         required = True
