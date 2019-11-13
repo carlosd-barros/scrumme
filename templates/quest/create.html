@@ -1,10 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base_form.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Create{% endblock title %}
-
-{% block css %} {% endblock css %}
-
+{% block title %}Quest Create{% endblock title %}
 
 {% block main %}
 
@@ -17,20 +14,21 @@
 
             <div class="card-body">
                 <form method="POST">
-                
+
                     {% csrf_token %}
                     {{ form|crispy }}
 
                     <div class="form-group text-right">
-                        <a href="{% url 'core:equipe_list' %}"
+                        <a href="{% url 'core:quest_list' %}"
                         class="btn btn-outline-danger"
                         role="button" aria-pressed="true">
+                            <i class="fa fa-times" aria-hidden="true"></i>
                             Cancelar
                         </a>
-
                         <button class="btn btn-outline-success"
                         type="submit" role="button" aria-pressed="true">
-                            Criar Quest
+                            <li class="fas fa-check-circle" aria-hidden="true"></li>
+                            Criar quest
                         </button>
                     </div>
                 </form>
@@ -40,7 +38,4 @@
 </div>
 
 {% endblock main %}
-
-
-{% block js %} {% endblock js %}
 

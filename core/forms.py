@@ -29,8 +29,8 @@ class QuestCreateForm(forms.ModelForm):
         label='Data inicial',
         widget=forms.widgets.DateInput(
             attrs={
-                'type': 'text',
-                'class':'datepicker'
+                'class':'datepicker',
+                'style':"display:flex;",
             }
         ),
         required = True
@@ -39,8 +39,7 @@ class QuestCreateForm(forms.ModelForm):
         label='Data de entrega',
         widget=forms.widgets.DateInput(
             attrs={
-                'type': 'date',
-                'class':'form-control'
+                'class':'datepicker'
             }
         ),
         required = False
@@ -63,6 +62,4 @@ class QuestCreateForm(forms.ModelForm):
 
             if instance.end_date:
                 self.fields['end_date'].widget.attrs['value'] = instance.end_date
-
-
 

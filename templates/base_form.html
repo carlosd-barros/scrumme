@@ -1,22 +1,30 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block css %}
+    <link href="{% static 'node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
 {% block main %}
 
 {% endblock main %}
 
 {% block js %}
-<link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
-<script type="text/javascript" src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
-<script type="text/javascript" src="{% static 'css/bootstrap-datepicker.css' %}"></script>
 
-<script>
-    $(function() {
-        $('.datepicker').datepicker({
-            format: 'd/n/Y'
+    <script type="text/javascript" src="{% static 'node_modules/popper.js/dist/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js' %}"></script>
+
+    <script>
+
+        $('.dateinput').datetimepicker({
+            timepicker:false,
+            datepicker:true,
+            format:'d/m/Y',
+            // theme:'dark',
+            inline:true,
         });
-    });
-</script>
+
+    </script>
 
 {% endblock js %}
