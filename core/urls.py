@@ -11,7 +11,7 @@ from core.views.equipe import (
 from core.views.quest import (
     QuestCreateView, QuestDeleteView,
     QuestDetailView, QuestListView,
-    QuestUpdateView
+    QuestUpdateView, QuestComplete
 )
 from core.views.jogador import (
     JogadorCreateView, JogadorDeleteView,
@@ -31,7 +31,7 @@ urlpatterns = [
 
     # Jogador
     path(
-        'profile/<slug:slug>/details/',
+        'profile/<int:pk>/details/',
         JogadorDetailView.as_view(),
         name='jogador_detail'
     ),
@@ -41,7 +41,7 @@ urlpatterns = [
         name='jogador_update'
     ),
     path(
-        'profile/<slug:slug>/delete/',
+        'profile/<int:pk>/delete/',
         JogadorDeleteView.as_view(),
         name='jogador_delete'
     ),
@@ -58,19 +58,24 @@ urlpatterns = [
         name='quest_create'
     ),
     path(
-        'quest/<slug:slug>/delete/',
+        'quest/<int:pk>/delete/',
         QuestDeleteView.as_view(),
         name='quest_delete'
     ),
     path(
-        'quest/<slug:slug>/detail/',
+        'quest/<int:pk>/detail/',
         QuestDetailView.as_view(),
         name='quest_detail'
     ),
     path(
-        'quest/<slug:slug>/update',
+        'quest/<int:pk>/update',
         QuestUpdateView.as_view(),
         name='quest_update'
+    ),
+    path(
+        'quest/<int:pk>/complete',
+        QuestComplete.as_view(),
+        name = 'quest_complete'
     ),
 
 
@@ -86,17 +91,17 @@ urlpatterns = [
         name='equipe_create'
     ),
     path(
-        'equipe/<slug:slug>/delete/',
+        'equipe/<int:pk>/delete/',
         EquipeDeleteView.as_view(),
         name='equipe_delete'
     ),
     path(
-        'equipe/<slug:slug>/detail/',
+        'equipe/<int:pk>/detail/',
         EquipeDetailView.as_view(),
         name='equipe_detail'
     ),
     path(
-        'equipe/<slug:slug>/update/',
+        'equipe/<int:pk>/update/',
         EquipeUpdateView.as_view(),
         name='equipe_update'
     ),

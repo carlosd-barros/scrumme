@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock title %}
 
 {% block main %}
-
+{% if request.user.is_authenticated %}
 <h2 class="m-0 font-weight-bold text-secondary"> Suas equipes </h2>
 <hr>
 <div class="row">
@@ -13,7 +13,7 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
             <h5 class="m-0 font-weight-bold text-primary text-capitalize">
-                <a href="{% url 'core:equipe_detail' equipe.slug %}">
+                <a href="{% url 'core:equipe_detail' equipe.pk %}">
                     {{ equipe.name }}
                 </a>
             </h5>
@@ -25,9 +25,9 @@
 
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">Ações</div>
-                    <a class="dropdown-item" href="{% url 'core:equipe_detail' equipe.slug %}">Detalhes</a>
-                    <a class="dropdown-item" href="{% url 'core:equipe_update' equipe.slug %}">Editar</a>
-                    <a class="dropdown-item" href="{% url 'core:equipe_delete' equipe.slug %}">Excluir</a>
+                    <a class="dropdown-item" href="{% url 'core:equipe_detail' equipe.pk %}">Detalhes</a>
+                    <a class="dropdown-item" href="{% url 'core:equipe_update' equipe.pk %}">Editar</a>
+                    <a class="dropdown-item" href="{% url 'core:equipe_delete' equipe.pk %}">Excluir</a>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
             <h5 class="m-0 font-weight-bold text-primary text-capitalize">
-            <a href="{% url 'core:quest_detail' quest.slug %}">
+            <a href="{% url 'core:quest_detail' quest.pk %}">
                 {{ quest.name }}
             </a>
             </h5>
@@ -93,9 +93,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                 <div class="dropdown-header">Ações</div>
-                <a class="dropdown-item" href="{% url 'core:quest_detail' quest.slug %}">Detalhes</a>
-                <a class="dropdown-item" href="{% url 'core:quest_update' quest.slug %}">Editar</a>
-                <a class="dropdown-item" href="{% url 'core:quest_delete' quest.slug %}">Excluir</a>
+                <a class="dropdown-item" href="{% url 'core:quest_detail' quest.pk %}">Detalhes</a>
+                <a class="dropdown-item" href="{% url 'core:quest_update' quest.pk %}">Editar</a>
+                <a class="dropdown-item" href="{% url 'core:quest_delete' quest.pk %}">Excluir</a>
             </div>
             </div>
 
@@ -141,5 +141,9 @@
         <p>Parece que você não é reponsável por nenhuma quest.<br>
     {% endfor %}
 </div>
+{% else %}
+  <h5>É preciso estar logado para obter acesso.</h5>
+{% endif %}
+
 
 {% endblock main %}

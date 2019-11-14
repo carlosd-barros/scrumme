@@ -62,4 +62,3 @@ class QuestCreateForm(forms.ModelForm):
 
             if instance.end_date:
                 self.fields['end_date'].widget.attrs['value'] = instance.end_date
-

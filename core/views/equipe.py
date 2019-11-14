@@ -9,7 +9,6 @@ from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.template.defaultfilters import slugify
 
 from django.views.generic import (
     ListView, FormView, DetailView, 
@@ -102,7 +101,7 @@ class EquipeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse(
             self.success_url,
             kwargs=({
-                'slug':self.get_object().slug
+                'pk':self.get_object().pk
             })
         )
 

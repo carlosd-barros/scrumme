@@ -51,7 +51,7 @@
             <div class="btn-group">
 
                 <a class="btn btn-outline-secondary"
-                href="{% url 'core:quest_detail' quest.slug %}"
+                href="{% url 'core:quest_detail' quest.pk %}"
                 title="Visualizar">
                     <span class="icon text-white-600">
                     <i class="fas fa-eye"></i>
@@ -59,13 +59,13 @@
                 </a>
 
                 <a class="btn btn-outline-primary"
-                href="{% url 'core:quest_update' quest.slug %}"
+                href="{% url 'core:quest_update' quest.pk %}"
                 title="Editar">
                     <i class="fas fa-edit"></i>
                 </a>
 
                 <a class="btn btn-outline-danger"
-                href="{% url 'core:quest_delete' quest.slug %}"
+                href="{% url 'core:quest_delete' quest.pk %}"
                 title="Excluir">
                     <i class="fas fa-trash-alt"></i>
                 </a>

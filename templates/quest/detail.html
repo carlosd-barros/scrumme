@@ -66,13 +66,14 @@
 
         <div class="form-group float-right">
             <a class="btn btn-outline-secondary"
-            href="{% url 'core:quest_update' object.slug %}">
+            href="{% url 'core:quest_update' object.pk %}">
                 Editar quest
             </a>
 
             <a class="btn btn-outline-success"
             onsubmit="return confirm('Confirmar conclusão?')"
-            href="#">
+            href="{% url 'core:quest_complete' object.pk %}"
+            type="submit">
                 <li class="fas fa-check-circle"></li>
                 Concluir quest
             </a>

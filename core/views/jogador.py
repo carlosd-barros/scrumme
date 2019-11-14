@@ -8,8 +8,7 @@ from django.db.models import Q
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.template.defaultfilters import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import (
     ListView, FormView, DetailView, 
@@ -22,7 +21,7 @@ from core.models import Jogador, Classe, Equipe, Quest
 logger = logging.getLogger(__name__)
 
 
-class JogadorListView(ListView):
+class JogadorListView(LoginRequiredMixin, ListView):
     model = Jogador
     template_name = "jogador/list.html"
     ordering = ["name"]
@@ -39,17 +38,17 @@ class JogadorCreateView(CreateView):
     ]
 
 
-class JogadorDetailView(DetailView):
+class JogadorDetailView(LoginRequiredMixin, DetailView):
     model = Jogador
     template_name = "jogador/detail.html"
 
-class JogadorDeleteView(DeleteView):
+class JogadorDeleteView(LoginRequiredMixin, DeleteView):
     model = Jogador
     success_url = reverse_lazy('accounts:login')
     template_name = "jogador/delete.html"
 
 
-class JogadorUpdateView(UpdateView):
+class JogadorUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'jogador/update.html'
     success_url = 'core:jogador_detail'
@@ -85,6 +84,9 @@ class JogadorUpdateView(UpdateView):
                 'Ops, parece que algo deu errado.'
             )
             form = self.get_form()
+            render(
+                self.request, self.template_name, {'form':form}
+            )
 
         return super(
             JogadorUpdateView, self).form_valid(form)
@@ -93,6 +95,6 @@ class JogadorUpdateView(UpdateView):
         return reverse(
             self.success_url,
             kwargs=({
-                'slug':self.get_object().jogador.slug
+                'pk':self.get_object().jogador.pk
             })
         )

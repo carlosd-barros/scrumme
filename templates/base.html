@@ -132,30 +132,30 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
                 {% if user.is_authenticated %}
-                <a class="dropdown-item" href="{% url 'core:jogador_detail' request.user.jogador.slug %}">
-                  <i class="fas fa-user fa-sm text-gray-400"></i>
+                <a class="dropdown-item" href="{% url 'core:jogador_detail' request.user.jogador.pk %}">
+                  <i class="fas fa-user fa-sm text-gray-500"></i>
                   Perfil
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'accounts:logout' %}" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt text-gray-400"></i>
+                  <i class="fas fa-sign-out-alt text-gray-500"></i>
                   Logout
                 </a>
 
                 {% if user.is_superuser %}
                 <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">
-                  <i class="oi oi-flash fa-sm fa-fw mr-2 text-gray-400"></i>
+                  <i class="fa fa-rocket text-gray-500" aria-hidden="true"></i>
                   Admin
                 </a>
                 {% endif %}
 
                 {% else %}
                 <a class="dropdown-item" href="{% url 'accounts:login' %}">
-                  <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-500"></i>
                   Login
                 </a>
                 <a class="dropdown-item" href="{% url 'accounts:register' %}">
-                    <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-500"></i>
                     Register
                   </a>
                 {% endif %}

@@ -40,7 +40,7 @@
                 <div class="btn-group">
 
                     <a class="btn btn-outline-secondary"
-                    href="{% url 'core:equipe_detail' equipe.slug %}"
+                    href="{% url 'core:equipe_detail' equipe.pk %}"
                     title="Visualizar">
                     <span class="icon text-white-600">
                         <i class="fas fa-eye"></i>
@@ -48,13 +48,13 @@
                     </a>
 
                     <a class="btn btn-outline-primary"
-                    href="{% url 'core:equipe_update' equipe.slug %}"
+                    href="{% url 'core:equipe_update' equipe.pk %}"
                     title="Editar">
                         <i class="fas fa-edit"></i>
                     </a>
 
                     <a class="btn btn-outline-danger"
-                    href="{% url 'core:equipe_delete' equipe.slug %}"
+                    href="{% url 'core:equipe_delete' equipe.pk %}"
                     title="Excluir">
                         <i class="fas fa-trash-alt"></i>
                     </a>

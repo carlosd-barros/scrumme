@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.template.defaultfilters import slugify
 
 from django.views.generic import (
     ListView, FormView, DetailView, 
@@ -41,14 +40,14 @@ class DashboardView(TemplateView):
                 jogador.name = jogador.user.username
                 jogador.save()
 
-        else:
-            messages.error(
-                request,
-                'É necessário estar logado para obter acesso.'
-            )
-            return HttpResponseRedirect(
-                reverse('accounts:login')
-            )
+        # else:
+        #     messages.error(
+        #         request,
+        #         'É necessário estar logado para obter acesso.'
+        #     )
+        #     return HttpResponseRedirect(
+        #         reverse('accounts:login')
+        #     )
 
         return super(
             DashboardView, self).dispatch(request, *args, **kwargs)

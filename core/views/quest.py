@@ -8,8 +8,7 @@ from django.db.models import Q
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.template.defaultfilters import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import (
     ListView, FormView, DetailView, 
@@ -24,7 +23,7 @@ from core.forms import QuestCreateForm
 logger = logging.getLogger(__name__)
 
 
-class QuestListView(ListView):
+class QuestListView(LoginRequiredMixin, ListView):
     model = Quest
     template_name = "quest/list.html"
     ordering = ["-created"]
@@ -35,7 +34,7 @@ class QuestListView(ListView):
         ).distinct()
 
 
-class QuestCreateView(CreateView):
+class QuestCreateView(LoginRequiredMixin, CreateView):
     model = Quest
     form_class = QuestCreateForm
     template_name = "quest/create.html"
@@ -61,18 +60,34 @@ class QuestCreateView(CreateView):
             QuestCreateView, self).form_valid(form)
 
 
-class QuestDetailView(DetailView):
+class QuestDetailView(LoginRequiredMixin, DetailView):
     model = Quest
     template_name = "quest/detail.html"
 
 
-class QuestDeleteView(DeleteView):
+class QuestComplete(View):
+    template_name = 'quest/detail.html'
+    success_url = reverse_lazy('core:quest_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        logger.debug(
+            f"kwargs qui: {kwargs}"
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+
+    def post(self, request):
+        if request.method == 'POST':
+            print(request)
+
+
+class QuestDeleteView(LoginRequiredMixin, DeleteView):
     model = Quest
     template_name = "quest/delete.html"
     success_url = reverse_lazy('core:quest_list')
 
 
-class QuestUpdateView(UpdateView):
+class QuestUpdateView(LoginRequiredMixin, UpdateView):
     model = Quest
     form_class = QuestCreateForm
     template_name = "quest/update.html"
