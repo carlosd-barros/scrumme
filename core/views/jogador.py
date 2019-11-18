@@ -1,6 +1,7 @@
 import logging
 from PIL import Image
 from resizeimage import resizeimage
+from django.template.defaultfilters import filesizeformat
 
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
@@ -11,8 +12,6 @@ from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from django.template.defaultfilters import filesizeformat
 
 from django.views.generic import (
     ListView, FormView, DetailView, 

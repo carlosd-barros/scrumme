@@ -23,7 +23,7 @@ from core.views.classe import (
     ClasseDetailView, ClasseListView,
     ClasseUpdateView
 )
-from core.views.projeto import ProjetotListView, ProjetoDetailView
+
 
 app_name='core'
 
@@ -105,18 +105,6 @@ urlpatterns = [
         'equipe/<int:pk>/update/',
         EquipeUpdateView.as_view(),
         name='equipe_update'
-    ),
-
-    #Projeto
-    path(
-        'projeto/list',
-        ProjetotListView.as_view(),
-        name='projeto_list'
-    ),
-    path(
-        'projeto/<int:pk>/detail',
-        ProjetoDetailView.as_view(),
-        name='projeto_detail'
     ),
 
 

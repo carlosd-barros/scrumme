@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Equipe, Quest, Classe, Jogador, Projeto
+from .models import Equipe, Quest, Classe, Jogador
 
 @admin.register(Equipe)
 class EquipeAdmin(admin.ModelAdmin):
@@ -39,11 +39,4 @@ class JogadorAdmin(admin.ModelAdmin):
         "name", "classe",
         "type", "points",
         "active",
-    )
-
-
-@admin.register(Projeto)
-class ProjetoAdmin(admin.ModelAdmin):
-    list_display = (
-        'name', 'responsavel', 'active'
     )

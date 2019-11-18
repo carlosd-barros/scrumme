@@ -108,43 +108,8 @@ class Equipe(models.Model):
         return self.name
 
 
-class Projeto(models.Model):
-    name = models.CharField("Nome", max_length=50)
-    responsavel = models.ForeignKey(
-        Jogador,
-        on_delete=models.PROTECT,
-        verbose_name="Resopnsável pelo projeto",
-    )
-    equipe = models.ForeignKey(
-        Equipe,
-        verbose_name="Equipe",
-        on_delete=models.PROTECT
-    )
-    active = models.BooleanField(default=True)
-    created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
-    updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
-
-    class Meta:
-        verbose_name = "Projeto"
-        verbose_name_plural = "Projetos"
-
-    def __str__(self):
-        return self.name
-
-    # def get_absolute_url(self):
-    #     return reverse(
-    #         "core:projeto_detail", kwargs={"pk": self.pk}
-    #     )
-
-
-
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=100)
-    project = models.ForeignKey(
-        Projeto,
-        verbose_name="Projeto",
-        on_delete=models.PROTECT
-    )
     responsaveis = models.ManyToManyField(
         Jogador,
         blank=True,

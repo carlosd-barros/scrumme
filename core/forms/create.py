@@ -7,7 +7,7 @@ from tempus_dominus.widgets import (
 )
 
 from core.models import (
-    Jogador, Classe, Equipe, Quest, Projeto
+    Jogador, Classe, Equipe, Quest
 )
 from .base import ModelDatePickerForm
 
@@ -50,25 +50,4 @@ class QuestCreateForm(ModelDatePickerForm):
             'end_date': DatePicker(),
         }
 
-
-class ProjetoCreateForm(forms.ModelForm):
-    equipe = forms.ModelMultipleChoiceField(
-        required=True,
-        label='Equipe',
-        queryset=Projeto.objects.none(),
-        help_text='Mantenha precionado ctrl para selecionar vários'
-    )
-
-    class Meta:
-        model = Projeto
-        fields = (
-            "name", "equipe"
-        )
-
-    def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance')
-        super().__init__(*args, **kwargs)
-
-        if instance:
-            self.fields['equipe'].initial = instance.equipe.filter(active=True)
 
