@@ -68,32 +68,10 @@
         </div>
       </li>
 
-      {% comment %} <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder" aria-hidden="true"></i>
-          <span>Projetos</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Seu projetos</h6>
-            <a class="collapse-item" href="{% url 'core:projeto_list' %}">Listar</a>
-            <a class="collapse-item" href="#">Novo projeto</a>
-          </div>
-        </div>
-      </li> {% endcomment %}
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link" href="{% url 'core:quest_list' %}">
           <i class="fa fa-gamepad" aria-hidden="true"></i>
-          <span>Quests</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Suas quests</h6>
-            <a class="collapse-item" href="{% url 'core:quest_list' %}">Listar</a>
-            <a class="collapse-item" href="{% url 'core:quest_create' %}">Nova quest</a>
-          </div>
-        </div>
+          <span>Charts</span></a>
       </li>
 
       <!-- Divider -->

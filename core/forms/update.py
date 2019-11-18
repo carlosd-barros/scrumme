@@ -15,7 +15,7 @@ from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 from django.contrib.auth.models import User
 from core.models import Jogador, Classe, Equipe, Quest
 
-from .base import ModelBaseFormHelper
+from .base import ModelBaseFormHelper, ModelDatePickerForm
 
 logger = logging.getLogger(__name__)
 
@@ -75,3 +75,26 @@ class JogadorUpdateForm(ModelBaseFormHelper):
                 pass
 
         return avatar
+
+class QuestUpdateForm(ModelDatePickerForm):
+
+    class Meta:
+        model = Quest
+        fields = [
+            "name", "responsaveis",
+            "init_date", "end_date",
+            "points", "description"
+        ]
+        widgets = {
+            'init_date': DatePicker(),
+            'end_date': DatePicker(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        print(f"instancia aqui: {instance.responsaveis}")
+        super(QuestUpdateForm, self).__init__(*args, **kwargs)
+
+        if instance:
+            self.fields['responsaveis'].queryset = instance.equipe.team.filter(active=True)
+            self.fields['responsaveis'].required = True

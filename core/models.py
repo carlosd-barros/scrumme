@@ -110,6 +110,13 @@ class Equipe(models.Model):
 
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=100)
+    equipe = models.ForeignKey(
+        Equipe,
+        null=True,
+        blank=True,
+        verbose_name="Equipe",
+        on_delete=models.PROTECT
+    )
     responsaveis = models.ManyToManyField(
         Jogador,
         blank=True,

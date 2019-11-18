@@ -13,7 +13,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Editar quest "{{ object.name|upper }}"</h5>
+        <h5 class="m-0 font-weight-bold text-primary">Editando a quest "{{ object.name|upper }}"</h5>
     </div>
 
     <div class="card-body">
@@ -23,11 +23,11 @@
             {{ form|crispy }}
 
             <div class="form-group text-right">
-                <a href="{% url 'core:quest_list' %}"
+                <a href="{% url 'core:quest_detail' object.pk %}"
                 class="btn btn-outline-danger"
                 role="button" aria-pressed="true">
                     <i class="fa fa-times" aria-hidden="true"></i>
-                    Descartar
+                    Cancelar
                 </a>
 
                 <button onsubmit="return confirm('Confirmar?')"

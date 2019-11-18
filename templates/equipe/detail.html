@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Equipe Detail{% endblock title %}
 
@@ -47,4 +48,31 @@
     </div>
 </div>
 
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Criar quest para está equipe</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="POST">
+
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <div class="form-group text-right">
+                <button class="btn btn-outline-success"
+                type="submit" role="button" aria-pressed="true">
+                    <li class="fas fa-check-circle" aria-hidden="true"></li>
+                    Criar quest
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 {% endblock main %}
+
+{% block js %}
+    {{ form.media }}
+{% endblock js %}

@@ -20,6 +20,7 @@ from django.views.generic import (
 from core.models import Jogador, Classe, Equipe, Quest
 
 from core.forms.create import QuestCreateForm
+from core.forms.update import QuestUpdateForm
 
 logger = logging.getLogger(__name__)
 
@@ -68,36 +69,32 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
 
 class QuestComplete(View):
     quest_id = None
-    success_url = 'core:quest_detail'
+    success_url = reverse_lazy('core:quest_list')
     template_name = 'quest/detail.html'
 
     def dispatch(self, request, *args, **kwargs):
-        logger.debug(
-            f"kwargs qui: {kwargs}"
-        )
-        logger.debug(
-            f"args qui: {args}"
-        )
         self.quest_id = kwargs.get('pk')
-        return super().dispatch(request, *args, **kwargs)
+
+        return super(
+            QuestComplete, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, pk):
-        if request.method == 'POST':
-            print(f"request aqui: {request.POST}")
-        messages.success(
-            request, 'funfou meu bacano'
-        )
-        return HttpResponseRedirect(
-            self.get_success_url()
-        )
+        quest = get_object_or_404(Quest, pk=pk)
+        jogadores = quest.responsaveis
 
-    def get_success_url(self):
-        return reverse(
-            self.success_url,
-            kwargs={
-                'pk':self.quest_id
-            }
-        )
+        for jogador in jogadores.all():
+            jogador.points += quest.points
+            jogador.save()
+
+        quest.open = False
+        quest.save()
+
+        return HttpResponseRedirect(self.success_url)
+
+    # def get_success_url(self):
+    #     return reverse(
+    #         self.success_url, kwargs={'pk':self.quest_id}
+    #     )
 
 
 class QuestDeleteView(LoginRequiredMixin, DeleteView):
@@ -108,7 +105,35 @@ class QuestDeleteView(LoginRequiredMixin, DeleteView):
 
 class QuestUpdateView(LoginRequiredMixin, UpdateView):
     model = Quest
-    form_class = QuestCreateForm
+    form_class = QuestUpdateForm
     template_name = "quest/update.html"
-    success_url = reverse_lazy('core:quest_list')
+    success_url = 'core:quest_detail'
+
+    def form_valid(self, form):
+        if self.request.method == 'POST':
+            if form.is_valid:
+                form.save()
+                messages.success(
+                    self.request,
+                    'Quest editada com sucesso.'
+                )
+
+                return HttpResponseRedirect(
+                    self.get_success_url()
+                )
+
+            else:
+                messages.error(
+                    self.request, 'Ops, verifique os dados informados.'
+                )
+                return render(
+                    self.request, self.template_name, self.get_context_data()
+                )
+
+        return reverse_lazy('core:quest_list')
+
+    def get_success_url(self):
+        return reverse(
+            self.success_url, kwargs={'pk':self.get_object().pk}
+        )
 

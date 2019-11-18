@@ -3,27 +3,7 @@
 
 {% block title %}Quest List{% endblock title %}
 
-{% block css %} {% endblock css %}
-
 {% block main %}
-
-{% comment %} <nav class="nav-container" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Quest</li>
-    </ol>
-    <ul class="nav-buttons">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-cogs"></i> Opções
-            </button>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{% url 'core:quest_create' %}">Novo</a>
-            </div>
-        </div>
-    </ul>
-</nav> {% endcomment %}
 
 <h2>Suas quests</h2> <hr> <br>
 
@@ -35,6 +15,7 @@
             <th class="text-center">Responsáveis</th>
             <th class="text-center">Inicio</th>
             <th class="text-center">Entrega</th>
+            <th class="text-center">Concluída</th>
             <th class="text-center">Ações</th>
         </tr>
     </thead>
@@ -46,6 +27,13 @@
             <td class="text-center">{{ quest.responsaveis.all|length }}</td>
             <td class="text-center">{{ quest.init_date|date:'d/m/Y' }}</td>
             <td class="text-center">{{ quest.end_date|date:'d/m/Y' }}</td>
+            <td class="text-center">
+                {% if quest.open %}
+                        <span class="badge badge-pill badge-danger">NÃO</span>
+                {% else %}
+                        <span class="badge badge-pill badge-success">SIM</span>
+                {% endif %}
+            </td>
 
             <td class="actions text-center align-middle">
             <div class="btn-group">

@@ -16,7 +16,7 @@ from django.views.generic import (
     UpdateView, DeleteView, View
 )
 
-from core.forms.create import EquipeCreateForm
+from core.forms.create import EquipeCreateForm, QuestCreateForm, QuestFormCreate
 from core.models import Jogador, Classe, Equipe, Quest
 
 logger = logging.getLogger(__name__)
@@ -36,6 +36,8 @@ class EquipeListView(LoginRequiredMixin, ListView):
         ).distinct()
 
         return queryset
+
+
 class EquipeCreateView(LoginRequiredMixin, CreateView):
     model = Equipe
     form_class = EquipeCreateForm
@@ -66,16 +68,35 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
     template_name = "equipe/detail.html"
 
     def get_context_data(self, **kwargs):
-        team = self.get_object().team.all()
-
         kwargs.update({
-            'quests':Quest.objects.filter(
-                responsaveis__in=team
-            ).distinct()
+            'form':QuestFormCreate,
         })
 
         return super(
             EquipeDetailView, self).get_context_data(**kwargs)
+
+    @transaction.atomic
+    def post(self, request, pk):
+        logger.debug(f"dados aqui: {request.POST}")
+
+        form = QuestFormCreate(request.POST)
+        if form.is_valid:
+            quest = form.save(commit=False)
+            quest.equipe = self.get_object()
+            quest.save()
+
+            messages.success(
+                request,
+                'Quest criada com sucesso. Agora defina os responsáveis.'
+            )
+
+            return HttpResponseRedirect(
+                reverse('core:quest_update', kwargs={'pk':quest.pk})
+            )
+
+        return HttpResponseRedirect(
+            reverse('core:equipe_detail', kwargs={'pk':self.get_object().pk})
+        )
 
 
 class EquipeDeleteView(LoginRequiredMixin, DeleteView):
