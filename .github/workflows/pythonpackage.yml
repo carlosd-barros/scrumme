@@ -2,8 +2,9 @@ name: Python package
 
 on: [push]
 
-# jobs:
-#   build:
+jobs:
+  build:
+    run: echo 'funfou'
 
 #     runs-on: ubuntu-latest
 #     strategy:
