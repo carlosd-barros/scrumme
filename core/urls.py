@@ -14,7 +14,7 @@ from core.views.quest import (
     QuestUpdateView, QuestComplete
 )
 from core.views.jogador import (
-    JogadorCreateView, JogadorDeleteView,
+    JogadorDeleteView,
     JogadorDetailView, JogadorListView,
     JogadorUpdateView
 )
@@ -23,11 +23,12 @@ from core.views.classe import (
     ClasseDetailView, ClasseListView,
     ClasseUpdateView
 )
+from core.views.projeto import ProjetotListView, ProjetoDetailView
 
 app_name='core'
 
 urlpatterns = [
-    path('', DashboardView.as_view(), name='dashboard'),
+    path('', DashboardView.as_view(), name='home'),
 
     # Jogador
     path(
@@ -104,6 +105,18 @@ urlpatterns = [
         'equipe/<int:pk>/update/',
         EquipeUpdateView.as_view(),
         name='equipe_update'
+    ),
+
+    #Projeto
+    path(
+        'projeto/list',
+        ProjetotListView.as_view(),
+        name='projeto_list'
+    ),
+    path(
+        'projeto/<int:pk>/detail',
+        ProjetoDetailView.as_view(),
+        name='projeto_detail'
     ),
 
 

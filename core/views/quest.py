@@ -1,5 +1,6 @@
 import logging
 
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -18,7 +19,7 @@ from django.views.generic import (
 
 from core.models import Jogador, Classe, Equipe, Quest
 
-from core.forms import QuestCreateForm
+from core.forms.create import QuestCreateForm
 
 logger = logging.getLogger(__name__)
 
@@ -66,19 +67,37 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
 
 
 class QuestComplete(View):
+    quest_id = None
+    success_url = 'core:quest_detail'
     template_name = 'quest/detail.html'
-    success_url = reverse_lazy('core:quest_list')
 
     def dispatch(self, request, *args, **kwargs):
         logger.debug(
             f"kwargs qui: {kwargs}"
         )
+        logger.debug(
+            f"args qui: {args}"
+        )
+        self.quest_id = kwargs.get('pk')
         return super().dispatch(request, *args, **kwargs)
 
-
-    def post(self, request):
+    def post(self, request, pk):
         if request.method == 'POST':
-            print(request)
+            print(f"request aqui: {request.POST}")
+        messages.success(
+            request, 'funfou meu bacano'
+        )
+        return HttpResponseRedirect(
+            self.get_success_url()
+        )
+
+    def get_success_url(self):
+        return reverse(
+            self.success_url,
+            kwargs={
+                'pk':self.quest_id
+            }
+        )
 
 
 class QuestDeleteView(LoginRequiredMixin, DeleteView):

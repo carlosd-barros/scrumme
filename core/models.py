@@ -1,14 +1,22 @@
 from django.db import models
-from .choices import JogadorType
+from django.urls import reverse
 from django.contrib.auth.models import User
+
+from .choices import JogadorType, JogadorClass
 
 
 class Classe(models.Model):
-    name = models.CharField("Classe", max_length=50)
-    min_points = models.IntegerField("Minimos pontos")
-    max_points = models.IntegerField("Maximo de pontos", blank=True, null=True)
-    active = models.BooleanField('Ativo')
-
+    name = models.CharField("Nome", max_length=50)
+    min_points = models.IntegerField("Pontos mínimos")
+    max_points = models.IntegerField("Pontos máximos", blank=True, null=True)
+    related_choice = models.IntegerField(
+        "Classe choice relacionada",
+        choices=JogadorClass.choices(),
+        default=JogadorClass.INICIANTE.code,
+        blank=True,
+        null=True
+    )
+    active = models.BooleanField('Ativo', default=True)
 
     class Meta:
         verbose_name='Classe'
@@ -26,12 +34,12 @@ class Jogador(models.Model):
         "Nome Completo",
         max_length=150,
     )
-    classe = models.ForeignKey(
-        Classe,
-        null=True,
+    classe = models.IntegerField(
+        "Classe do jogador",
+        choices=JogadorClass.choices(),
+        default=JogadorClass.INICIANTE.code,
         blank=True,
-        verbose_name="Classe",
-        on_delete=models.PROTECT
+        null=True
     )
     type = models.IntegerField(
         'Tipo de jogador',
@@ -41,13 +49,21 @@ class Jogador(models.Model):
         null=True
     )
     points = models.IntegerField("Scrum points", default=0)
-    avatar = models.ImageField(default='profile_pics/default.svg', upload_to='profile_pics')
+    avatar = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        upload_to='profile_pics',
+        verbose_name='Imagem do perfil',
+        default='profile_pics/default.png',
+        help_text='apenas imagens são aceitas'
+    )
     active = models.BooleanField(default=True)
     created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
     updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
 
     def save(self, *args, **kwargs):
-        if self.name:
+        if len(self.name) > 1:
             self.name = self.name.upper()
         else:
             self.name = self.user.username
@@ -89,21 +105,57 @@ class Equipe(models.Model):
         verbose_name_plural="Equipes"
 
     def __str__(self):
-        self.name
+        return self.name
+
+
+class Projeto(models.Model):
+    name = models.CharField("Nome", max_length=50)
+    responsavel = models.ForeignKey(
+        Jogador,
+        on_delete=models.PROTECT,
+        verbose_name="Resopnsável pelo projeto",
+    )
+    equipe = models.ForeignKey(
+        Equipe,
+        verbose_name="Equipe",
+        on_delete=models.PROTECT
+    )
+    active = models.BooleanField(default=True)
+    created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
+    updated = models.DateTimeField('Atualizado em', auto_now=True, null=True)
+
+    class Meta:
+        verbose_name = "Projeto"
+        verbose_name_plural = "Projetos"
+
+    def __str__(self):
+        return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse(
+    #         "core:projeto_detail", kwargs={"pk": self.pk}
+    #     )
+
+
 
 class Quest(models.Model):
     name = models.CharField("Nome", max_length=100)
+    project = models.ForeignKey(
+        Projeto,
+        verbose_name="Projeto",
+        on_delete=models.PROTECT
+    )
     responsaveis = models.ManyToManyField(
         Jogador,
         blank=True,
-        verbose_name="Responsáveis",
+        verbose_name="Responsáveis"
     )
     init_date = models.DateField("Inicio")
     end_date = models.DateField("Fim", null=True, blank=True)
     points = models.IntegerField("Quantidade de pontos")
     description = models.TextField("Descrição")
     active = models.BooleanField("Ativo", default=True)
-    complete = models.BooleanField("Concluida", default=False)
+    open = models.BooleanField("Concluida", default=True)
     created = models.DateTimeField("Criado em", auto_now_add=True, null=True)
     updated = models.DateTimeField("Atualizado em", auto_now=True, null=True)
 

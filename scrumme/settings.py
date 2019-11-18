@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'tempus_dominus',
 
     'core',
     'accounts',
@@ -136,7 +137,6 @@ STATICFILES_DIRS = [
     BASE_DIR.child("static"),
 ]
 
-CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MEDIA_URL = "/media/"
 
@@ -145,9 +145,12 @@ MEDIA_ROOT = BASE_DIR.child('media')
 LOGOUT_URL = "/auth/logout/"
 
 # Auth
-LOGIN_REDIRECT_URL = 'core:dashboard'
+LOGIN_REDIRECT_URL = 'core:home'
 
 LOGOUT_REDIRECT_URL = 'accounts:login'
+
+# https://django-crispy-forms.readthedocs.io/en/latest/
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # E-mail
 # https://docs.djangoproject.com/en/2.0/topics/email/
@@ -166,6 +169,10 @@ EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
 AWS_S3_FILE_OVERWWRITE = False
 
 AWS_DEFAULT_ACL = None
+
+# https://tempusdominus.github.io/bootstrap-4/Installing/
+TEMPUS_DOMINUS_LOCALIZE = True
+TEMPUS_DOMINUS_INCLUDE_ASSETS = True
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-age
@@ -230,3 +237,8 @@ LOGGING = {
         }
     }
 }
+
+ALLOWED_UPLOAD_FILETYPES = [
+    'jpeg','png', 'jpg'
+]
+ALLOWED_UPLOAD_MAXSIZE = 716800

@@ -15,8 +15,8 @@
         <h5 class="m-0 font-weight-bold text-primary text-captalize">{{ object.name }}</h5>
     </div>
 
-    <div class="card-body">
-        <div class="widget-body">
+    <div class="card">
+        <div class="card-body">
 
             <div class="row">
                 <div class="col-md-4">
@@ -62,23 +62,26 @@
                 </div>
             </div>
 
+            <form action="{% url 'core:quest_complete' object.pk %}" method="POST"> {% csrf_token %}
+                <div class="form-group float-right">
+
+                    <a class="btn btn-outline-secondary"
+                    href="{% url 'core:quest_update' object.pk %}">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                        Editar quest
+                    </a>
+
+                    <button class="btn btn-outline-success"
+                    type="submit"
+                    onsubmit="return confirm('Confirmar conclusão?')">
+                        <li class="fas fa-check-circle"></li>
+                        Concluir quest
+                    </button>
+
+                </div>
+            </form>
+
         </div>
-
-        <div class="form-group float-right">
-            <a class="btn btn-outline-secondary"
-            href="{% url 'core:quest_update' object.pk %}">
-                Editar quest
-            </a>
-
-            <a class="btn btn-outline-success"
-            onsubmit="return confirm('Confirmar conclusão?')"
-            href="{% url 'core:quest_complete' object.pk %}"
-            type="submit">
-                <li class="fas fa-check-circle"></li>
-                Concluir quest
-            </a>
-        </div>
-
     </div>
 </div>
 

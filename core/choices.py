@@ -35,3 +35,11 @@ class JogadorType(ChoicesEnum):
     COMUM = (0, 'COMUM')
     MASTER = (1, 'SCRUM MASTER')
     OWNER = (2, 'PRODUCT OWNER')
+
+
+class JogadorClass(ChoicesEnum):
+    INICIANTE = (0, 'INICIANTE')
+    INTERMEDIARIO = (1, 'INTERMEDIÁRIO')
+    AVANCADO = (2, 'AVANÇADO')
+    MESTRE = (3, 'MESTRE')
+    JEDI = (4, 'JEDI')

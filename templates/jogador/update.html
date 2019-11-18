@@ -2,33 +2,50 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}Update{% endblock title %}
+{% block title %}Jogador Update{% endblock title %}
 
 
 {% block main %}
 
-<div class="content-section">
-    <form method="POST"> {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Atualizando jogador - {{ object.jogador.name }}</legend>
-            {{ form|crispy }}
-        </fieldset>
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Atualizando informações do jogador "{{ object.jogador.name|capfirst }}"</h5>
+    </div>
 
-        <div class="form-group float-right">
-            <a href= "{% url 'core:jogador_detail' object.jogador.pk %}"
-            title="Cancelar" class="btn btn-outline-primary"
-            role="button" aria-pressed="true">
-                <i class="fa fa-times" aria-hidden="true"></i>
-                Cancelar
-            </a>
+    <div class="card-body">
+        <form method="POST" class="form-vertical" enctype="multipart/form-data">
 
-            <button class="btn btn-outline-success"
-            type="submit" role="button" aria-pressed="true">
-                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                Atualizar Perfil
-            </button>
-        </div>
-    </form>
+            {% csrf_token %}
+            {% crispy form %}
+
+            <div class="form-group float-right">
+                <a href= "{% url 'core:jogador_detail' object.jogador.pk %}"
+                title="Cancelar" class="btn btn-outline-primary"
+                role="button" aria-pressed="true">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    Cancelar
+                </a>
+
+                <button class="btn btn-outline-success"
+                type="submit" role="button" aria-pressed="true">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    Atualizar Perfil
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
 {% endblock main %}
+
+{% block js %}
+    {{ form.media }}
+
+    <script>
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>
+
+{% endblock js %}

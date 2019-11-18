@@ -14,7 +14,7 @@ urlpatterns = [
         '',
         RedirectView.as_view(
             url=reverse_lazy(
-                'core:dashboard'
+                'core:home'
             ),
             permanent=False
         ),

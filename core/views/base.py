@@ -25,29 +25,15 @@ class DashboardView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            name = f"{request.user.first_name} {request.user.last_name}"
+
             jogador, created = Jogador.objects.get_or_create(
                 user=request.user,
                 defaults={
                     'user':request.user,
-                    'name':(
-                        f"{request.user.first_name} "
-                        f"{request.user.last_name}"
-                    )
+                    'name':name if len(name) > 1 else request.user.username
                 }
             )
-
-            if jogador.name == '':
-                jogador.name = jogador.user.username
-                jogador.save()
-
-        # else:
-        #     messages.error(
-        #         request,
-        #         'É necessário estar logado para obter acesso.'
-        #     )
-        #     return HttpResponseRedirect(
-        #         reverse('accounts:login')
-        #     )
 
         return super(
             DashboardView, self).dispatch(request, *args, **kwargs)

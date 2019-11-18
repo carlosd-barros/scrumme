@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Equipe, Quest, Classe, Jogador
+from .models import Equipe, Quest, Classe, Jogador, Projeto
 
 @admin.register(Equipe)
 class EquipeAdmin(admin.ModelAdmin):
@@ -26,7 +26,11 @@ class QuestAdmin(admin.ModelAdmin):
 
 @admin.register(Classe)
 class ClasseAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'name', 'min_points',
+        'max_points', 'related_choice',
+        'active',
+    )
 
 
 @admin.register(Jogador)
@@ -35,4 +39,11 @@ class JogadorAdmin(admin.ModelAdmin):
         "name", "classe",
         "type", "points",
         "active",
+    )
+
+
+@admin.register(Projeto)
+class ProjetoAdmin(admin.ModelAdmin):
+    list_display = (
+        'name', 'responsavel', 'active'
     )

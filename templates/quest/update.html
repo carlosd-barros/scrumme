@@ -1,49 +1,44 @@
 {% extends 'base.html' %}
+
 {% load crispy_forms_tags %}
 
 {% block title %}Quest Update{% endblock title %}
 
-{% block css %} {% endblock css %}
+{% block css %}
+    {{ form.media }}
+{% endblock css %}
 
 
 {% block main %}
 
-<div class="row">
-    <div class="col-xl-12 col-lg-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h5 class="m-0 font-weight-bold text-primary">Editar quest "{{ object.name|upper }}"</h5>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Editar quest "{{ object.name|upper }}"</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="POST"> 
+
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <div class="form-group text-right">
+                <a href="{% url 'core:quest_list' %}"
+                class="btn btn-outline-danger"
+                role="button" aria-pressed="true">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    Descartar
+                </a>
+
+                <button onsubmit="return confirm('Confirmar?')"
+                class="btn btn-outline-success"
+                type="submit" role="button" aria-pressed="true">
+                    <li class="fas fa-check-circle"></li>
+                    Atualizar quest
+                </button>
             </div>
-
-            <div class="card-body">
-                <form method="POST"> 
-
-                    {% csrf_token %}
-                    {{ form|crispy }}
-
-                    <div class="form-group text-right">
-                        <a href="{% url 'core:quest_list' %}"
-                        class="btn btn-outline-danger"
-                        role="button" aria-pressed="true">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                            Descartar
-                        </a>
-
-                        <button onsubmit="return confirm('Confirmar?')"
-                        class="btn btn-outline-success"
-                        type="submit" role="button" aria-pressed="true">
-                            <li class="fas fa-check-circle"></li>
-                            Atualizar quest
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
 {% endblock main %}
-
-
-{% block js %} {% endblock js %}
-

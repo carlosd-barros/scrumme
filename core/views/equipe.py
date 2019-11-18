@@ -16,7 +16,7 @@ from django.views.generic import (
     UpdateView, DeleteView, View
 )
 
-from core.forms import EquipeCreateForm
+from core.forms.create import EquipeCreateForm
 from core.models import Jogador, Classe, Equipe, Quest
 
 logger = logging.getLogger(__name__)

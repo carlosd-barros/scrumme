@@ -2,6 +2,7 @@ from django import template
 from django.db.models import Q
 
 from core.choices import JogadorType as JT
+from core.choices import JogadorClass as JC
 from core.models import Jogador, Quest, Equipe
 
 register = template.Library()
@@ -26,4 +27,11 @@ def get_quests(jogador):
 def get_jogador_type(type):
     return [
         t.display_name for t in JT if t.code == type
+    ][0]
+
+
+@register.simple_tag
+def get_jogador_class(classe):
+    return [
+        c.display_name for c in JC if c.code == classe
     ][0]
