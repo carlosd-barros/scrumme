@@ -9,10 +9,10 @@
 <h1 class="margin-none">Detalhes</h1>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary text-captalize">{{ object.name }}</h5>
-    </div>
     <div class="card-body">
+        <div class="card-title">
+            <h5 class="m-0 font-weight-bold text-primary text-captalize">{{ object.name }}</h5>
+        </div> <hr/>
 
         <div class="row">
             <div class="col-md-6">
@@ -57,13 +57,13 @@
         <form method="POST">
 
             {% csrf_token %}
-            {% crispy form %}
+            {% crispy form form.helper %}
 
             <div class="form-group text-right">
                 <button class="btn btn-outline-success"
                 type="submit" role="button" aria-pressed="true">
                     <li class="fas fa-check-circle" aria-hidden="true"></li>
-                    Criar quest
+                    Confirmar
                 </button>
             </div>
         </form>
