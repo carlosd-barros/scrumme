@@ -79,14 +79,12 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
         jogador = user.jogador
 
 
-
         return super(
             QuestDetailView, self).dispatch(request, *args, **kwargs)
 
 
 class QuestConfirmView(LoginRequiredMixin, View):
     success_url = reverse_lazy('core:quest_list')
-    template_name = 'quest/detail.html'
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
@@ -104,18 +102,17 @@ class QuestConfirmView(LoginRequiredMixin, View):
             quest.open = False
             quest.save()
 
-        else:
-            messages.error(
-                request,
-                'Por favor, defina um ou mais responsáveis por está quests.'
-            )
-            return HttpResponseRedirect(
-                reverse(
-                    'core:quest_detail', kwargs={'pk':quest_pk}
-                )
-            )
+            return HttpResponseRedirect(self.success_url)
 
-        return HttpResponseRedirect(self.success_url)
+        messages.error(
+            request, 'Por favor, defina um ou mais responsáveis por está quests.'
+        )
+
+        return HttpResponseRedirect(
+            reverse(
+                'core:quest_detail', kwargs={'pk':quest_pk}
+            )
+        )
 
 
 class QuestUpdateView(LoginRequiredMixin, UpdateView):
@@ -129,22 +126,18 @@ class QuestUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.method == 'POST':
             if form.is_valid:
                 form.save()
+
                 messages.success(
-                    self.request,
-                    'Quest editada com sucesso.'
+                    self.request, 'Quest editada com sucesso.'
                 )
+                return HttpResponseRedirect(self.get_success_url())
 
-                return HttpResponseRedirect(
-                    self.get_success_url()
-                )
-
-            else:
-                messages.error(
-                    self.request, 'Ops, verifique os dados informados.'
-                )
-                return render(
-                    self.request, self.template_name, self.get_context_data()
-                )
+            messages.error(
+                self.request, 'Ops, verifique os dados informados.'
+            )
+            return render(
+                self.request, self.template_name, self.get_context_data()
+            )
 
         return reverse_lazy('core:quest_list')
 
@@ -166,17 +159,15 @@ class QuestCompleteCreateView(LoginRequiredMixin, UpdateView):
             logger.debug(f"nível aqui: {quest.level}")
 
             if form.is_valid:
-                logger.debug(
-                    f"form aqui: {form}")
+                form.save()
+
+                return HttpResponseRedirect(self.get_success_url())
 
         return render(
             self.request,
             self.template_name,
-            context={
-                'form':form, 'object':quest
-            }
+            context={'form':form, 'object':quest}
         )
-
 
     def get_success_url(self):
         return reverse(

@@ -1,4 +1,5 @@
 import logging
+from random import randint
 
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
@@ -18,6 +19,7 @@ from django.views.generic import (
 
 from core.forms.create import EquipeCreateForm, QuestCreateForm
 from core.models import Jogador, Classe, Equipe, Quest
+from core.choices import QuestLevel
 
 logger = logging.getLogger(__name__)
 
@@ -82,7 +84,20 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
 
         if form.is_valid:
             quest = form.save(commit=False)
+            level = quest.level
+
+            if level == QuestLevel.BAIXO.code:
+                quest.points = randint(1,5)
+
+            elif level == QuestLevel.MEDIO.code:
+                quest.points = randint(4,8)
+
+            elif level == QuestLevel.ALTO.code:
+                quest.points = randint(7,11)
+
             quest.equipe = self.get_object()
+
+
             quest.save()
 
             messages.success(

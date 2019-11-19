@@ -44,7 +44,10 @@ class JogadorClass(ChoicesEnum):
     MESTRE = (3, 'MESTRE')
     JEDI = (4, 'JEDI')
 
+
 class QuestLevel(ChoicesEnum):
     BAIXO = (0, 'BAIXO')
     MEDIO = (1, 'MÉDIO')
     ALTO = (2, 'ALTO')
+
+
