@@ -16,7 +16,7 @@
 ```$ yarn install```
 
 ## .env
-crie um arquivo .env no diretório base ou na pasta do projeto \
+crie um arquivo .env no diretório base ou na pasta do projeto
 
 > `DEBUG=True` \
 > `EMAIL_HOST = smtp.gmail.com` \
