@@ -11,7 +11,7 @@ from core.views.equipe import (
 from core.views.quest import (
     QuestCreateView, QuestDeleteView,
     QuestDetailView, QuestListView,
-    QuestUpdateView, QuestCompleteCreateView,
+    QuestUpdateView, QuestDoneCreateView,
     QuestConfirmView,
 )
 from core.views.jogador import (
@@ -80,8 +80,8 @@ urlpatterns = [
     ),
     path(
         'quest/<int:pk>/done/',
-        QuestCompleteCreateView.as_view(),
-        name='quest_confirm'
+        QuestDoneCreateView.as_view(),
+        name='quest_done'
     ),
 
 

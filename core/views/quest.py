@@ -153,7 +153,7 @@ class QuestUpdateView(LoginRequiredMixin, UpdateView):
             self.success_url, kwargs={'pk':self.get_object().pk}
         )
 
-class QuestCompleteCreateView(LoginRequiredMixin, UpdateView):
+class QuestDoneCreateView(LoginRequiredMixin, UpdateView):
     model = Quest
     template_name = "quest/update.html"
     form_class = QuestCompleteCreateForm
