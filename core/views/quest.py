@@ -14,13 +14,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView, FormView, DetailView, 
     FormView,TemplateView, CreateView, 
-    UpdateView, DeleteView, View
+    UpdateView, DeleteView, View,
 )
 
-from core.models import Jogador, Classe, Equipe, Quest
-
 from core.forms.create import QuestCreateForm
-from core.forms.update import QuestUpdateForm
+from core.forms.update import (
+    QuestUpdateForm, QuestCompleteCreateForm,
+)
+from core.models import (
+    Jogador, Classe, Equipe, Quest, Classe
+)
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +34,13 @@ class QuestListView(LoginRequiredMixin, ListView):
     ordering = ["-created"]
 
     def get_queryset(self):
+        jogador = self.request.user.jogador
+        equipe = Equipe.objects.filter(
+            Q(lider=jogador) | Q(team__in=[jogador])
+        ).distinct()
+
         return super().get_queryset().filter(
-            responsaveis__in=[self.request.user.jogador]
+            Q(responsaveis__in=[jogador]) | Q(equipe__in=equipe)
         ).distinct()
 
 
@@ -66,41 +74,48 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
     model = Quest
     template_name = "quest/detail.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        jogador = user.jogador
 
-class QuestComplete(View):
-    quest_id = None
+
+
+        return super(
+            QuestDetailView, self).dispatch(request, *args, **kwargs)
+
+
+class QuestConfirmView(LoginRequiredMixin, View):
     success_url = reverse_lazy('core:quest_list')
     template_name = 'quest/detail.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        self.quest_id = kwargs.get('pk')
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        quest_pk = kwargs.get('pk', None)
+        quest = get_object_or_404(Quest, pk=quest_pk)
+        jogadores = quest.responsaveis.all()
 
-        return super(
-            QuestComplete, self).dispatch(request, *args, **kwargs)
+        if jogadores.exists():
 
-    def post(self, request, pk):
-        quest = get_object_or_404(Quest, pk=pk)
-        jogadores = quest.responsaveis
+            for jogador in jogadores:
 
-        for jogador in jogadores.all():
-            jogador.points += quest.points
-            jogador.save()
+                jogador.points += quest.points
+                jogador.save()
 
-        quest.open = False
-        quest.save()
+            quest.open = False
+            quest.save()
+
+        else:
+            messages.error(
+                request,
+                'Por favor, defina um ou mais responsáveis por está quests.'
+            )
+            return HttpResponseRedirect(
+                reverse(
+                    'core:quest_detail', kwargs={'pk':quest_pk}
+                )
+            )
 
         return HttpResponseRedirect(self.success_url)
-
-    # def get_success_url(self):
-    #     return reverse(
-    #         self.success_url, kwargs={'pk':self.quest_id}
-    #     )
-
-
-class QuestDeleteView(LoginRequiredMixin, DeleteView):
-    model = Quest
-    template_name = "quest/delete.html"
-    success_url = reverse_lazy('core:quest_list')
 
 
 class QuestUpdateView(LoginRequiredMixin, UpdateView):
@@ -109,6 +124,7 @@ class QuestUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "quest/update.html"
     success_url = 'core:quest_detail'
 
+    @transaction.atomic
     def form_valid(self, form):
         if self.request.method == 'POST':
             if form.is_valid:
@@ -137,3 +153,38 @@ class QuestUpdateView(LoginRequiredMixin, UpdateView):
             self.success_url, kwargs={'pk':self.get_object().pk}
         )
 
+class QuestCompleteCreateView(LoginRequiredMixin, UpdateView):
+    model = Quest
+    template_name = "quest/update.html"
+    form_class = QuestCompleteCreateForm
+    success_url = 'core:quest_detail'
+
+    @transaction.atomic
+    def form_valid(self, form):
+        if self.request.method == 'POST':
+            quest = self.get_object()
+            logger.debug(f"nível aqui: {quest.level}")
+
+            if form.is_valid:
+                logger.debug(
+                    f"form aqui: {form}")
+
+        return render(
+            self.request,
+            self.template_name,
+            context={
+                'form':form, 'object':quest
+            }
+        )
+
+
+    def get_success_url(self):
+        return reverse(
+            self.success_url, kwargs={'pk':self.get_object().pk}
+        )
+
+
+class QuestDeleteView(LoginRequiredMixin, DeleteView):
+    model = Quest
+    template_name = "quest/delete.html"
+    success_url = reverse_lazy('core:quest_list')

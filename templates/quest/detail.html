@@ -9,35 +9,19 @@
 
 <a class="text" href="{% url 'core:quest_list' %}" aria-pressed="true">Quests</a>
 <h1 class="margin-none">Detalhes</h1>
+<p>
+    {{ object.equipe_set }}
+</p>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary text-captalize">{{ object.name }}</h5>
+        <h5 class="m-0 font-weight-bold text-primary">
+            Detalhes da quest <span class="text-capitalize">'{{ object.name }}'</span>
+        </h5>
     </div>
 
     <div class="card">
         <div class="card-body">
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div><strong>Inicio previsto para</strong></div>
-                    {{ object.init_date|date:'d/m/Y' }}
-                </div>
-
-                <div class="col-md-4">
-                    <div><strong>Conclusão prevista para</strong></div>
-                    {{ object.end_date|date:'d/m/Y' }}
-                </div>
-
-                <div class="col-md-4">
-                    <div><strong>Pontos por conclusão</strong></div>
-                    <div class=" row">
-                        <div class="col-md-6 text-center">
-                            <span class="badge badge-pill badge-info">{{ object.points }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div> <br/>
 
             <div class="row">
                 <div class="col-md-4">
@@ -46,8 +30,29 @@
                 </div>
 
                 <div class="col-md-4">
+                    <div><strong>Inicio previsto para</strong></div>
+                    {{ object.init_date|date:'d/m/Y' }}
+                </div>
+
+                <div class="col-md-4">
                     <div><strong>Criada em</strong></div>
                     {{ object.created|date:'d/m/Y' }}
+                </div>
+            </div> <br/>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div><strong>Pontos por conclusão</strong></div>
+                    <div class=" row">
+                        <div class="col-md-6 text-center">
+                            <span class="badge badge-pill badge-info">{{ object.points }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div><strong>Conclusão prevista para</strong></div>
+                    {{ object.end_date|date:'d/m/Y' }}
                 </div>
 
                 <div class="col-md-4">
@@ -69,7 +74,7 @@
                 </div>
             </div>
 
-            <form action="{% url 'core:quest_complete' object.pk %}" method="POST"> {% csrf_token %}
+            <form action="{% url 'core:quest_confirm' object.pk %}" method="POST"> {% csrf_token %}
                 <div class="form-group float-right">
 
                     {% if object.open %}

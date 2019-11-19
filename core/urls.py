@@ -6,31 +6,31 @@ from core.views.base import DashboardView, NotFoundView
 from core.views.equipe import (
     EquipeCreateView, EquipeDeleteView,
     EquipeDetailView, EquipeListView,
-    EquipeUpdateView
+    EquipeUpdateView,
 )
 from core.views.quest import (
     QuestCreateView, QuestDeleteView,
     QuestDetailView, QuestListView,
-    QuestUpdateView, QuestComplete
+    QuestUpdateView, QuestCompleteCreateView,
+    QuestConfirmView,
 )
 from core.views.jogador import (
-    JogadorDeleteView,
-    JogadorDetailView, JogadorListView,
-    JogadorUpdateView
+    JogadorDeleteView, JogadorDetailView,
+    JogadorListView, JogadorUpdateView,
 )
 from core.views.classe import (
     ClasseCreateView, ClasseDeleteView,
     ClasseDetailView, ClasseListView,
-    ClasseUpdateView
+    ClasseUpdateView,
 )
 
 
 app_name='core'
 
 urlpatterns = [
-    path('', DashboardView.as_view(), name='home'),
+    path('home/', DashboardView.as_view(), name='home'),
 
-    # Jogador
+    # JOGADOR
     path(
         'profile/<int:pk>/details/',
         JogadorDetailView.as_view(),
@@ -47,7 +47,7 @@ urlpatterns = [
         name='jogador_delete'
     ),
 
-    # Quest
+    # QUEST
     path(
         'quest/list/',
         QuestListView.as_view(),
@@ -69,18 +69,23 @@ urlpatterns = [
         name='quest_detail'
     ),
     path(
-        'quest/<int:pk>/update',
+        'quest/<int:pk>/update/',
         QuestUpdateView.as_view(),
         name='quest_update'
     ),
     path(
-        'quest/<int:pk>/complete',
-        QuestComplete.as_view(),
-        name = 'quest_complete'
+        'quest/<int:pk>/confirm/',
+        QuestConfirmView.as_view(),
+        name='quest_confirm'
+    ),
+    path(
+        'quest/<int:pk>/done/',
+        QuestCompleteCreateView.as_view(),
+        name='quest_confirm'
     ),
 
 
-    # Equipe
+    # EQUIPE
     path(
         'equipe/list/',
         EquipeListView.as_view(),
@@ -108,7 +113,7 @@ urlpatterns = [
     ),
 
 
-    # Classe
+    # CLASSE
     path(
         'classe/list/',
         ClasseListView.as_view(),
@@ -136,6 +141,6 @@ urlpatterns = [
     ),
 
 
-    # http erros
+    # HTTP ERRORS
     path('404/', NotFoundView.as_view(), name='404'),
 ]

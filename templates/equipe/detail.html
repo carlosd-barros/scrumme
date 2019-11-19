@@ -57,7 +57,7 @@
         <form method="POST">
 
             {% csrf_token %}
-            {{ form|crispy }}
+            {% crispy form %}
 
             <div class="form-group text-right">
                 <button class="btn btn-outline-success"

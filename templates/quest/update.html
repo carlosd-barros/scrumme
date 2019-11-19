@@ -4,16 +4,13 @@
 
 {% block title %}Quest Update{% endblock title %}
 
-{% block css %}
-    {{ form.media }}
-{% endblock css %}
-
-
 {% block main %}
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Editando a quest "{{ object.name|upper }}"</h5>
+<div class="card shadow">
+    <div class="card-header">
+        <h5 class="m-0 font-weight-bold text-primary">
+            Editando a quest <span class="text-capitalize">'{{ object.name }}'</span>
+        </h5>
     </div>
 
     <div class="card-body">
@@ -23,18 +20,20 @@
             {{ form|crispy }}
 
             <div class="form-group text-right">
-                <a href="{% url 'core:quest_detail' object.pk %}"
-                class="btn btn-outline-danger"
-                role="button" aria-pressed="true">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                    Cancelar
-                </a>
+                {% if form.name %}
+                    <a href="{% url 'core:quest_detail' object.pk %}"
+                    class="btn btn-outline-danger"
+                    role="button" aria-pressed="true">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Cancelar
+                    </a>
+                {% endif %}
 
                 <button onsubmit="return confirm('Confirmar?')"
                 class="btn btn-outline-success"
                 type="submit" role="button" aria-pressed="true">
                     <li class="fas fa-check-circle"></li>
-                    Atualizar quest
+                    Confirmar
                 </button>
             </div>
         </form>
@@ -42,3 +41,7 @@
 </div>
 
 {% endblock main %}
+
+{% block js %}
+    {{ form.media }}
+{% endblock js %}

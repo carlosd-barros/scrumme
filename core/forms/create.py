@@ -35,28 +35,13 @@ class EquipeCreateForm(forms.ModelForm):
             "name", "lider", "team"
         ]
 
-
 class QuestCreateForm(ModelDatePickerForm):
 
     class Meta:
         model = Quest
         fields = [
-            "name", "equipe", "responsaveis",
-            "init_date", "end_date",
-            "points", "description"
-        ]
-        widgets = {
-            'init_date': DatePicker(),
-            'end_date': DatePicker(),
-        }
-
-class QuestFormCreate(ModelDatePickerForm):
-
-    class Meta:
-        model = Quest
-        fields = [
             "name", "init_date",
-            "end_date", "points",
+            "end_date", "level",
             "description"
         ]
         widgets = {

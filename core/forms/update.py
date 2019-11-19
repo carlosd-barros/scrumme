@@ -4,6 +4,7 @@ from resizeimage import resizeimage
 
 from django import forms
 from django.conf import settings
+from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError
 from django.template.defaultfilters import filesizeformat
@@ -47,12 +48,6 @@ class JogadorUpdateForm(ModelBaseFormHelper):
         if avatar:
             file_extension = avatar.name.split('.')[-1]
 
-            logger.debug(
-                f"{filesizeformat(settings.ALLOWED_UPLOAD_MAXSIZE)} | "
-                f"{filesizeformat(avatar.size)}\n"
-                f"{avatar.name}"
-            )
-
             try:
                 logger.debug('verificando extensão do arquivo')
                 if file_extension in settings.ALLOWED_UPLOAD_FILETYPES:
@@ -76,6 +71,7 @@ class JogadorUpdateForm(ModelBaseFormHelper):
 
         return avatar
 
+
 class QuestUpdateForm(ModelDatePickerForm):
 
     class Meta:
@@ -98,3 +94,19 @@ class QuestUpdateForm(ModelDatePickerForm):
         if instance:
             self.fields['responsaveis'].queryset = instance.equipe.team.filter(active=True)
             self.fields['responsaveis'].required = True
+
+
+class QuestCompleteCreateForm(ModelBaseFormHelper):
+
+    class Meta:
+        model = Quest
+        fields = ['responsaveis']
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        super(QuestCompleteCreateForm, self).__init__(*args, **kwargs)
+
+        if instance:
+            self.fields['responsaveis'].queryset = instance.equipe.team.filter(active=True)
+            self.fields['responsaveis'].required = True
+

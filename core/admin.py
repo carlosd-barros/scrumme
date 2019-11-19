@@ -14,6 +14,7 @@ class QuestAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'init_date',
         'end_date', 'points',
+        'open', 'active',
     )
     readonly_fields = ('created',)
     filter_horizontal = ('responsaveis',)

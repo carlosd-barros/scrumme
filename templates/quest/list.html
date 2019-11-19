@@ -12,7 +12,7 @@
     <thead>
         <tr>
             <th>Nome</th>
-            <th class="text-center">Responsáveis</th>
+            <th class="text-center">Equipe relacionada</th>
             <th class="text-center">Inicio</th>
             <th class="text-center">Entrega</th>
             <th class="text-center">Concluída</th>
@@ -24,7 +24,7 @@
         {% for quest in object_list %}
         <tr>
             <td>{{ quest.name }}</td>
-            <td class="text-center">{{ quest.responsaveis.all|length }}</td>
+            <td class="text-center">{{ quest.equipe.name }}</td>
             <td class="text-center">{{ quest.init_date|date:'d/m/Y' }}</td>
             <td class="text-center">{{ quest.end_date|date:'d/m/Y' }}</td>
             <td class="text-center">

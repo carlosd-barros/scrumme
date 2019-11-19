@@ -16,7 +16,7 @@ from django.views.generic import (
     UpdateView, DeleteView, View
 )
 
-from core.forms.create import EquipeCreateForm, QuestCreateForm, QuestFormCreate
+from core.forms.create import EquipeCreateForm, QuestCreateForm
 from core.models import Jogador, Classe, Equipe, Quest
 
 logger = logging.getLogger(__name__)
@@ -29,10 +29,10 @@ class EquipeListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super(EquipeListView, self).get_queryset()
-        integrante = self.request.user.jogador
+        jogador = self.request.user.jogador
+
         queryset = queryset.filter(
-            Q(lider=integrante) |
-            Q(team__in=[integrante])
+            Q(lider=jogador) | Q(team__in=[jogador])
         ).distinct()
 
         return queryset
@@ -44,13 +44,14 @@ class EquipeCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('core:equipe_list')
     template_name = "equipe/create.html"
 
+    @transaction.atomic
     def form_valid(self, form):
         if self.request.method == 'POST':
             if form.is_valid():
                 form.save()
                 messages.success(
                     self.request,
-                    "Equipe criada com sucesso."
+                    'Equipe criada com sucesso.'
                 )
             else:
                 messages.error(
@@ -69,17 +70,16 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'form':QuestFormCreate,
+            'form':QuestCreateForm,
         })
 
         return super(
             EquipeDetailView, self).get_context_data(**kwargs)
 
     @transaction.atomic
-    def post(self, request, pk):
-        logger.debug(f"dados aqui: {request.POST}")
+    def post(self, request, *args, **kwargs):
+        form = QuestCreateForm(request.POST)
 
-        form = QuestFormCreate(request.POST)
         if form.is_valid:
             quest = form.save(commit=False)
             quest.equipe = self.get_object()
@@ -91,8 +91,12 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
             )
 
             return HttpResponseRedirect(
-                reverse('core:quest_update', kwargs={'pk':quest.pk})
+                reverse('core:quest_confirm', kwargs={'pk':quest.pk})
             )
+
+        messages.error(
+            request, 'Ops, verifique os dados do formulário.'
+        )
 
         return HttpResponseRedirect(
             reverse('core:equipe_detail', kwargs={'pk':self.get_object().pk})
@@ -121,8 +125,6 @@ class EquipeUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse(
             self.success_url,
-            kwargs=({
-                'pk':self.get_object().pk
-            })
+            kwargs={'pk':self.get_object().pk}
         )
 

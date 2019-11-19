@@ -13,12 +13,17 @@ urlpatterns = [
     path(
         '',
         RedirectView.as_view(
-            url=reverse_lazy(
-                'core:home'
-            ),
+            url=reverse_lazy('core:home'),
             permanent=False
         ),
-        name="home"
+    ),
+    path(
+        '',
+        include(
+            'core.urls',
+            namespace='core'
+        ),
+        name='core'
     ),
     path(
         'accounts/',
@@ -28,18 +33,8 @@ urlpatterns = [
         ),
         name='accounts'
     ),
-    path(
-        'core/',
-        include(
-            'core.urls',
-            namespace='core'
-        ),
-        name='core'
-    ),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+urlpatterns += static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+)

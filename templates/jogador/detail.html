@@ -20,28 +20,17 @@
 <header class="row justify-content-md-center">
 
     <div class="media col-md-3">
-        <div class="container">
+        {% comment %} <div class="container"> {% endcomment %}
+
             <div class="card-body">
                 <div class="card-image-container">
                     <a href="{% url 'core:jogador_update' object.user.id %}" title="Editar perfil">
                         <img class="card-image" src="{{ object.avatar.url }}">
                     </a>
                 </div>
-
-                <!-- <div class="dropdown-divider"></div>
-
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <a href="{% url 'core:jogador_update' object.user.id %}">Editar</a>
-                    </div>
-
-                    <div class="col-md-6 text-center">
-                        <a href="{% url 'core:jogador_delete' object.pk %}" class=text-danger>Deletar</a>
-                    </div>
-                </div> -->
-
             </div>
-        </div>
+
+        {% comment %} </div> {% endcomment %}
     </div>
 
     <div class="col-md-5">

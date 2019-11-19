@@ -79,16 +79,16 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
 
                 if avatar:
                     logger.debug(f"avatar aqui: {avatar}")
-                    resized_avatar = self.format_image(jogador.avatar)
+                    jogador.avatar = avatar
+                    jogador.save()
 
-                    if resized_avatar:
-                        jogador.avatar = avatar
-                        jogador.save()
+                    # resized_avatar = self.format_image(jogador.avatar)
 
-                        logger.debug(f"resized_avatar aqui: {resized_avatar}")
-                        jogador.avatar = resized_avatar
+                    # if resized_avatar:
+                    #     logger.debug(f"resized_avatar aqui: {resized_avatar}")
+                    #     jogador.avatar = resized_avatar
 
-                jogador.save()
+                # jogador.save()
                 form.save()
 
                 messages.success(

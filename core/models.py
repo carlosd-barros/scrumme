@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from .choices import JogadorType, JogadorClass
+from .choices import JogadorType, JogadorClass, QuestLevel
 
 
 class Classe(models.Model):
@@ -26,27 +26,21 @@ class Classe(models.Model):
         return self.name
 
 class Jogador(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.PROTECT
-    )
-    name = models.CharField(
-        "Nome Completo",
-        max_length=150,
-    )
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    name = models.CharField("Nome Completo", max_length=150)
     classe = models.IntegerField(
-        "Classe do jogador",
+        blank=True,
+        null=True,
+        verbose_name="Classe do jogador",
         choices=JogadorClass.choices(),
         default=JogadorClass.INICIANTE.code,
-        blank=True,
-        null=True
     )
     type = models.IntegerField(
-        'Tipo de jogador',
+        blank=True,
+        null=True,
+        verbose_name='Tipo de jogador',
         choices=JogadorType.choices(),
         default=JogadorType.COMUM.code,
-        blank=True,
-        null=True
     )
     points = models.IntegerField("Scrum points", default=0)
     avatar = models.FileField(
@@ -66,7 +60,7 @@ class Jogador(models.Model):
         if len(self.name) > 1:
             self.name = self.name.upper()
         else:
-            self.name = self.user.username
+            self.name = self.user.username.upper()
 
         super(Jogador, self).save(*args, **kwargs)
 
@@ -75,7 +69,7 @@ class Jogador(models.Model):
         verbose_name_plural='Jogadores'
 
     def __str__(self):
-        if self.name:
+        if len(self.name) > 1:
             return self.name
         return self.user.username
 
@@ -86,9 +80,9 @@ class Equipe(models.Model):
         Jogador,
         null=True,
         blank=True,
-        verbose_name="Lider da equipe",
         related_name="lider",
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name="Lider da equipe",
     )
     team = models.ManyToManyField(
         Jogador,
@@ -124,7 +118,12 @@ class Quest(models.Model):
     )
     init_date = models.DateField("Inicio")
     end_date = models.DateField("Fim", null=True, blank=True)
-    points = models.IntegerField("Quantidade de pontos")
+    level = models.IntegerField(
+        verbose_name='Nível de dificuldade',
+        choices=QuestLevel.choices(),
+        default=QuestLevel.BAIXO.code,
+    )
+    points = models.IntegerField("Pontos", null=True, blank=True)
     description = models.TextField("Descrição")
     active = models.BooleanField("Ativo", default=True)
     open = models.BooleanField("Concluida", default=True)
