@@ -1,5 +1,6 @@
 {% extends 'base_list.html' %}
-{% load staticfiles %}
+{% load quest_tags %}
+{% load jogador_tags %}
 
 {% block title %}Quest List{% endblock title %}
 
@@ -46,17 +47,19 @@
                     </span>
                 </a>
 
-                <a class="btn btn-outline-primary"
-                href="{% url 'core:quest_update' quest.pk %}"
-                title="Editar">
-                    <i class="fas fa-edit"></i>
-                </a>
+                {% comment %} {% if  %}
+                    <a class="btn btn-outline-primary"
+                    href="{% url 'core:quest_update' quest.pk %}"
+                    title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
 
-                <a class="btn btn-outline-danger"
-                href="{% url 'core:quest_delete' quest.pk %}"
-                title="Excluir">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
+                    <a class="btn btn-outline-danger"
+                    href="{% url 'core:quest_delete' quest.pk %}"
+                    title="Excluir">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                {% endif %} {% endcomment %}
 
                 </div>
             </td>

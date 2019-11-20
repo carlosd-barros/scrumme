@@ -47,7 +47,7 @@
                     </span>
                     </a>
 
-                    <a class="btn btn-outline-primary"
+                    {% comment %} <a class="btn btn-outline-primary"
                     href="{% url 'core:equipe_update' equipe.pk %}"
                     title="Editar">
                         <i class="fas fa-edit"></i>
@@ -57,7 +57,7 @@
                     href="{% url 'core:equipe_delete' equipe.pk %}"
                     title="Excluir">
                         <i class="fas fa-trash-alt"></i>
-                    </a>
+                    </a> {% endcomment %}
 
                 </div>
             </td>

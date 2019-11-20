@@ -63,15 +63,17 @@ class JogadorUpdateForm(ModelBaseFormHelper):
                         logger.debug('deu bom meu bacano')
                 else:
                     logger.debug('tipo de arquivo não suportado')
-                    raise forms.ValidationError(
-                        _('Tipo de arquivo não suportado'))
+                    raise forms.ValidationError(_(
+                        'Tipo de arquivo não suportado'
+                    ))
 
-            except AttributeError:
+            except:
                 pass
 
         return avatar
 
 
+# update quest normal
 class QuestUpdateForm(ModelDatePickerForm):
 
     class Meta:
@@ -96,6 +98,8 @@ class QuestUpdateForm(ModelDatePickerForm):
             self.fields['responsaveis'].required = True
 
 
+# update quest para criar ou outros jogadores
+# que não são o lider da equipe atualizar os responsáveis
 class QuestCompleteCreateForm(ModelBaseFormHelper):
 
     class Meta:

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load quest_tags %}
 
 {% block title %}Quest Detail{% endblock title %}
 
@@ -9,17 +10,13 @@
 
 <a class="text" href="{% url 'core:quest_list' %}" aria-pressed="true">Quests</a>
 <h1 class="margin-none">Detalhes</h1>
-<p>
-    {{ object.equipe_set }}
-</p>
-
 
 <div class="card shadow">
     <div class="card-body">
 
         <div class="card-title">
             <h5 class="m-0 font-weight-bold text-primary">
-                Detalhes da quest <span class="text-capitalize">'{{ object.name }}'</span>
+                <span class="text-capitalize">{{ object.name }}</span>
             </h5>
         </div> <hr/>
 
@@ -78,20 +75,42 @@
             <div class="form-group float-right">
 
                 {% if object.open %}
-                    <a class="btn btn-outline-secondary"
-                    href="{% url 'core:quest_update' object.pk %}">
-                        <i class="fas fa-edit" aria-hidden="true"></i>
-                        Editar quest
-                    </a>
+                    {% is_lider object as permission %}
+                    {% if permission %}
+                        <a class="btn btn-outline-secondary"
+                        href="{% url 'core:quest_update' object.pk %}">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
+                            Editar quest
+                        </a>
 
-                    <button class="btn btn-outline-success"
-                    type="submit"
-                    onsubmit="return confirm('Confirmar conclusão?')">
-                        <li class="fas fa-check-circle"></li>
-                        Concluir quest
-                    </button>
+                        <button class="btn btn-outline-success"
+                        type="submit"
+                        onsubmit="return confirm('Confirmar conclusão?')">
+                            <li class="fas fa-check-circle"></li>
+                            Concluir quest
+                        </button>
+
+                    {% else %}
+                        {% member_permission object as permission %}
+                        {% if permission %}
+                            <a class="btn btn-outline-secondary"
+                            href="{% url 'core:quest_done' object.pk %}">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                                Editar quest
+                            </a>
+
+                            <button class="btn btn-outline-success"
+                            type="submit"
+                            onsubmit="return confirm('Confirmar conclusão?')">
+                                <li class="fas fa-check-circle"></li>
+                                Concluir quest
+                            </button>
+
+                        {% endif %}
+
+                    {% endif %}
+
                 {% endif %}
-
             </div>
         </form>
 

@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 class DashboardView(TemplateView):
     template_name = 'core/index.html'
 
+    @transaction.atomic
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             name = f"{request.user.first_name} {request.user.last_name}"
@@ -31,7 +32,7 @@ class DashboardView(TemplateView):
                 user=request.user,
                 defaults={
                     'user':request.user,
-                    'name':name if len(name) > 1 else request.user.username
+                    'name':name if len(name) > 1 else request.user.username.upper()
                 }
             )
 
@@ -40,16 +41,26 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        player = None
-        if self.request.user.is_authenticated:
-            player = self.request.user.jogador
+        jogador = None
 
-        context['equipes'] = Equipe.objects.filter(
-            team__in=[player]
-        )
+        if self.request.user.is_authenticated:
+            jogador = self.request.user.jogador
+
+        equipes = Equipe.objects.filter(
+            (
+                Q(lider=jogador) | Q(team__in=[jogador])
+            ) &
+            Q(active=True)
+        ).distinct()
+
+        context['equipes'] = equipes
+
         context['quests'] = Quest.objects.filter(
-            responsaveis__in=[player]
-        )
+            (
+                Q(responsaveis__in=[jogador]) | Q(equipe__in=equipes)
+            ) &
+            Q(open=True)
+        ).distinct()
 
         return context
 

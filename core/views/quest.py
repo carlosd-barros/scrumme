@@ -44,32 +44,6 @@ class QuestListView(LoginRequiredMixin, ListView):
         ).distinct()
 
 
-class QuestCreateView(LoginRequiredMixin, CreateView):
-    model = Quest
-    form_class = QuestCreateForm
-    template_name = "quest/create.html"
-    success_url = reverse_lazy('core:quest_list')
-
-    @transaction.atomic
-    def form_valid(self, form):
-        if self.request.method == 'POST':
-            if form.is_valid():
-                form.save()
-                messages.success(
-                    self.request,
-                    "Quest criada com sucesso."
-                )
-            else:
-                messages.error(
-                    self.request,
-                    'Ops, parece que algo deu errado.'
-                )
-                form = form(self.request.POST)
-
-        return super(
-            QuestCreateView, self).form_valid(form)
-
-
 class QuestDetailView(LoginRequiredMixin, DetailView):
     model = Quest
     template_name = "quest/detail.html"
@@ -83,7 +57,40 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
             QuestDetailView, self).dispatch(request, *args, **kwargs)
 
 
-class QuestConfirmView(LoginRequiredMixin, View):
+class QuestUpdateView(LoginRequiredMixin, UpdateView):
+    model = Quest
+    form_class = QuestUpdateForm
+    template_name = "quest/update.html"
+    success_url = 'core:quest_detail'
+
+    @transaction.atomic
+    def form_valid(self, form):
+        if self.request.method == 'POST':
+            if form.is_valid:
+                form.save()
+
+                messages.success(
+                    self.request, 'Quest editada com sucesso.'
+                )
+                return HttpResponseRedirect(self.get_success_url())
+
+            messages.error(
+                self.request, 'Ops, verifique os dados informados.'
+            )
+            return render(
+                self.request, self.template_name, context={'form':form}
+            )
+
+        return reverse_lazy('core:quest_list')
+
+    def get_success_url(self):
+        return reverse(
+            self.success_url, kwargs={'pk':self.get_object().pk}
+        )
+
+
+# Criar quest a partir de uma equipe
+class QuestCreateEquipeView(LoginRequiredMixin, View):
     success_url = reverse_lazy('core:quest_list')
 
     @transaction.atomic
@@ -115,38 +122,7 @@ class QuestConfirmView(LoginRequiredMixin, View):
         )
 
 
-class QuestUpdateView(LoginRequiredMixin, UpdateView):
-    model = Quest
-    form_class = QuestUpdateForm
-    template_name = "quest/update.html"
-    success_url = 'core:quest_detail'
-
-    @transaction.atomic
-    def form_valid(self, form):
-        if self.request.method == 'POST':
-            if form.is_valid:
-                form.save()
-
-                messages.success(
-                    self.request, 'Quest editada com sucesso.'
-                )
-                return HttpResponseRedirect(self.get_success_url())
-
-            messages.error(
-                self.request, 'Ops, verifique os dados informados.'
-            )
-            return render(
-                self.request, self.template_name, self.get_context_data()
-            )
-
-        return reverse_lazy('core:quest_list')
-
-    def get_success_url(self):
-        return reverse(
-            self.success_url, kwargs={'pk':self.get_object().pk}
-        )
-
-class QuestDoneCreateView(LoginRequiredMixin, UpdateView):
+class QuestDoneUpdateView(LoginRequiredMixin, UpdateView):
     model = Quest
     template_name = "quest/update.html"
     form_class = QuestCompleteCreateForm

@@ -95,9 +95,12 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
             elif level == QuestLevel.ALTO.code:
                 quest.points = randint(7,11)
 
+            else:
+                messages.error(
+                    request, 'Os pontos desta quest não puderam ser atribuídos.'
+                )
+
             quest.equipe = self.get_object()
-
-
             quest.save()
 
             messages.success(
@@ -106,7 +109,9 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
             )
 
             return HttpResponseRedirect(
-                reverse('core:quest_confirm', kwargs={'pk':quest.pk})
+                reverse(
+                    'core:quest_done', kwargs={'pk':quest.pk}
+                )
             )
 
         messages.error(

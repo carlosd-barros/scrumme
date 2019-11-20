@@ -9,10 +9,10 @@ from core.views.equipe import (
     EquipeUpdateView,
 )
 from core.views.quest import (
-    QuestCreateView, QuestDeleteView,
+    QuestDeleteView,
     QuestDetailView, QuestListView,
-    QuestUpdateView, QuestDoneCreateView,
-    QuestConfirmView,
+    QuestUpdateView, QuestDoneUpdateView,
+    QuestCreateEquipeView,
 )
 from core.views.jogador import (
     JogadorDeleteView, JogadorDetailView,
@@ -54,11 +54,6 @@ urlpatterns = [
         name='quest_list'
     ),
     path(
-        'quest/create/',
-        QuestCreateView.as_view(),
-        name='quest_create'
-    ),
-    path(
         'quest/<int:pk>/delete/',
         QuestDeleteView.as_view(),
         name='quest_delete'
@@ -68,6 +63,8 @@ urlpatterns = [
         QuestDetailView.as_view(),
         name='quest_detail'
     ),
+
+    # Criar quest apartir de uma equipe
     path(
         'quest/<int:pk>/update/',
         QuestUpdateView.as_view(),
@@ -75,12 +72,12 @@ urlpatterns = [
     ),
     path(
         'quest/<int:pk>/confirm/',
-        QuestConfirmView.as_view(),
+        QuestCreateEquipeView.as_view(),
         name='quest_confirm'
     ),
     path(
         'quest/<int:pk>/done/',
-        QuestDoneCreateView.as_view(),
+        QuestDoneUpdateView.as_view(),
         name='quest_done'
     ),
 
