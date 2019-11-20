@@ -90,7 +90,6 @@ class QuestUpdateForm(ModelDatePickerForm):
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
-        print(f"instancia aqui: {instance.responsaveis}")
         super(QuestUpdateForm, self).__init__(*args, **kwargs)
 
         if instance:

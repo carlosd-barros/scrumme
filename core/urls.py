@@ -9,10 +9,10 @@ from core.views.equipe import (
     EquipeUpdateView,
 )
 from core.views.quest import (
-    QuestDeleteView,
+    QuestAlternativeCreateView, QuestDeleteView,
     QuestDetailView, QuestListView,
     QuestUpdateView, QuestDoneUpdateView,
-    QuestCreateEquipeView,
+    QuestConcludeView,
 )
 from core.views.jogador import (
     JogadorDeleteView, JogadorDetailView,
@@ -54,31 +54,36 @@ urlpatterns = [
         name='quest_list'
     ),
     path(
-        'quest/<int:pk>/delete/',
-        QuestDeleteView.as_view(),
-        name='quest_delete'
-    ),
-    path(
         'quest/<int:pk>/detail/',
         QuestDetailView.as_view(),
         name='quest_detail'
     ),
-
-    # Criar quest apartir de uma equipe
     path(
         'quest/<int:pk>/update/',
         QuestUpdateView.as_view(),
         name='quest_update'
     ),
     path(
+        'quest/<int:pk>/delete/',
+        QuestDeleteView.as_view(),
+        name='quest_delete'
+    ),
+
+    # Criar quest apartir de uma equipe
+    path(
+        'quest/<int:pk>/custom-create',
+        QuestAlternativeCreateView.as_view(),
+        name='quest_alternative_create'
+    ),
+    path(
         'quest/<int:pk>/confirm/',
-        QuestCreateEquipeView.as_view(),
+        QuestConcludeView.as_view(),
         name='quest_confirm'
     ),
     path(
-        'quest/<int:pk>/done/',
+        'quest/<int:pk>/custom-update/',
         QuestDoneUpdateView.as_view(),
-        name='quest_done'
+        name='quest_alternative_update'
     ),
 
 
@@ -94,11 +99,6 @@ urlpatterns = [
         name='equipe_create'
     ),
     path(
-        'equipe/<int:pk>/delete/',
-        EquipeDeleteView.as_view(),
-        name='equipe_delete'
-    ),
-    path(
         'equipe/<int:pk>/detail/',
         EquipeDetailView.as_view(),
         name='equipe_detail'
@@ -107,6 +107,11 @@ urlpatterns = [
         'equipe/<int:pk>/update/',
         EquipeUpdateView.as_view(),
         name='equipe_update'
+    ),
+    path(
+        'equipe/<int:pk>/delete/',
+        EquipeDeleteView.as_view(),
+        name='equipe_delete'
     ),
 
 
@@ -122,11 +127,6 @@ urlpatterns = [
         name='classe_create'
     ),
     path(
-        'classe/<int:pk>/delete/',
-        ClasseDeleteView.as_view(),
-        name='classe_delete'
-    ),
-    path(
         'classe/<int:pk>/detail/',
         ClasseDetailView.as_view(),
         name='classe_detail'
@@ -135,6 +135,11 @@ urlpatterns = [
         'classe/<int:pk>/update/',
         ClasseUpdateView.as_view(),
         name='classe_update'
+    ),
+    path(
+        'classe/<int:pk>/delete/',
+        ClasseDeleteView.as_view(),
+        name='classe_delete'
     ),
 
 

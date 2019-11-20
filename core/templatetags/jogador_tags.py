@@ -22,11 +22,8 @@ def get_equipes(jogador):
 @register.simple_tag
 def get_quests(jogador):
     return Quest.objects.filter(
-        (
-            Q(responsaveis__in=[jogador]) |
-            Q(equipe__in = get_equipes(jogador=jogador) )
-        ) &
-        Q(open=True)
+        Q(responsaveis__in=[jogador]) |
+        Q(equipe__in = get_equipes(jogador=jogador) )
     ).distinct()
 
 

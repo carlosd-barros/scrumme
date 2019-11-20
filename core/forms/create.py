@@ -1,3 +1,5 @@
+import logging
+
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -10,6 +12,8 @@ from core.models import (
     Jogador, Classe, Equipe, Quest
 )
 from .base import ModelDatePickerForm
+
+logger = logging.getLogger(__name__)
 
 
 class EquipeCreateForm(forms.ModelForm):
@@ -48,3 +52,18 @@ class QuestCreateForm(ModelDatePickerForm):
             'init_date': DatePicker(),
             'end_date': DatePicker(),
         }
+
+
+class QuestAlternativeCreateForm(ModelDatePickerForm):
+    class Meta:
+        model = Quest
+        fields = [
+            "name", "init_date",
+            "end_date", "level",
+            "description"
+        ]
+        widgets = {
+            'init_date': DatePicker(),
+            'end_date': DatePicker(),
+        }
+

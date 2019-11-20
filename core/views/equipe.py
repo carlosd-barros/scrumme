@@ -1,5 +1,4 @@
 import logging
-from random import randint
 
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
@@ -17,9 +16,11 @@ from django.views.generic import (
     UpdateView, DeleteView, View
 )
 
-from core.forms.create import EquipeCreateForm, QuestCreateForm
-from core.models import Jogador, Classe, Equipe, Quest
-from core.choices import QuestLevel
+from core.forms.create import EquipeCreateForm, QuestCreateForm, QuestAlternativeCreateForm
+from core.models import (
+    Jogador, Classe, Equipe, Quest, Classe
+)
+from core.choices import QuestLevel, JogadorClass, JogadorType
 
 logger = logging.getLogger(__name__)
 
@@ -72,55 +73,11 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'form':QuestCreateForm,
+            'form':QuestAlternativeCreateForm,
         })
 
         return super(
             EquipeDetailView, self).get_context_data(**kwargs)
-
-    @transaction.atomic
-    def post(self, request, *args, **kwargs):
-        form = QuestCreateForm(request.POST)
-
-        if form.is_valid:
-            quest = form.save(commit=False)
-            level = quest.level
-
-            if level == QuestLevel.BAIXO.code:
-                quest.points = randint(1,5)
-
-            elif level == QuestLevel.MEDIO.code:
-                quest.points = randint(4,8)
-
-            elif level == QuestLevel.ALTO.code:
-                quest.points = randint(7,11)
-
-            else:
-                messages.error(
-                    request, 'Os pontos desta quest não puderam ser atribuídos.'
-                )
-
-            quest.equipe = self.get_object()
-            quest.save()
-
-            messages.success(
-                request,
-                'Quest criada com sucesso. Agora defina os responsáveis.'
-            )
-
-            return HttpResponseRedirect(
-                reverse(
-                    'core:quest_done', kwargs={'pk':quest.pk}
-                )
-            )
-
-        messages.error(
-            request, 'Ops, verifique os dados do formulário.'
-        )
-
-        return HttpResponseRedirect(
-            reverse('core:equipe_detail', kwargs={'pk':self.get_object().pk})
-        )
 
 
 class EquipeDeleteView(LoginRequiredMixin, DeleteView):
