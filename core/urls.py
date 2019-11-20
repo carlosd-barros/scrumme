@@ -1,5 +1,7 @@
-from django.views.generic.base import RedirectView
+from django.conf import settings
 from django.urls import path, re_path
+from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 from core.views.base import DashboardView, NotFoundView
 
@@ -146,3 +148,5 @@ urlpatterns = [
     # HTTP ERRORS
     path('404/', NotFoundView.as_view(), name='404'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -127,8 +127,8 @@ dmypy.json
 # NodeJs
 # node_modules/
 
-# docs pessoais
-media/
+# media
+# media/
 
 # vscode
 .vscode
