@@ -128,7 +128,7 @@ dmypy.json
 # node_modules/
 
 # media
-# media/
+media/
 
 # vscode
 .vscode
