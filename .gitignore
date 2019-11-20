@@ -125,7 +125,7 @@ dmypy.json
 .pyre/
 
 # NodeJs
-node_modules/
+# node_modules/
 
 # docs pessoais
 media/
