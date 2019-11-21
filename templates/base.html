@@ -237,21 +237,8 @@
   <script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Core plugin JavaScript-->
-  {% comment %} <script src="{% static 'custom/vendor/jquery-easing/jquery.easing.min.js' %}"></script> {% endcomment %}
-
   <!-- Custom scripts for all pages-->
   <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-
-  {% comment %}
-  <!-- Page level plugins -->
-  <script src="{% static 'custom/vendor/chart.js/Chart.min.js' %}"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="{% static 'custom/js/demo/chart-area-demo.js' %}"></script>
-  <script src="{% static 'custom/js/demo/chart-pie-demo.js' %}"></script>
-  {% endcomment %}
-
 
   <!-- Js specifique page -->
   {% block js %}{% endblock js %}
