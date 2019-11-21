@@ -148,5 +148,3 @@ urlpatterns = [
     # HTTP ERRORS
     path('404/', NotFoundView.as_view(), name='404'),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
