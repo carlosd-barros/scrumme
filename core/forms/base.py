@@ -16,6 +16,16 @@ class ModelBaseFormHelper(forms.ModelForm):
         self.helper.include_media = False
 
 
+class BaseFormHelper(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.include_media = False
+
+
 class ModelDatePickerForm(ModelBaseFormHelper):
 
     class Media:
