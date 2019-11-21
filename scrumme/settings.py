@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import django_heroku
 
-from decouple import config
 from unipath import Path
+from decouple import config
+from dj_database_url import parse as db_url
 
 
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -86,13 +87,16 @@ WSGI_APPLICATION = 'scrumme.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+# https://github.com/jacobian/dj-database-url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': config(
+        'DATABASE_URL',
+        default='sqlite:///db.sqlite3',
+        cast=db_url,
+    )
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -129,20 +133,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-# STATIC_ROOT = BASE_DIR.child('staticfiles')
+STATIC_ROOT = BASE_DIR.child('staticfiles')
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     BASE_DIR.child("static"),
-# ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
+STATICFILES_DIRS = [
+    BASE_DIR.child("static"),
+]
 
 MEDIA_URL = "/media/"
 
@@ -172,18 +169,18 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
 
-AWS_S3_FILE_OVERWWRITE = False
-
-AWS_DEFAULT_ACL = None
-
 # https://tempusdominus.github.io/bootstrap-4/Installing/
 TEMPUS_DOMINUS_LOCALIZE = True
 TEMPUS_DOMINUS_INCLUDE_ASSETS = True
 
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-age
 # SESSION_COOKIE_AGE = 3600000
 
+# https://docs.djangoproject.com/en/2.2/topics/http/file-uploads/
+ALLOWED_UPLOAD_FILETYPES = [
+    'jpeg','png', 'jpg'
+]
+ALLOWED_UPLOAD_MAXSIZE = 716800
 
 # Configure Django App for Heroku.
 # https://github.com/heroku/django-heroku
@@ -243,8 +240,3 @@ LOGGING = {
         }
     }
 }
-
-ALLOWED_UPLOAD_FILETYPES = [
-    'jpeg','png', 'jpg'
-]
-ALLOWED_UPLOAD_MAXSIZE = 716800
