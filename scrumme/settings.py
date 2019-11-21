@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'scrumme.urls'
@@ -191,7 +192,8 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = BASE_DIR.child('staticfiles')
+# STATIC_ROOT = BASE_DIR.child('staticfiles')
+STATIC_ROOT = 'staticfiles'
 
 STATIC_URL = '/static/'
 
@@ -212,9 +214,7 @@ LOGOUT_REDIRECT_URL = 'accounts:login'
 
 # http://whitenoise.evans.io/en/stable/django.html
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WHITENOISE_ROOT = {
-    'fivicon':'./static/images/favicon.ico',
-}
+
 
 # https://django-crispy-forms.readthedocs.io/en/latest/
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -250,3 +250,4 @@ ALLOWED_UPLOAD_MAXSIZE = 716800
 # https://github.com/heroku/django-heroku
 django_heroku.settings(locals())
 
+DEBUG_PROPAGATE_EXCEPTIONS = True
