@@ -10,11 +10,12 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.views.generic import (
-    ListView, FormView, DetailView, 
-    FormView,TemplateView, CreateView, 
-    UpdateView, DeleteView, View
+from django.views.generic.base import RedirectView, TemplateView, View
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import (
+    CreateView, DeleteView, FormView, UpdateView,
 )
+from django.views.generic.list import ListView
 
 from core.forms.create import EquipeCreateForm, QuestCreateForm, QuestAlternativeCreateForm
 from core.models import (

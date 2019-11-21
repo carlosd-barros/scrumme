@@ -66,9 +66,12 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
 
     @transaction.atomic
     def form_valid(self, form):
+        logger.debug('chamou aview certa.')
+        print('chamou aview certa.')
         if self.request.method == 'POST':
 
-            if form.is_valid():
+            if form.is_valid:
+                print('é valido meu consagrado')
                 data = form.cleaned_data
                 avatar = data.get('avatar', None)
                 new_name = f"{data.get('first_name')} {data.get('last_name')}"
@@ -95,8 +98,12 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
                     self.request, "Perfil atualizado com sucesso."
                 )
 
-        return super(
-            JogadorUpdateView, self).form_valid(form)
+                return super(
+                    JogadorUpdateView, self).form_valid(form)
+
+            print('não é valido meu consagrado')
+            return self.form_invalid(form)
+
 
     def format_image(self, img):
         try:
@@ -115,8 +122,7 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
         except AttributeError as error:
             logger.debug(f'deu ruim meu bacano: {error}')
             messages.error(
-                self.request,
-                f"error ao alterar avatar."
+                self.request, f"error ao alterar avatar."
             )
             return None
 
