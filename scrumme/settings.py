@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
+    'minio_storage,'
 
     'crispy_forms',
     'tempus_dominus',
@@ -62,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'scrumme.urls'
@@ -133,6 +134,60 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Config logging
+# https://docs.djangoproject.com/en/2.2/topics/logging/
+
+INTERNAL_IPS = ('127.0.0.1',)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s %(name)s:'
+                      '%(filename)s:%(lineno)d %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue'
+        },
+    },
+    'handlers': {
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+        'console': {
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', ],
+            'level': config('LOG_LEVEL', default='DEBUG'),
+            'propagate': False,
+        },
+        'requests': {
+            'handlers': ['null', ],
+            'propagate': False,
+        },
+        'requests_oauthlib': {
+            'handlers': ['null', ],
+            'propagate': False,
+        },
+        'urllib3': {
+            'handlers': ['null', ],
+            'propagate': False,
+        }
+    }
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -190,57 +245,8 @@ ALLOWED_UPLOAD_MAXSIZE = 716800
 # https://github.com/heroku/django-heroku
 django_heroku.settings(locals())
 
+# https://django-minio-storage.readthedocs.io/en/latest/usage/
 
-# Config logging
-# https://docs.djangoproject.com/en/2.2/topics/logging/
-
-INTERNAL_IPS = ('127.0.0.1',)
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[%(asctime)s] %(levelname)s %(name)s:'
-                      '%(filename)s:%(lineno)d %(message)s',
-            'datefmt': '%d/%b/%Y %H:%M:%S'
-        },
-    },
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue'
-        },
-    },
-    'handlers': {
-        'null': {
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console', ],
-            'level': config('LOG_LEVEL', default='DEBUG'),
-            'propagate': False,
-        },
-        'requests': {
-            'handlers': ['null', ],
-            'propagate': False,
-        },
-        'requests_oauthlib': {
-            'handlers': ['null', ],
-            'propagate': False,
-        },
-        'urllib3': {
-            'handlers': ['null', ],
-            'propagate': False,
-        }
-    }
-}
+if DEBUG:
+    DEFAULT_FILE_STORAGE = "minio_storage.storage.MinioMediaStorage"
+    STATICFILES_STORAGE = "minio_storage.storage.MinioStaticStorage"
