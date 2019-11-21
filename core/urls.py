@@ -43,11 +43,11 @@ urlpatterns = [
         JogadorUpdateView.as_view(),
         name='jogador_update'
     ),
-    path(
-        'profile/<int:pk>/delete/',
-        JogadorDeleteView.as_view(),
-        name='jogador_delete'
-    ),
+    # path(
+    #     'profile/<int:pk>/delete/',
+    #     JogadorDeleteView.as_view(),
+    #     name='jogador_delete'
+    # ),
 
     # QUEST
     path(
