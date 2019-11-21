@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,8 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 'whitenoise.runserver_nostatic',
-    'minio_storage,'
+    # 'minio_storage',
 
     'crispy_forms',
     'tempus_dominus',
@@ -56,14 +56,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'scrumme.urls'
@@ -211,6 +210,14 @@ LOGIN_REDIRECT_URL = 'core:home'
 
 LOGOUT_REDIRECT_URL = 'accounts:login'
 
+# http://whitenoise.evans.io/en/stable/django.html
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_ROOT = {
+    'fivicon':'./static/images/favicon.ico',
+}
+
+
+
 # https://django-crispy-forms.readthedocs.io/en/latest/
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
@@ -245,8 +252,3 @@ ALLOWED_UPLOAD_MAXSIZE = 716800
 # https://github.com/heroku/django-heroku
 django_heroku.settings(locals())
 
-# https://django-minio-storage.readthedocs.io/en/latest/usage/
-
-if DEBUG:
-    DEFAULT_FILE_STORAGE = "minio_storage.storage.MinioMediaStorage"
-    STATICFILES_STORAGE = "minio_storage.storage.MinioStaticStorage"
