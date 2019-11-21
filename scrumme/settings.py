@@ -29,23 +29,19 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
-# DEBUG = True
-# TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # 'minio_storage',
 
     'crispy_forms',
     'tempus_dominus',
@@ -63,7 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'scrumme.urls'
@@ -192,8 +189,8 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-# STATIC_ROOT = BASE_DIR.child('staticfiles')
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = BASE_DIR.child('staticfiles')
+# STATIC_ROOT = 'staticfiles'
 
 STATIC_URL = '/static/'
 
