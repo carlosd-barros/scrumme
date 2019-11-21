@@ -216,8 +216,6 @@ WHITENOISE_ROOT = {
     'fivicon':'./static/images/favicon.ico',
 }
 
-
-
 # https://django-crispy-forms.readthedocs.io/en/latest/
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
