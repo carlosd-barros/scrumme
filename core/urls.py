@@ -34,7 +34,7 @@ urlpatterns = [
 
     # JOGADOR
     path(
-        'profile/<int:pk>/details/',
+        'profile/<int:pk>/detail/',
         JogadorDetailView.as_view(),
         name='jogador_detail'
     ),
