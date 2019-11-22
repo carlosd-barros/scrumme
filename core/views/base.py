@@ -35,6 +35,8 @@ class DashboardView(TemplateView):
                     'name':name if len(name) > 1 else request.user.username.upper()
                 }
             )
+        else:
+            return HttpResponseRedirect(reverse_lazy('accounts:login'))
 
         return super(
             DashboardView, self).dispatch(request, *args, **kwargs)

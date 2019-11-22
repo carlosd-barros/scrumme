@@ -221,21 +221,22 @@ class QuestConcludeView(LoginRequiredMixin, View):
             # next_class = next_class.first()
 
             if current_class == next_class:
-                # if self.request.user.jogador == jogador:
-                messages.success(
-                    self.request,
-                    f"{jogador.user.first_name}, faltam "
-                    f"{next_class.min_points - points} "
-                    f"para você ascender à classe {next_class.name}."
-                )
+                if self.request.user.jogador == jogador:
+                    messages.success(
+                        self.request,
+                        f"{jogador.user.first_name}, faltam "
+                        f"{next_class.min_points - points} "
+                        f"para você ascender à classe {next_class.name}."
+                    )
+
             elif next_class == check_next_class:
-                # if self.request.user.jogador == jogador:
-                classe = next_class.related_choice
-                messages.success(
-                    self.request,
-                    f"Parabéns {jogador.user.first_name}, "
-                    f"você acaba de ascender à classe {next_class.name}"
-                )
+                if self.request.user.jogador == jogador:
+                    classe = next_class.related_choice
+                    messages.success(
+                        self.request,
+                        f"Parabéns {jogador.user.first_name}, "
+                        f"você acaba de ascender à classe {next_class.name}"
+                    )
 
             else:
                 messages.error(

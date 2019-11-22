@@ -8,11 +8,10 @@ from core.models import Jogador, Quest, Equipe
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True)
-def is_lider(context, equipe):
-    lider = equipe.equipe.lider
-    jogador = context.get('request').user.jogador
-    
+@register.simple_tag
+def is_lider(quest, jogador):
+    lider = quest.equipe.lider
+
     if lider == jogador:
         return True
 
@@ -22,7 +21,10 @@ def is_lider(context, equipe):
 def member_permission(context, quest):
     jogador = context.get('request').user.jogador
 
-    if jogador in quest.responsaveis.all():
+    if (
+        jogador in quest.responsaveis.all() or
+        is_lider(quest, jogador)
+    ):
         return True
 
     return False
