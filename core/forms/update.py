@@ -44,7 +44,7 @@ class JogadorUpdateForm(ModelBaseFormHelper):
         fields = [
             'username', 'email',
             'first_name', 'last_name',
-            'password1', 'password2',
+            # 'password1', 'password2',
             'avatar'
         ]
 
@@ -59,11 +59,11 @@ class JogadorUpdateForm(ModelBaseFormHelper):
                 css_class='form-row'
             ),
             'email',
-            Row(
-                Column('password1', css_class='form-group col-md-6 mb-0'),
-                Column('password2', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
+            # Row(
+            #     Column('password1', css_class='form-group col-md-6 mb-0'),
+            #     Column('password2', css_class='form-group col-md-6 mb-0'),
+            #     css_class='form-row'
+            # ),
             'avatar',
         )
 
