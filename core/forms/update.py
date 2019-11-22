@@ -45,7 +45,7 @@ class JogadorUpdateForm(ModelBaseFormHelper):
             'username', 'email',
             'first_name', 'last_name',
             # 'password1', 'password2',
-            'avatar'
+            # 'avatar'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -64,7 +64,7 @@ class JogadorUpdateForm(ModelBaseFormHelper):
             #     Column('password2', css_class='form-group col-md-6 mb-0'),
             #     css_class='form-row'
             # ),
-            'avatar',
+            # 'avatar',
         )
 
         if instance:
