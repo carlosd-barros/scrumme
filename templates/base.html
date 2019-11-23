@@ -243,5 +243,14 @@
   <!-- Js specifique page -->
   {% block js %}{% endblock js %}
 
+  <script>
+
+  $("#content").on('click', function(e) {
+    if ($("div.collapse").hasClass("show")) {
+  $('div.collapse').collapse('hide');
+    };
+  });
+  </script>
+
 </body>
 </html>
