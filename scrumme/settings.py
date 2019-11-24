@@ -14,7 +14,6 @@ import os
 import django_heroku
 
 # from unipath import Path
-from pathlib import Path
 from decouple import config
 from dj_database_url import parse as db_url
 
