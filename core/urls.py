@@ -1,9 +1,11 @@
-from django.conf import settings
 from django.urls import path, re_path
-from django.conf.urls.static import static
-from django.views.generic.base import RedirectView
 
-from core.views.base import DashboardView, NotFoundView
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic.base import RedirectView, TemplateView
+
+
+from core.views.base import DashboardView
 
 from core.views.equipe import (
     EquipeCreateView, EquipeDeleteView,
@@ -78,9 +80,9 @@ urlpatterns = [
         name='quest_alternative_create'
     ),
     path(
-        'quest/<int:pk>/confirm/',
+        'quest/<int:pk>/conclude/',
         QuestConcludeView.as_view(),
-        name='quest_confirm'
+        name='quest_conclude'
     ),
     path(
         'quest/<int:pk>/custom-update/',
@@ -117,34 +119,40 @@ urlpatterns = [
     ),
 
 
-    # CLASSE
-    path(
-        'classe/list/',
-        ClasseListView.as_view(),
-        name='classe_list'
-    ),
-    path(
-        'classe/create/',
-        ClasseCreateView.as_view(),
-        name='classe_create'
-    ),
-    path(
-        'classe/<int:pk>/detail/',
-        ClasseDetailView.as_view(),
-        name='classe_detail'
-    ),
-    path(
-        'classe/<int:pk>/update/',
-        ClasseUpdateView.as_view(),
-        name='classe_update'
-    ),
-    path(
-        'classe/<int:pk>/delete/',
-        ClasseDeleteView.as_view(),
-        name='classe_delete'
-    ),
+    # # CLASSE
+    # path(
+    #     'classe/list/',
+    #     ClasseListView.as_view(),
+    #     name='classe_list'
+    # ),
+    # path(
+    #     'classe/create/',
+    #     ClasseCreateView.as_view(),
+    #     name='classe_create'
+    # ),
+    # path(
+    #     'classe/<int:pk>/detail/',
+    #     ClasseDetailView.as_view(),
+    #     name='classe_detail'
+    # ),
+    # path(
+    #     'classe/<int:pk>/update/',
+    #     ClasseUpdateView.as_view(),
+    #     name='classe_update'
+    # ),
+    # path(
+    #     'classe/<int:pk>/delete/',
+    #     ClasseDeleteView.as_view(),
+    #     name='classe_delete'
+    # ),
 
 
     # HTTP ERRORS
-    path('404/', NotFoundView.as_view(), name='404'),
+    path(
+        '404/',
+        TemplateView.as_view(
+            template_name = 'http_errors/404.html'
+        ),
+        name='404'
+    ),
 ]

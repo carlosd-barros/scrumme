@@ -28,4 +28,3 @@ def member_permission(context, quest):
         return True
 
     return False
-

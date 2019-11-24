@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <form id="form-submit" action="{% url 'core:quest_confirm' object.pk %}" method="POST"> {% csrf_token %}
+        <form id="form-submit" action="{% url 'core:quest_conclude' object.pk %}" method="POST"> {% csrf_token %}
             <div class="form-group float-right">
 
                 {% if object.open %}

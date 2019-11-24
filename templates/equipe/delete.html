@@ -17,10 +17,12 @@
             </div>
 
             <div class="card-body">
-                <h4>
+                <h5>
                     <i class="fa fa-exclamation-triangle"></i>
-                    Após excluir não será possível reverter.
-                </h4>
+                    Ao excluir uma equipe todas as quests relacionadas a ela
+                    também serão ecluidas e após excluir não será possível reverter.
+                </h5>
+
                 <form method="POST">
 
                     {% csrf_token %}

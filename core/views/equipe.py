@@ -2,7 +2,12 @@ import logging
 
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import (
+    Http404,
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpResponseForbidden,
+)
 
 from django.db.models import Q
 from django.db import transaction
@@ -12,12 +17,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic.base import RedirectView, TemplateView, View
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.views.generic.edit import (
     CreateView, DeleteView, FormView, UpdateView,
 )
-from django.views.generic.list import ListView
 
-from core.forms.create import EquipeCreateForm, QuestCreateForm, QuestAlternativeCreateForm
+from core.forms.create import (
+    QuestCreateForm,
+    EquipeCreateForm,
+    QuestAlternativeCreateForm,
+)
 from core.models import (
     Jogador, Classe, Equipe, Quest, Classe
 )
@@ -45,8 +54,8 @@ class EquipeListView(LoginRequiredMixin, ListView):
 class EquipeCreateView(LoginRequiredMixin, CreateView):
     model = Equipe
     form_class = EquipeCreateForm
-    success_url = reverse_lazy('core:equipe_list')
     template_name = "equipe/create.html"
+    success_url = reverse_lazy('core:equipe_list')
 
     @transaction.atomic
     def form_valid(self, form):
@@ -83,8 +92,49 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
 
 class EquipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Equipe
-    success_url = reverse_lazy('core:equipe_list')
     template_name = "equipe/delete.html"
+    success_url = reverse_lazy('core:equipe_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        jogador = request.user.jogador
+        equipe = self.get_object()
+
+        if jogador != equipe.lider or not equipe.open:
+            return HttpResponseRedirect(reverse_lazy('core:404'))
+
+        return super(
+            EquipeDeleteView, self).dispatch(request, *args, **kwargs)
+
+    @transaction.atomic
+    def delete(self, request, *args, **kwargs):
+        equipe = self.get_object()
+
+        logger.debug(
+            f"equipe aqui: {equipe}"
+        )
+
+        related_quests = Quest.objects.filter(
+            equipe=equipe
+        )
+
+        # related_quests.update(active=False)
+        logger.debug(
+            f"related_quests aqui: {related_quests}"
+        )
+
+        equipe.open = False
+        # equipe.save()
+
+        return HttpResponseRedirect(
+            reverse(
+                'core:equipe_delete',
+                kwargs={'pk':equipe.pk}
+            )
+        )
+
+        # return HttpResponseRedirect(self.get_success_url())
+
+
 
 class EquipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Equipe

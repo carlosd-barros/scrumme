@@ -182,7 +182,7 @@ class QuestConcludeView(LoginRequiredMixin, View):
 
         messages.error(
             request,
-            'Por favor, defina um ou mais responsáveis por está quests.'
+            'Por favor, defina um ou mais responsáveis por esta quests.'
         )
 
         return HttpResponseRedirect(
@@ -242,7 +242,7 @@ class QuestConcludeView(LoginRequiredMixin, View):
                 messages.error(
                     self.request,
                     f"Se você possui mais de {current_class.max_points+1} pontos "
-                    f"e ainda está na classe {current_class.name}, por favor "
+                    f"e ainda esta na classe {current_class.name}, por favor "
                     "mande um email para scrum.gamification@gmail.com "
                     "ou contate os administradores para que possamos corrigir isto."
                 )

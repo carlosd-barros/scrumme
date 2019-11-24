@@ -9,11 +9,7 @@ from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from django.views.generic import (
-    ListView, FormView, DetailView, 
-    FormView,TemplateView, CreateView, 
-    UpdateView, DeleteView, View
-)
+from django.views.generic.base import TemplateView
 
 from core.models import Jogador, Classe, Equipe, Quest
 
@@ -65,7 +61,3 @@ class DashboardView(TemplateView):
         ).distinct()
 
         return context
-
-
-class NotFoundView(TemplateView):
-    template_name = 'http_erros/404.html'

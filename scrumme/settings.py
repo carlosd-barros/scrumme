@@ -30,6 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
+print(f"aquiiiiiiiiii: {DEBUG}")
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*']
 
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 # http://whitenoise.evans.io/en/stable/django.html
@@ -134,10 +135,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# https://django-debug-toolbar.readthedocs.io/en/latest/
+INTERNAL_IPS = ('127.0.0.1',)
+
+
 # Config logging
 # https://docs.djangoproject.com/en/2.2/topics/logging/
 
-INTERNAL_IPS = ('127.0.0.1',)
 
 LOGGING = {
     'version': 1,

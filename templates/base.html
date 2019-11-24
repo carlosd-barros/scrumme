@@ -26,6 +26,23 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+    <style>
+        /* Show it is fixed to the top */
+
+        .nav-container {
+            position: relative;
+            z-index: 999;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+
+
     <!-- css specifique page -->
     {% block css %}{% endblock css %}
 
@@ -162,24 +179,14 @@
             {% if messages %}
             <div class="alert fade show">
                 {% for message in messages %}
-                {% if message.tags %}
-                    {% if message.tags == 'error' %}
-                    <div class="alert alert-danger">{{ message }}</div>
-                    {% else %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% if message.tags %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% else %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
                 {% endfor %}
-            </div>
-            {% endif %}
-
-            {% if form.non_field_error %}
-            <div class="alert alert-danger">
-                <strong>
-                {% for error in form.non_field_errors %}
-                    {{ error|escape }} <br>
-                {% endfor %}
-                </strong>
             </div>
             {% endif %}
 
@@ -244,12 +251,11 @@
     {% block js %}{% endblock js %}
 
     <script>
-
-    $("#content").on('click', function(e) {
-        if ($("div.collapse").hasClass("show")) {
-    $('div.collapse').collapse('hide');
-        };
-    });
+        $("#content").on('click', function(e) {
+            if ($("div.collapse").hasClass("show")) {
+                $('div.collapse').collapse('hide');
+            };
+        });
     </script>
 
 </body>
