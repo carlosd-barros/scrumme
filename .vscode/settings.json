@@ -7,9 +7,8 @@
     "python.formatting.provider": "autopep8",
     "python.jediEnabled": false,
     "python.linting.pylintEnabled": true,
-    "python.linting.banditArgs": [
-        "--load-plugin",
-        "pylint_django",
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
     ],
     "python.pythonPath": "~/.pyenv/versions/3.7.4/envs/scrumme-3.7/bin/python",
     "python.autoComplete.extraPaths": [
