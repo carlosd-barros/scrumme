@@ -4,253 +4,253 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Jekyll v3.8.5">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
 
-  <meta name="author" content="CYBERULBRA-2077">
-  <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <meta name="author" content="CYBERULBRA-2077">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
 
-  <title>ScrumMe &raquo; {% block title %}{% endblock title %}</title>
+    <title>ScrumMe &raquo; {% block title %}{% endblock title %}</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet" />
 
-  <!-- Fontawesome core CSS -->
-  <link href="{% static 'node_modules/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
+    <!-- Fontawesome core CSS -->
+    <link href="{% static 'node_modules/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
 
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
-  <!-- css specifique page -->
-  {% block css %}{% endblock css %}
+    <!-- css specifique page -->
+    {% block css %}{% endblock css %}
 
 </head>
 
 <body id="page-top">
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'core:home' %}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Scrum Points<sup> ui ui</sup></div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Interface
-      </div>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fa fa-users" aria-hidden="true"></i>
-          <span>Equipes</span>
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'core:home' %}">
+            <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Scrum Points<sup> ui ui</sup></div>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Suas equipes</h6>
-            <a class="collapse-item" href="{% url 'core:equipe_list' %}">Listar</a>
-            <a class="collapse-item" href="{% url 'core:equipe_create' %}">Nova equipe</a>
-          </div>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Interface
         </div>
-      </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'core:quest_list' %}">
-          <i class="fa fa-gamepad" aria-hidden="true"></i>
-          <span>Quests</span></a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span>Equipes</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Suas equipes</h6>
+                <a class="collapse-item" href="{% url 'core:equipe_list' %}">Listar</a>
+                <a class="collapse-item" href="{% url 'core:equipe_create' %}">Nova equipe</a>
+            </div>
+            </div>
+        </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:quest_list' %}">
+            <i class="fa fa-gamepad" aria-hidden="true"></i>
+            <span>Quests</span></a>
+        </li>
 
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
 
-    </ul>
-    <!-- End Sidebar -->
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-      <div id="content">
+        </ul>
+        <!-- End Sidebar -->
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              {% if user.is_authenticated %}
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                    {{ user.username }}
-                  </span>
-                  <img class="img-profile rounded-circle" src="{{ request.user.jogador.avatar.url }}">
-                </a>
-              {% else %}
-              <div class="nav-link dropdown-toggle">
-                <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:login' %}">
-                  <i class="fa fa-sign-in" aria-hidden="true"></i>
-                  Login
-                </a>
-                <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:register' %}">
-                  Register
-                </a>
-              </div>
-              {% endif %}
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
 
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
                 {% if user.is_authenticated %}
-                <a class="dropdown-item" href="{% url 'core:jogador_detail' request.user.jogador.pk %}">
-                  <i class="fas fa-user fa-sm text-gray-500"></i>
-                  Perfil
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'accounts:logout' %}" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt text-gray-500"></i>
-                  Logout
-                </a>
-
-                {% if user.is_superuser %}
-                <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">
-                  <i class="fa fa-rocket text-gray-500" aria-hidden="true"></i>
-                  Admin
-                </a>
-                {% endif %}
-
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                        {{ user.username }}
+                    </span>
+                    <img class="img-profile rounded-circle" src="{{ request.user.jogador.avatar.url }}">
+                    </a>
                 {% else %}
-                <a class="dropdown-item" href="{% url 'accounts:login' %}">
-                  <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-500"></i>
-                  Login
-                </a>
-                <a class="dropdown-item" href="{% url 'accounts:register' %}">
-                    <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-500"></i>
+                <div class="nav-link dropdown-toggle">
+                    <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:login' %}">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    Login
+                    </a>
+                    <a class="mr-2 d-none d-lg-inline text-gray-600 small" href="{% url 'accounts:register' %}">
                     Register
-                  </a>
+                    </a>
+                </div>
                 {% endif %}
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
-              </div>
-            </li>
+                    {% if user.is_authenticated %}
+                    <a class="dropdown-item" href="{% url 'core:jogador_detail' request.user.jogador.pk %}">
+                    <i class="fas fa-user fa-sm text-gray-500"></i>
+                    Perfil
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'accounts:logout' %}" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt text-gray-500"></i>
+                    Logout
+                    </a>
 
-          </ul>
-        </nav>
-        <!-- End Topbar -->
-        
-        {% if messages %}
-          <div class="alert fade show">
-            {% for message in messages %}
-              {% if message.tags %}
-                {% if message.tags == 'error' %}
-                  <div class="alert alert-danger">{{ message }}</div>
-                {% else %}
-                  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% if user.is_superuser %}
+                    <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">
+                    <i class="fa fa-rocket text-gray-500" aria-hidden="true"></i>
+                    Admin
+                    </a>
+                    {% endif %}
+
+                    {% else %}
+                    <a class="dropdown-item" href="{% url 'accounts:login' %}">
+                    <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-500"></i>
+                    Login
+                    </a>
+                    <a class="dropdown-item" href="{% url 'accounts:register' %}">
+                        <i class="fas fa-sing-in-alt fa-sm fa-fw mr-2 text-gray-500"></i>
+                        Register
+                    </a>
+                    {% endif %}
+
+                </div>
+                </li>
+
+            </ul>
+            </nav>
+            <!-- End Topbar -->
+            
+            {% if messages %}
+            <div class="alert fade show">
+                {% for message in messages %}
+                {% if message.tags %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                    {% else %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endif %}
                 {% endif %}
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
 
-        {% if form.non_field_error %}
-          <div class="alert alert-danger">
-            <strong>
-              {% for error in form.non_field_errors %}
-                {{ error|escape }} <br>
-              {% endfor %}
-            </strong>
-          </div>
-        {% endif %}
+            {% if form.non_field_error %}
+            <div class="alert alert-danger">
+                <strong>
+                {% for error in form.non_field_errors %}
+                    {{ error|escape }} <br>
+                {% endfor %}
+                </strong>
+            </div>
+            {% endif %}
 
-        <div class="container">
+            <div class="container">
 
-            {% block main %}
+                {% block main %}
 
-            {% endblock main %}
+                {% endblock main %}
+
+            </div>
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>CYBERULBRA-2077 &copy; Scrum Me 2019</span>
+            </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
         </div>
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>CYBERULBRA-2077 &copy; Scrum Me 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-  </div>
-  <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+            <div class="modal-body">Selecione o botão de "Logout" a baixo para encerrar sua sessão.</div>
+            <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Calcelar</button>
+            <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
+            </div>
         </div>
-        <div class="modal-body">Selecione o botão de "Logout" a baixo para encerrar sua sessão.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Calcelar</button>
-          <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
-  <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-  <!-- Js specifique page -->
-  {% block js %}{% endblock js %}
+    <!-- Js specifique page -->
+    {% block js %}{% endblock js %}
 
-  <script>
+    <script>
 
-  $("#content").on('click', function(e) {
-    if ($("div.collapse").hasClass("show")) {
-  $('div.collapse').collapse('hide');
-    };
-  });
-  </script>
+    $("#content").on('click', function(e) {
+        if ($("div.collapse").hasClass("show")) {
+    $('div.collapse').collapse('hide');
+        };
+    });
+    </script>
 
 </body>
 </html>
