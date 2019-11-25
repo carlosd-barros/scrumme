@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import locale
 import django_heroku
 
 # from unipath import Path
@@ -26,12 +27,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
+config.encoding = locale.getpreferredencoding(False)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
+print(f"debuuuuuuuuuuug: {DEBUG}")
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 

@@ -1,0 +1,28 @@
+<form id="form-submit" action="{% url 'core:quest_conclude' object.pk %}" method="POST">
+    {% csrf_token %}
+</form>
+
+    <script>
+        // $("#btn-submit-quest").click( function () {
+        //     $.confirm({
+        //         theme: 'black',
+        //         title: 'Concluir quest!',
+        //         content: 'testenado' ,
+        //         buttons: {
+        //             formSubmit: {
+        //                 text: 'Confirmar',
+        //                 btnClass: 'btn-blue',
+        //                 action: function () {
+        //                     console.log('opaaaaaaaaaaa')
+        //                     ajax: {
+        //                         url: "{% 'core:quest_conclude' object.pk %}"
+        //                     }
+        //                 }
+        //             },
+        //             cancel: function () {
+        //                 console.log('cancelou')
+        //             },
+        //         },
+        //     });
+        // });
+    </script>

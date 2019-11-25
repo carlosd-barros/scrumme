@@ -2,6 +2,7 @@
 
 {% load crispy_forms_tags %}
 {% load base_tags %}
+{% load equipe_tags %}
 
 {% block title %}Equipe Detail{% endblock title %}
 
@@ -13,41 +14,33 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-        <h5 class="m-0 font-weight-bold text-primary text-capitalize">{{ equipe.name }}</h5>
+        <h5 class="m-0 font-weight-bold text-primary text-capitalize">{{ object.name }}</h5>
 
-        {% is_lider request.user.jogador object as permission %}
-        {% if permission %}
-            <div class="dropdown no-arrow">
-                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+        <div class="dropdown no-arrow">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-600"></i>
+                <i class="fas fa-cogs"></i> Opções
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#" title="Quests relacionadas">
+                    <i class="fa fa-gamepad"></i> Quests
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                    <div class="dropdown-header">
-                        <i class="fas fa-cogs text-dark"></i>
-                        <span class="text-gray-900">Opções</span>
-                    </div>
+                {% is_lider request.user.jogador object as permission %}
+                {% if permission %}
+                <div class="dropdown-divider"></div>
 
-                    <a class="dropdown-item" href="{% url 'core:equipe_update' equipe.pk %}" title="Editar">
-                        <li class="fa fa-edit text-gray-800"></li>
-                        <span class="text-gray-600">Editar</span>
-                    <a>
+                <a class="dropdown-item" href="{% url 'core:equipe_update' object.pk %}" title="Editar">
+                    <i class="fas fa-pencil-alt"></i> Editar
+                <a>
 
-                    <a class="dropdown-item" href="{% url 'core:equipe_delete' equipe.pk %}" title="Excluir">
-                        <i class="fas fa-trash-alt text-gray-800"></i>
-                        <span class="text-gray-600">Excluir</span>
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <a class="dropdown-item" href="#" title="Quests relacionadas">
-                        <i class="fa fa-gamepad text-gray-800" aria-hidden="true"></i>
-                        <span class="text-gray-600">Quests</span>
-                    </a>
-                </div>
+                <a class="dropdown-item" href="{% url 'core:equipe_delete' object.pk %}" title="Excluir">
+                    <i class="fas fa-minus-circle"></i> Excluir
+                </a>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
     </div>
 
     <div class="card-body">
@@ -88,7 +81,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary">Criar quest para esta equipe?</h5>
+        <h5 class="m-0 font-weight-bold text-primary">Criar quest para esta equipe</h5>
     </div>
 
     <div class="card-body">

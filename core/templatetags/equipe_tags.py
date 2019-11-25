@@ -6,3 +6,10 @@ from core.choices import JogadorClass as JC
 from core.models import Jogador, Quest, Equipe
 
 register = template.Library()
+
+
+@register.simple_tag
+def get_related_quests(equipe):
+    return Quest.objects.filter(
+        equipe=equipe
+    ).count()

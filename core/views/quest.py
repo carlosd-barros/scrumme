@@ -3,8 +3,12 @@ from random import randint
 
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404, render, redirect
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import (
+    Http404,
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpResponseForbidden,
+)
 
 from django.db.models import Q
 from django.db import transaction
@@ -50,13 +54,18 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
     model = Quest
     template_name = "quest/detail.html"
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     user = request.user
-    #     jogador = user.jogador
+    def dispatch(self, request, *args, **kwargs):
+        jogador = request.user.jogador
+        quest = self.get_object()
 
+        if (
+            not Jogador.objects.is_lider(jogador, quest=quest) and
+            not Jogador.objects.is_member(jogador, quest=quest)
+        ):
+            return HttpResponseForbidden()
 
-    #     return super(
-    #         QuestDetailView, self).dispatch(request, *args, **kwargs)
+        return super(
+            QuestDetailView, self).dispatch(request, *args, **kwargs)
 
 
 class QuestUpdateView(LoginRequiredMixin, UpdateView):
@@ -167,18 +176,22 @@ class QuestConcludeView(LoginRequiredMixin, View):
         jogadores = quest.responsaveis.all()
 
         if jogadores.exists():
-            for jogador in jogadores:
-                classe = self.player_level_up(jogador, quest)
-                if classe:
-                    jogador.classe = classe
+            # for jogador in jogadores:
+            #     classe = self.player_level_up(jogador, quest)
+            #     if classe:
+            #         jogador.classe = classe
 
-                jogador.points += quest.points
-                jogador.save()
+            #     jogador.points += quest.points
+            #     jogador.save()
 
-            quest.open = False
-            quest.save()
+            # quest.open = False
+            # quest.save()
 
-            return HttpResponseRedirect(self.success_url)
+            # return HttpResponseRedirect(self.success_url)
+
+            return HttpResponseRedirect(
+                reverse('core:quest_detail', kwargs={'pk':quest_pk})
+            )
 
         messages.error(
             request,

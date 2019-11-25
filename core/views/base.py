@@ -44,20 +44,19 @@ class DashboardView(TemplateView):
         if self.request.user.is_authenticated:
             jogador = self.request.user.jogador
 
-        equipes = Equipe.objects.filter(
+        context['equipes'] = Equipe.objects.filter(
+            Q(active=True) &
             (
                 Q(lider=jogador) | Q(team__in=[jogador])
-            ) &
-            Q(active=True)
+            )
         ).distinct()
 
-        context['equipes'] = equipes
-
         context['quests'] = Quest.objects.filter(
+            Q(open=True) &
             (
-                Q(responsaveis__in=[jogador]) | Q(equipe__in=equipes)
-            ) &
-            Q(open=True)
+                Q(responsaveis__in=[jogador]) |
+                Q(equipe__lider=jogador)
+            )
         ).distinct()
 
         return context

@@ -1,8 +1,6 @@
 from django import template
 from django.db.models import Q
 
-from core.choices import JogadorType as JT
-from core.choices import JogadorClass as JC
 from core.models import Jogador, Quest, Equipe
 
 register = template.Library()
@@ -44,3 +42,16 @@ def is_member(context, equipe=None, quest=None):
         )
 
     return False
+
+@register.simple_tag
+def is_lider_or_member(jogador, equipe=None, quest=None):
+
+    is_lider = Jogador.objects.is_lider(
+        jogador=jogador, equipe=equipe, quest=quest
+    )
+
+    is_member = Jogador.objects.is_member(
+        jogador=jogador, equipe=equipe, quest=quest
+    )
+
+    return is_lider or is_member

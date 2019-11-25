@@ -71,15 +71,15 @@ class QuestAlternativeCreateForm(ModelDatePickerForm):
 
     def clean(self):
         cleaned_data = super(QuestAlternativeCreateForm, self).clean()
-        init_date = cleaned_data.get("start_date")
+        init_date = cleaned_data.get("init_date")
         end_date = cleaned_data.get("end_date")
         today = date.today()
 
-        if end_date and end_date < start_date:
+        if end_date and end_date < init_date:
             raise ValidationError(
                 _("A data final não pode ser menor que a data inicial."))
 
-        if start_date.date() < today:
+        if init_date < today:
             raise ValidationError(
                 _("A data inicial não pode ser menor que a data de hoje."))
 

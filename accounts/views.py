@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class AuthRegisterView(FormView):
     form_class = AuthRegisterForm
     template_name = 'auth/register.html'
-    sucess_url = 'accounts:login'
+    success_url = reverse_lazy('accounts:login')
 
     def form_valid(self, form):
         if self.request.method == "POST":
@@ -28,12 +28,11 @@ class AuthRegisterView(FormView):
                     self.request, 
                     f'{first_name}, sua conta foi criada com sucesso!'
                 )
+            else:
+                return self.form_invalid(form)
         else:
-            logger.debug('deu ruim man')
             form = AuthRegisterForm()
 
         return super(
             AuthRegisterView, self).form_valid(form)
 
-    def get_success_url(self):
-        return reverse(self.sucess_url)

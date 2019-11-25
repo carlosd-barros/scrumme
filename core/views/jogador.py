@@ -71,7 +71,6 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.method == 'POST':
 
             if form.is_valid:
-                print('é valido meu consagrado')
                 data = form.cleaned_data
                 avatar = data.get('avatar', None)
                 new_name = f"{data.get('first_name')} {data.get('last_name')}"
@@ -91,7 +90,7 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
                     #     logger.debug(f"resized_avatar aqui: {resized_avatar}")
                     #     jogador.avatar = resized_avatar
 
-                # jogador.save()
+                jogador.save()
                 form.save()
 
                 messages.success(
@@ -101,8 +100,14 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
                 return super(
                     JogadorUpdateView, self).form_valid(form)
 
-            print('não é valido meu consagrado')
+            logger.debug('não é valido meu consagrado')
             return self.form_invalid(form)
+
+        return render(
+            self.request,
+            self.template_name,
+            self.get_context_data(form=JogadorUpdateForm)
+        )
 
 
     def format_image(self, img):
@@ -124,7 +129,15 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
             messages.error(
                 self.request, f"error ao alterar avatar."
             )
-            return None
+
+        return None
+
+    # def save(self, commit=True):
+    #     user = super().save(commit=False)
+    #     user.set_password(self.cleaned_data["password1"])
+    #     if commit:
+    #         user.save()
+    #     return user
 
 
     def get_success_url(self):

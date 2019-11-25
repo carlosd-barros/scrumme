@@ -81,6 +81,18 @@ class EquipeDetailView(LoginRequiredMixin, DetailView):
     model = Equipe
     template_name = "equipe/detail.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        jogador = request.user.jogador
+        equipe = self.get_object()
+
+        if (
+            not Jogador.objects.is_lider(jogador, equipe=equipe) and
+            not Jogador.objects.is_member(jogador, equipe=equipe)
+        ):
+            return HttpResponseForbidden()
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         kwargs.update({
             'form':QuestAlternativeCreateForm,

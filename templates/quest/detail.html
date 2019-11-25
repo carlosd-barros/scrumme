@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-{% load quest_tags %}
+
+{% load staticfiles %}
+{% load base_tags %}
 
 {% block title %}Quest Detail{% endblock title %}
 
@@ -9,14 +11,45 @@
 <h1 class="margin-none">Detalhes</h1>
 
 <div class="card shadow">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
+        <h5 class="m-0 font-weight-bold text-primary text-capitalize">{{ object.name }}</h5>
+
+        <div class="dropdown no-arrow">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cogs"></i> Opções
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                {% is_lider request.user.jogador quest=object as lider %}
+                {% is_member request.user.jogador quest=object as member %}
+                {% if lider or member %}
+
+                    {% if not lider %}
+                        <a class="btn btn-outline-secondary" href="{% url 'core:quest_alternative_update' object.pk %}">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
+                            Editar quest
+                        </a>
+                    {% else %}
+                        <a class="dropdown-item" href="{% url 'core:quest_update' object.pk %}" title="Editar">
+                            <i class="fas fa-pencil-alt"></i> Editar
+                        <a>
+
+                        <a class="dropdown-item" href="{% url 'core:quest_delete' object.pk %}" title="Excluir">
+                            <i class="fas fa-minus-circle"></i> Excluir
+                        </a>
+                    {% endif %}
+                    <!-- <a class="dropdown-item" id="btn-submit" href="#" title="Concluir quest">
+                        <i class="fas fa-minus-circle"></i> Concluir
+                    </a> -->
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <div class="card-body">
-
-        <div class="card-title">
-            <h5 class="m-0 font-weight-bold text-primary">
-                <span class="text-capitalize">{{ object.name }}</span>
-            </h5>
-        </div> <hr/>
-
         <div class="row">
             <div class="col-md-4">
                 <div><strong>Equipe</strong></div>
@@ -67,49 +100,26 @@
                 {% endfor %}
             </div>
         </div>
-
-        <form id="form-submit" action="{% url 'core:quest_conclude' object.pk %}" method="POST"> {% csrf_token %}
+        
+        {% if object.open %}
+        <form id="form-submit" action="{% url 'core:quest_conclude' object.pk %}" method="POST">
+            {% csrf_token %}
             <div class="form-group float-right">
-
-                {% if object.open %}
-
-                    {% member_permission object as permission %}
-                    {% if permission %}
-
-                        {% is_lider object request.user.jogador as permission %}
-                        {% if permission %}
-                            <a class="btn btn-outline-secondary" href="{% url 'core:quest_update' object.pk %}">
-                                <i class="fas fa-edit" aria-hidden="true"></i>
-                                Editar quest
-                            </a>
-
-                        {% else %}
-                            <a class="btn btn-outline-secondary" href="{% url 'core:quest_alternative_update' object.pk %}">
-                                <i class="fas fa-edit" aria-hidden="true"></i>
-                                Editar quest
-                            </a>
-
-                        {% endif %}
-                        <button onsubmit="return confirm('Confirmar conclusão?')" class="btn btn-outline-success" type="submit">
-                            <li class="fas fa-check-circle"></li>
-                            Concluir quest
-                        </button>
-
-                    {% endif %}
-                {% endif %}
+                <button id="btn-submit-quest" class="btn btn-outline-success" type="submit">
+                    <li class="fas fa-check-circle"></li> Concluir quest
+                </button>
             </div>
         </form>
+        {% endif %}
 
     </div>
 </div>
 
-
 {% endblock main %}
 
 {% block js %}
-    <script>
-        $('#form-submit').on('submit', function() {
-            alert("Deseja concluir a quest 'object.name'?")
-        });
-    </script>
+    <link rel="stylesheet" href="{% static 'node_modules/jquery-confirm/css/jquery-confirm.css' %}">
+    <script src="{% static 'node_modules/jquery-confirm/js/jquery-confirm.js' %}"></script>
+    <script src="{% static 'node_modules/select2/dist/js/select2.js' %}"></script>
+
 {% endblock js %}
