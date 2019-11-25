@@ -1,7 +1,7 @@
 import logging
 from random import randint
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.http.response import (
     Http404,
@@ -169,6 +169,23 @@ class QuestAlternativeCreateView(LoginRequiredMixin, CreateView):
 class QuestConcludeView(LoginRequiredMixin, View):
     success_url = reverse_lazy('core:quest_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        quest_id = kwargs.get('pk', None)
+        quest = get_object_or_404(Quest, pk=quest_id)
+
+        url_redirect = reverse(
+            'core:quest_detail', kwargs={'pk':quest_id}
+        )
+
+        if not quest.open:
+            messages.error(
+                request,
+                'Esta quest já foi concluída.'
+            )
+            return HttpResponseRedirect(url_redirect)
+
+        return super().dispatch(request, *args, **kwargs)
+
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         quest_pk = kwargs.get('pk', None)
@@ -176,22 +193,22 @@ class QuestConcludeView(LoginRequiredMixin, View):
         jogadores = quest.responsaveis.all()
 
         if jogadores.exists():
-            # for jogador in jogadores:
-            #     classe = self.player_level_up(jogador, quest)
-            #     if classe:
-            #         jogador.classe = classe
+            for jogador in jogadores:
+                classe = self.player_level_up(jogador, quest)
+                if classe:
+                    jogador.classe = classe
 
-            #     jogador.points += quest.points
-            #     jogador.save()
+                jogador.points += quest.points
+                jogador.save()
 
-            # quest.open = False
-            # quest.save()
+            quest.open = False
+            quest.save()
 
-            # return HttpResponseRedirect(self.success_url)
+            return HttpResponseRedirect(self.success_url)
 
-            return HttpResponseRedirect(
-                reverse('core:quest_detail', kwargs={'pk':quest_pk})
-            )
+            # return HttpResponseRedirect(
+            #     reverse('core:quest_detail', kwargs={'pk':quest_pk})
+            # )
 
         messages.error(
             request,
@@ -242,7 +259,7 @@ class QuestConcludeView(LoginRequiredMixin, View):
                         f"para você ascender à classe {next_class.name}."
                     )
 
-            elif next_class == check_next_class:
+            elif next_class:
                 if self.request.user.jogador == jogador:
                     classe = next_class.related_choice
                     messages.success(

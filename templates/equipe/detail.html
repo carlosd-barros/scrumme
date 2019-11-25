@@ -23,13 +23,13 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#" title="Quests relacionadas">
+                <!-- <a class="dropdown-item" href="#" title="Quests relacionadas">
                     <i class="fa fa-gamepad"></i> Quests
-                </a>
+                </a> -->
 
                 {% is_lider request.user.jogador object as permission %}
                 {% if permission %}
-                <div class="dropdown-divider"></div>
+                <!-- <div class="dropdown-divider"></div> -->
 
                 <a class="dropdown-item" href="{% url 'core:equipe_update' object.pk %}" title="Editar">
                     <i class="fas fa-pencil-alt"></i> Editar
