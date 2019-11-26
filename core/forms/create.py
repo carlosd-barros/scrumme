@@ -2,7 +2,6 @@ import logging
 from datetime import date
 
 from django import forms
-from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from crispy_forms.helper import FormHelper
@@ -76,11 +75,12 @@ class QuestAlternativeCreateForm(ModelDatePickerForm):
         today = date.today()
 
         if end_date and end_date < init_date:
-            raise ValidationError(
-                _("A data final não pode ser menor que a data inicial."))
+            raise forms.ValidationError(
+                _("A data final não pode ser menor que a data inicial.")
+            )
 
         if init_date < today:
-            raise ValidationError(
-                _("A data inicial não pode ser menor que a data de hoje."))
-
+            raise forms.ValidationError(
+                _("A data inicial não pode ser menor que a data de hoje.")
+            )
 

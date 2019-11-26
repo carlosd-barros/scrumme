@@ -8,10 +8,10 @@ register = template.Library()
 
 @register.simple_tag
 def is_lider(jogador, equipe=None, quest=None):
-    if jogador.user.is_superuser:
-        return True
+    # if jogador.user.is_superuser:
+    #     return True
 
-    elif equipe:
+    if equipe:
         return Jogador.objects.is_lider(
             jogador, equipe=equipe
         )
@@ -28,10 +28,10 @@ def is_lider(jogador, equipe=None, quest=None):
 def is_member(context, equipe=None, quest=None):
     jogador = context.get('request').user.jogador
 
-    if jogador.user.is_superuser:
-        return True
+    # if jogador.user.is_superuser:
+    #     return True
 
-    elif equipe:
+    if equipe:
         return Jogador.objects.is_member(
             jogador, equipe=equipe
         )

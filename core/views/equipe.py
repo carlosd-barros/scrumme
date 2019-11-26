@@ -111,7 +111,7 @@ class EquipeDeleteView(LoginRequiredMixin, DeleteView):
         jogador = request.user.jogador
         equipe = self.get_object()
 
-        if jogador != equipe.lider or not equipe.open:
+        if jogador != equipe.lider or not equipe.active:
             return HttpResponseRedirect(reverse_lazy('core:404'))
 
         return super(
@@ -129,22 +129,21 @@ class EquipeDeleteView(LoginRequiredMixin, DeleteView):
             equipe=equipe
         )
 
-        # related_quests.update(active=False)
+        related_quests.update(active=False)
         logger.debug(
             f"related_quests aqui: {related_quests}"
         )
 
-        equipe.open = False
-        # equipe.save()
+        equipe.active = False
+        equipe.save()
 
-        return HttpResponseRedirect(
-            reverse(
-                'core:equipe_delete',
-                kwargs={'pk':equipe.pk}
-            )
-        )
+        return HttpResponseRedirect(self.get_success_url())
 
-        # return HttpResponseRedirect(self.get_success_url())
+        # return HttpResponseRedirect(
+        #     reverse(
+        #         'core:equipe_delete', kwargs={'pk':equipe.pk}
+        #     )
+        # )
 
 
 
@@ -155,6 +154,18 @@ class EquipeUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         'lider', 'team'
     ]
+
+    def dispatch(self, request, *args, **kwargs):
+        equipe = self.get_object()
+        jogador = request.user.jogador
+
+        if not equipe.lider == jogador:
+            return HttpResponseForbidden()
+        
+        if not equipe.active:
+            return HttpResponseRedirect(reverse_lazy('core:404'))
+
+        return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):
         equipe = self.get_object()

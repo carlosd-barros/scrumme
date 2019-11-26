@@ -101,20 +101,19 @@ class QuestUpdateView(LoginRequiredMixin, UpdateView):
 
 
 # Criar quest a partir de uma equipe
-class QuestAlternativeCreateView(LoginRequiredMixin, CreateView):
+class QuestAlternativeCreateView(LoginRequiredMixin, View):
     model = Quest
     form_class = QuestAlternativeCreateForm
-    success_url = 'core:quest_detail'
-
-    def dispatch(self, request, *args, **kwargs):
-        logger.debug('opa passou aqui hein')
-        return super().dispatch(request, *args, **kwargs)
+    success_url = reverse_lazy('core:quest_list')
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        form = QuestAlternativeCreateForm(request.POST)
+        equipe = get_object_or_404(
+            Equipe, pk=kwargs.get('pk', None)
+        )
+        form = self.form_class(request.POST)
 
-        if form.is_valid:
+        if form.is_valid():
             quest = form.save(commit=False)
             points = self.points_for_quest(quest.level)
 
@@ -127,9 +126,7 @@ class QuestAlternativeCreateView(LoginRequiredMixin, CreateView):
                     'Os pontos desta quest não puderam ser atribuídos.'
                 )
 
-            quest.equipe = get_object_or_404(
-                Equipe, pk=kwargs.get('pk', None)
-            )
+            quest.equipe = equipe
             quest.save()
 
             messages.success(
@@ -147,8 +144,10 @@ class QuestAlternativeCreateView(LoginRequiredMixin, CreateView):
             self.request, 'Ops, verifique os dados do formulário.'
         )
 
-        return HttpResponseRedirect(
-            reverse('core:equipe_detail', kwargs={'pk':kwargs.get('pk')})
+        return render(
+            self.request,
+            "equipe/detail.html",
+            {'form':form, 'object':equipe}
         )
 
     def points_for_quest(self, level):
@@ -179,8 +178,7 @@ class QuestConcludeView(LoginRequiredMixin, View):
 
         if not quest.open:
             messages.error(
-                request,
-                'Esta quest já foi concluída.'
+                request, 'Esta quest já foi concluída.'
             )
             return HttpResponseRedirect(url_redirect)
 
@@ -205,10 +203,6 @@ class QuestConcludeView(LoginRequiredMixin, View):
             quest.save()
 
             return HttpResponseRedirect(self.success_url)
-
-            # return HttpResponseRedirect(
-            #     reverse('core:quest_detail', kwargs={'pk':quest_pk})
-            # )
 
         messages.error(
             request,
@@ -237,20 +231,16 @@ class QuestConcludeView(LoginRequiredMixin, View):
                 min_points__lte=points,
                 max_points__gte=points
             )
-            check_next_class = Classe.objects.get(
-                active=True,
-                min_points__exact=current_class.max_points+1
-            )
-            logger.debug(
-                f"classe: {classe} | points: {points}\n"
-            )
+
             logger.debug(
                 f"current_class: {current_class} | next_class: {next_class}\n"
             )
 
-            # next_class = next_class.first()
-
             if current_class == next_class:
+                print("player_level_up primeiro condicional ")
+                next_class = Classe.objects.get(
+                    min_points__exact=current_class.max_points+1
+                )
                 if self.request.user.jogador == jogador:
                     messages.success(
                         self.request,
@@ -260,12 +250,13 @@ class QuestConcludeView(LoginRequiredMixin, View):
                     )
 
             elif next_class:
+                print("player_level_up segundo condicional ")
                 if self.request.user.jogador == jogador:
                     classe = next_class.related_choice
                     messages.success(
                         self.request,
                         f"Parabéns {jogador.user.first_name}, "
-                        f"você acaba de ascender à classe {next_class.name}"
+                        f"você acaba de ascender à classe {next_class.name}."
                     )
 
             else:
@@ -313,4 +304,32 @@ class QuestDeleteView(LoginRequiredMixin, DeleteView):
     model = Quest
     template_name = "quest/delete.html"
     success_url = reverse_lazy('core:quest_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        jogador = request.user.jogador
+        quest = self.get_object()
+
+        if (
+            jogador not in quest.responsaveis.all() or 
+            not quest.open or not quest.active
+        ):
+            return HttpResponseRedirect(reverse_lazy('core:404'))
+
+        return super(
+            QuestDeleteView, self).dispatch(request, *args, **kwargs)
+
+    @transaction.atomic
+    def delete(self, request, *args, **kwargs):
+        quest = self.get_object()
+
+        quest.active = False
+        quest.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+        # return HttpResponseRedirect(
+        #     reverse(
+        #         'core:quest_delete', kwargs={'pk':quest.pk}
+        #     )
+        # )
 
