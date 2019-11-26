@@ -78,7 +78,7 @@ class Quest(models.Model):
         default=QuestLevel.BAIXO.code,
     )
     points = models.IntegerField("Pontos", null=True, blank=True)
-    description = models.TextField("Descrição")
+    description = models.TextField("Descrição", max_length=200)
     active = models.BooleanField("Ativo", default=True)
     open = models.BooleanField(default=True)
     created = models.DateTimeField("Criado em", auto_now_add=True, null=True)

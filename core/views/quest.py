@@ -305,3 +305,31 @@ class QuestDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "quest/delete.html"
     success_url = reverse_lazy('core:quest_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        jogador = request.user.jogador
+        quest = self.get_object()
+
+        if (
+            jogador not in quest.responsaveis.all() or 
+            not quest.open or not quest.active
+        ):
+            return HttpResponseRedirect(reverse_lazy('core:404'))
+
+        return super(
+            QuestDeleteView, self).dispatch(request, *args, **kwargs)
+
+    @transaction.atomic
+    def delete(self, request, *args, **kwargs):
+        quest = self.get_object()
+
+        quest.active = False
+        quest.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+        # return HttpResponseRedirect(
+        #     reverse(
+        #         'core:quest_delete', kwargs={'pk':quest.pk}
+        #     )
+        # )
+
