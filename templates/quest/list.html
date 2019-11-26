@@ -30,9 +30,9 @@
             <td class="text-center">{{ quest.end_date|date:'d/m/Y' }}</td>
             <td class="text-center">
                 {% if quest.open %}
-                        <span class="badge badge-pill badge-danger">NÃO</span>
-                {% else %}
                         <span class="badge badge-pill badge-success">SIM</span>
+                {% else %}
+                        <span class="badge badge-pill badge-danger">NÃO</span>
                 {% endif %}
             </td>
 

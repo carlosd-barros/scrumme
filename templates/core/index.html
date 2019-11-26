@@ -31,7 +31,11 @@
 
                                 <div class="col-md-5">
                                     <div><strong>Composta por</strong></div>
-                                    {{ equipe.team.all|length }} integrantes
+                                    {% if equipe.team.all.count == 1 %}
+                                        {{ equipe.team.all|length }} integrante
+                                    {% else %}
+                                        {{ equipe.team.all|length }} integrantes
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -70,7 +74,11 @@
 
                                 <div class="col-md-6">
                                     <div><strong>Composta por</strong></div>
-                                    {{ quest.responsaveis.all|length }} integrantes
+                                    {% if quest.responsaveis.all.count == 1 %}
+                                        {{ quest.responsaveis.all|length }} integrante
+                                    {% else %}
+                                        {{ quest.responsaveis.all|length }} integrantes
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

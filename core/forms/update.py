@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError
 from django.template.defaultfilters import filesizeformat
+from django.db.models import Q
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, Column, Row
@@ -71,7 +72,7 @@ class JogadorUpdateForm(ModelBaseFormHelper):
             self.fields['avatar'].initial = instance.jogador.avatar
 
     def clean_avatar(self):
-        avatar = self.cleaned_data['avatar']
+        avatar = self.cleaned_data.get('avatar', None)
 
         if avatar:
             file_extension = avatar.name.split('.')[-1]
@@ -125,8 +126,8 @@ class QuestUpdateForm(ModelDatePickerForm):
             self.fields['responsaveis'].required = True
 
 
-# update quest para criar ou outros jogadores
-# que não são o lider da equipe atualizar os responsáveis
+# update quest para criar ou para que outros jogadores
+# que não seja o lider da equipe possam atualizar os responsáveis
 class QuestCompleteCreateForm(ModelBaseFormHelper):
 
     class Meta:
@@ -138,6 +139,11 @@ class QuestCompleteCreateForm(ModelBaseFormHelper):
         super(QuestCompleteCreateForm, self).__init__(*args, **kwargs)
 
         if instance:
-            self.fields['responsaveis'].queryset = instance.equipe.team.filter(active=True)
+            team = instance.equipe.team.all()
+            lider = Jogador.objects.filter(
+                user=instance.equipe.lider.user
+            )
+            # self.fields['responsaveis'].queryset = instance.equipe.team.filter(active=True)
+            self.fields['responsaveis'].queryset = team | lider
             self.fields['responsaveis'].required = True
 
