@@ -60,7 +60,8 @@ class QuestDetailView(LoginRequiredMixin, DetailView):
 
         if (
             not Jogador.objects.is_lider(jogador, quest=quest) and
-            not Jogador.objects.is_member(jogador, quest=quest)
+            not Jogador.objects.is_member(jogador, quest=quest) and
+            not Jogador.objects.is_member(jogador, equipe=quest.equipe)
         ):
             return HttpResponseForbidden()
 
@@ -169,6 +170,7 @@ class QuestConcludeView(LoginRequiredMixin, View):
     success_url = reverse_lazy('core:quest_list')
 
     def dispatch(self, request, *args, **kwargs):
+        jogador = request.user.jogador
         quest_id = kwargs.get('pk', None)
         quest = get_object_or_404(Quest, pk=quest_id)
 
@@ -181,8 +183,15 @@ class QuestConcludeView(LoginRequiredMixin, View):
                 request, 'Esta quest já foi concluída.'
             )
             return HttpResponseRedirect(url_redirect)
+        
+        if not (
+            Jogador.objects.is_lider(jogador, quest=quest) and
+            Jogador.objects.is_member(jogador, quest=quest)
+        ):
+            return HttpResponseForbidden()
 
-        return super().dispatch(request, *args, **kwargs)
+        return super(
+            QuestConcludeView, self).dispatch(request, *args, **kwargs)
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):

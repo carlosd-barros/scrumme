@@ -21,10 +21,10 @@
                 <i class="fas fa-cogs"></i> Opções
             </button>
 
+            {% is_lider request.user.jogador quest=object as lider %}
+            {% is_member request.user.jogador quest=object as member %}
+            {% if lider or member %}
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                {% is_lider request.user.jogador quest=object as lider %}
-                {% is_member request.user.jogador quest=object as member %}
-                {% if lider or member %}
 
                     {% if not lider %}
                         <a class="btn btn-outline-secondary" href="{% url 'core:quest_alternative_update' object.pk %}">
@@ -44,8 +44,8 @@
                         <i class="fas fa-minus-circle"></i> Concluir
                     </a> -->
 
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 
@@ -79,11 +79,7 @@
 
             <div class="col-md-4">
                 <div><strong>Conclusão prevista para</strong></div>
-                {% if object.end_date %}
-                    {{ object.end_date|date:'d/m/Y' }}
-                {% else %}
-                    INDETERMINADO
-                {% endif %}
+                {{ object.end_date|date:'d/m/Y'|default:'INDETERMINADO' }}
             </div>
 
             <div class="col-md-4">
@@ -102,14 +98,16 @@
         </div>
         
         {% if object.open %}
-        <form id="form-submit" action="{% url 'core:quest_conclude' object.pk %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group float-right">
-                <button id="btn-submit-quest" class="btn btn-outline-success" type="submit">
-                    <li class="fas fa-check-circle"></li> Concluir quest
-                </button>
-            </div>
-        </form>
+            {% comment %} {% if lider or member %} {% endcomment %}
+            <form id="form-submit" action="{% url 'core:quest_conclude' object.pk %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group float-right">
+                    <button id="btn-submit-quest" class="btn btn-outline-success" type="submit">
+                        <li class="fas fa-check-circle"></li> Concluir quest
+                    </button>
+                </div>
+            </form>
+            {% comment %} {% endif %} {% endcomment %}
         {% endif %}
 
     </div>
