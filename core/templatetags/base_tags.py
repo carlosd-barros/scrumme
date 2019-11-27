@@ -24,9 +24,9 @@ def is_lider(jogador, equipe=None, quest=None):
     return False
 
 
-@register.simple_tag(takes_context=True)
-def is_member(context, equipe=None, quest=None):
-    jogador = context.get('request').user.jogador
+# @register.simple_tag(takes_context=True)
+@register.simple_tag
+def is_member(jogador, equipe=None, quest=None):
 
     # if jogador.user.is_superuser:
     #     return True
