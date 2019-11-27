@@ -121,10 +121,6 @@ class EquipeDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         equipe = self.get_object()
 
-        logger.debug(
-            f"equipe aqui: {equipe}"
-        )
-
         related_quests = Quest.objects.filter(
             equipe=equipe
         )
