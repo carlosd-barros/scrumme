@@ -139,11 +139,11 @@ class QuestCompleteCreateForm(ModelBaseFormHelper):
         super(QuestCompleteCreateForm, self).__init__(*args, **kwargs)
 
         if instance:
-            team = instance.equipe.team.all()
             lider = Jogador.objects.filter(
                 user=instance.equipe.lider.user
             )
-            # self.fields['responsaveis'].queryset = instance.equipe.team.filter(active=True)
-            self.fields['responsaveis'].queryset = team | lider
+
+            self.fields['responsaveis'].queryset = (
+                instance.equipe.team.filter(active=True) | lider).distinct()
             self.fields['responsaveis'].required = True
 
