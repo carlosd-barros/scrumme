@@ -31,7 +31,6 @@ config.encoding = locale.getpreferredencoding(False)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
-print(f"debuuuuuuuuuuug: {DEBUG}")
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*']
 
