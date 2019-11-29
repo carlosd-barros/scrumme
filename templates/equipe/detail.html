@@ -28,17 +28,15 @@
                 </a> -->
 
                 {% is_lider request.user.jogador object as permission %}
-                {% if permission %}
                 <!-- <div class="dropdown-divider"></div> -->
 
                 <a class="dropdown-item" href="{% url 'core:equipe_update' object.pk %}" title="Editar">
-                    <i class="fas fa-pencil-alt"></i> Editar
+                    <i class="fas fa-edit"></i> Editar
                 <a>
 
                 <a class="dropdown-item" href="{% url 'core:equipe_delete' object.pk %}" title="Excluir">
-                    <i class="fas fa-minus-circle"></i> Excluir
+                    <i class="fas fa-trash"></i> Excluir
                 </a>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -47,32 +45,35 @@
         <div class="article-metadata">
             <div class="widget widget-heading-simple table-condensed">
                 <div class="widget-body">
+
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div><strong>Lider</strong></div>
                             {{ object.lider.name }}
                         </div>
-            
-                        <div class="col-md-6">
+
+                        <div class="col-md-3">
+                            <div><strong>Quests relacionadas</strong></div>
+                            {% get_related_quests object %}
+                        </div>
+
+                        <div class="col-md-3">
                             <div><strong>Criada em</strong></div>
                             {{ object.created|date:'d/m/Y' }}
                         </div>
-                    </div>
-                    <br/>
+                    </div> <br/>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div><strong>Integrantes</strong></div>
-                                {% for integrante in object.team.all %}
-                                    {{ integrante.name }} <br>
-                                {% endfor %}
-                        </div>
-            
-                        <div class="col-md-6">
-                            <div><strong>Última atualização</strong></div>
-                            {{ object.updated|date:'d/m/Y' }}
+                            {% for integrante in object.team.all %}
+                                <a href="{% url 'core:jogador_detail' integrante.pk %}">
+                                    {{ integrante.name }}
+                                </a> <br/>
+                            {% endfor %}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

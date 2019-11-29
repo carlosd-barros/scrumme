@@ -5,28 +5,32 @@
 
 {% block css %}
 
-    <style>
-        .card-image {
-            width: 100%;
-            height: 100%;
-            /* border-radius: 50%; */
-        }
-    </style>
+<style>
+    .card-image {
+        width: 100%;
+        height: 100%;
+        /* border-radius: 50%; */
+    }
+</style>
 
 {% endblock css %}
 
 {% block main %}
 
-<header class="row justify-content-md-center">
+<div class="row justify-content-md-center">
 
     <div class="media col-md-3">
         {% comment %} <div class="container"> {% endcomment %}
 
             <div class="card-body">
                 <div class="card-image-container">
+                {% if request.user.jogador == object %}
                     <a href="{% url 'core:jogador_update' object.user.id %}" title="Editar perfil">
                         <img class="card-image" src="{{ object.avatar.url }}">
                     </a>
+                {% else %}
+                    <img class="card-image" src="{{ object.avatar.url }}">
+                {% endif %}
                 </div>
             </div>
 
@@ -36,11 +40,15 @@
     <div class="col-md-5">
         <div>
             <div>
-                <a href="{% url 'core:jogador_update' object.user.id %}"
-                title="Editar perfil"
-                class="font-weight-bold text-dark card-link">
+                {% if request.user.jogador == object %}
+                    <a href="{% url 'core:jogador_update' object.user.id %}"
+                    class="font-weight-bold text-dark card-link"
+                    title="Editar perfil">
+                        <h2>{{ object.user.username }}</h2>
+                    </a>
+                {% else %}
                     <h2>{{ object.user.username }}</h2>
-                </a>
+                {% endif %}
             </div> <hr>
 
             <div class="row">
@@ -79,7 +87,7 @@
         </div>
     </div>
 
-</header>
+</div>
 
 {% endblock main %}
 

@@ -35,21 +35,22 @@ class JogadorDetailView(LoginRequiredMixin, DetailView):
     model = Jogador
     template_name = "jogador/detail.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        jogador_user = self.get_object().user
+    # def dispatch(self, request, *args, **kwargs):
+    #     jogador_user = self.get_object().user
 
-        if not request.user == jogador_user:
-            messages.error(
-                request,
-                'Usuário não possui permissão.'
-            )
 
-            return HttpResponseRedirect(
-                reverse_lazy('core:home')
-            )
+    #     if not request.user == jogador_user:
+    #         messages.error(
+    #             request,
+    #             'Usuário não possui permissão.'
+    #         )
 
-        return super(
-            JogadorDetailView, self).dispatch(request, *args, **kwargs)
+    #         return HttpResponseRedirect(
+    #             reverse_lazy('core:home')
+    #         )
+
+    #     return super(
+    #         JogadorDetailView, self).dispatch(request, *args, **kwargs)
 
 
 class JogadorDeleteView(LoginRequiredMixin, DeleteView):
@@ -109,8 +110,7 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
             self.get_context_data(form=JogadorUpdateForm)
         )
 
-
-    def format_image(self, img):
+    def format_image(self, img=None):
         try:
             logger.debug('iniciando processo de redimensionamento de imagem')
             with open(img.path, 'r+b') as file:
@@ -122,12 +122,11 @@ class JogadorUpdateView(LoginRequiredMixin, UpdateView):
                     logger.debug('fim do processo de redimensionamento')
 
             logger.debug(f"imagem depois: {image.size} | {img.size}")
-            return img
 
         except AttributeError as error:
             logger.debug(f'deu ruim meu bacano: {error}')
             messages.error(
-                self.request, f"error ao alterar avatar."
+                self.request, "error ao alterar avatar."
             )
 
         return None
